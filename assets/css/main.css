@@ -1,3 +1,60 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-layout {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.custom-container {
+	width: 576px;
+}
+
+.custom-button {
+	font-size: 1.25rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: none;
+	background-color: #4a5568;
+	color: #fff;
+	border-radius: 5px;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+@media (max-width: 576px) {
+	.custom-container {
+		width: 100%;
+	}
+}
+
+a {
+	color: #4a5568;
+}
+
+input {
+	font-size: 1.25rem;
+	border: 1px #4a5568 solid;
+	border-radius: 5px;
+	padding: 5px 10px;
+}
+
+textarea {
+	font-size: 1.25rem;
+	border: 1px #4a5568 solid;
+	border-radius: 5px;
+	padding: 5px 10px;
+}
+
+button {
+	font-size: 1.25rem;
+	border: none;
+	background-color: #4a5568;
+	color: #fff;
+	border-radius: 5px;
+	padding: 5px 10px;
+	cursor: pointer;
+}

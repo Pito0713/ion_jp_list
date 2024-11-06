@@ -1,32 +1,31 @@
 <template lang="pug">
   LayoutsPage
-    div(class='flex justify-center items-center flex-col custom-container')
-      div(class='w-full')
-        Card(class='flex justify-center items-center flex-col')
-          textarea(placeholder='here' v-model="fileInput" class='mx-2.5 w-full')
-          input(placeholder='here' v-model="transInput" class='mt-2.5 w-full')
-          template(v-if='!submitArea')
-            button(@click='submit'  class='mt-2.5 w-full') submit
-        template(v-if='submitArea')
-          Card
-            div(v-for='(input, index) in inputs' :key='index')
-              div
-                input(type='text', v-model='input.jpValue' placeholder='here' class='mt-2.5 w-1/3')
-                input(type='text', v-model='input.chValue' placeholder='here' class='mt-2.5 ml-2.5 w-1/3')
-                button(@click='remove'  class='ml-2.5 w-1/5') delete
-            button(@click='addInput' class='mt-2.5') add input
-      
-      template(v-if='submitArea')
-        Card(class='w-full mt-2.5')
-          a(class='w-full text-2xl') {{fileInput}}
-          a(class='text-textSecond') {{transInput}}
-          div(class='border-b-2 my-2.5' )
-          div(v-for='(input, index) in inputs' :key='index')
-            div
-              a(class='mr-4') {{input.jpValue}}
-              a(class='text-textSecond') {{input.chValue}}
-      template(v-if='submitArea')
-        button(@click='call'  class='mt-4 w-80') call
+    VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
+      form(@submit="handleSubmit($event, onSubmit)")
+        div(class='flex justify-center items-center flex-col custom-container')
+          div(class='w-full')
+            Card(class='flex justify-center items-center flex-col')
+              VeeField(name="text" type="text" v-slot="{ field }")
+                textarea(placeholder='請輸入日文' v-model="fileInput" class='mx-2.5 w-full' v-bind="field")
+              VeeErrorMessage(name="text" class='ml-2.5 w-full text-red-700')
+              input(placeholder='可輸入平假名或片假名或翻譯' v-model="transInput" class='mt-2.5 w-full')
+            Card
+              div(v-for='(input, index) in inputs' :key='index' class='flex justify-center items-center flex-row')
+                div(class="grid grid-cols-8 gap-4")
+                  input(type='text', v-model='input.jpValue' placeholder='請輸入日文' class="col-span-3")
+                  input(type='text', v-model='input.chValue' placeholder='請輸入翻譯' class="col-span-3")
+                  div(@click='remove'  class='text-center col-span-2 custom-button') 刪除
+              div(@click='addInput' class='mt-2.5 custom-button') 新增
+            Card(class='w-full mt-2.5')
+              a(class='w-full text-2xl') {{fileInput}}
+              a(class='text-textSecond') {{transInput}}
+              div(class='border-b-2 my-2.5' )
+              div(v-for='(input, index) in inputs' :key='index')
+                div
+                  a(class='mr-4') {{input.jpValue}}
+                  a(class='text-textSecond') {{input.chValue}}
+   
+          button(type="submit" class='mt-4 w-80') 提交
   </template>
 
 <script setup>
@@ -34,12 +33,14 @@ import { ref, reactive, onMounted, watch, computed, defineComponent, defineExpos
 import Card from '../../components/Card.vue'
 import LayoutsPage from '../../layouts/LayoutsPage.vue'
 import ServiceApi from '~/service/service';
+import * as yup from 'yup';
 
 const fileInput = ref(null);
 const transInput = ref(null);
 const inputs = ref([{ jpValue: '', chValue: '' }]);
 const submitArea = ref(null);
 const router = useRouter()
+
 const submit = () => {
   submitArea.value = true
 }
@@ -51,8 +52,17 @@ const remove = (index) => {
 }
 
 
+const schema = yup.object({
+  text: yup.string().required('此欄位為必填')
+});
 
-const call = async () => {
+const { handleSubmit } = useForm({
+  // validationSchema: schema,
+  // initialValues: {
+  // },
+});
+
+const onSubmit = async () => {
   let submitData = {
     file: fileInput.value,
     translation: transInput.value,
@@ -74,7 +84,6 @@ defineExpose({
   transInput,
   remove,
   addInput,
-  call,
   submit
 })
 
