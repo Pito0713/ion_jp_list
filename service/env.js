@@ -5,7 +5,7 @@ const ENV = {
   },
   PRODUCTION: {
     NAME: 'production',
-    // DOMAIN: 'https://aoidoback.onrender.com',
+    DOMAIN: 'https://ion-list-back.onrender.com',
   },
 };
 
