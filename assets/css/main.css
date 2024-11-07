@@ -18,7 +18,7 @@
 	justify-content: center;
 	align-items: center;
 	border: none;
-	background-color: #4a5568;
+	background-color: #313a4a;
 	color: #fff;
 	border-radius: 5px;
 	padding: 5px 10px;
@@ -32,19 +32,19 @@
 }
 
 a {
-	color: #4a5568;
+	color: #313a4a;
 }
 
 input {
 	font-size: 1.25rem;
-	border: 1px #4a5568 solid;
+	border: 1px #313a4a solid;
 	border-radius: 5px;
 	padding: 5px 10px;
 }
 
 textarea {
 	font-size: 1.25rem;
-	border: 1px #4a5568 solid;
+	border: 1px #313a4a solid;
 	border-radius: 5px;
 	padding: 5px 10px;
 }
@@ -52,7 +52,7 @@ textarea {
 button {
 	font-size: 1.25rem;
 	border: none;
-	background-color: #4a5568;
+	background-color: #313a4a;
 	color: #fff;
 	border-radius: 5px;
 	padding: 5px 10px;

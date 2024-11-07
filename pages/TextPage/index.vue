@@ -5,13 +5,13 @@
         NuxtLink(to="/TextPage/addTextPage") +
       template(v-for='(item, index) in List.data' :key='item._id')
         Card(class='w-full my-2.5' )
-          a(class='w-full text-2xl') {{item.file}}
-          a(class='text-textSecond') {{item.translation}}
+          a(class='w-full text-xl font-medium mb-2') {{item.file}}
+          a(class='text-textSecond text-gray-500 text-lg') {{item.translation}}
           div(class='border-b-2 mb-2.5' )
           div(v-for='(input, index) in item.inputs' :key='index')
             div
-              a(class='mr-4') {{input.jpValue}}
-              a(class='text-textSecond') {{input.chValue}}
+              a(class='mr-2 font-medium text-lg') {{input.jpValue}}
+              a(class='text-textSecond text-gray-500 text-sm') {{input.chValue}}
 </template>
 
 <script setup>
