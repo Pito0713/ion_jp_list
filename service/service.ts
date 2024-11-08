@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {ENV} from './env.js';
-const env = ENV.PRODUCTION;
+const env = ENV.DEV;
 // 請求
 const requestInterceptor = (config: any) => {
 	// 請求10秒沒收到回應中斷
@@ -28,13 +28,16 @@ const responseInterceptor = (response: any) => {
 		inputs: string;
 		translation: string;
 	}
+
 	let target = response?.data;
 	if (target?.status === 'success') {
+		// 指定路由
 		if (response?.config?.url === '/getText') {
 			target?.data.forEach((item: getText) => {
 				try {
 					if (isJSON(item.inputs)) {
-						item.inputs = JSON.parse(item.inputs); // 將 inputs 轉換成 JSON 格式數據
+						// 將 inputs 轉換成 JSON 格式數據
+						item.inputs = JSON.parse(item.inputs);
 					}
 				} catch (error) {
 					console.log('解析失敗，非 JSON 格式：');
@@ -82,6 +85,10 @@ const fetchApi_Data = async (
 		return error;
 	}
 };
+interface log {
+	account: string;
+	password: string;
+}
 
 const ServiceApi = {
 	addText: async (submitData: any) => {
@@ -90,7 +97,15 @@ const ServiceApi = {
 		return data;
 	},
 	getText: async () => {
-		let data = await fetchApi_Data('POST', `/getText`, '', '');
+		let data = await fetchApi_Data('GET', `/getText`, '', '');
+		return data;
+	},
+	register: async (submitData: log) => {
+		let data = await fetchApi_Data('POST', `/register`, '', submitData);
+		return data;
+	},
+	login: async (submitData: log) => {
+		let data = await fetchApi_Data('POST', `/login`, '', submitData);
 		return data;
 	},
 };
