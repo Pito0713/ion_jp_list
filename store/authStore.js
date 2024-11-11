@@ -1,6 +1,6 @@
 export const authStore = defineStore('authStore', {
   state: () => ({
-    isAuthenticated: false
+    isAuthenticated: null
   }),
   actions: {
     setAuth(state) {
