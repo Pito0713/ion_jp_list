@@ -12,7 +12,7 @@
               a(class='w-full text-base mt-2 font-bold') 備註(選填)
               textarea(placeholder='可輸入平假名或片假名或翻譯(選填)' v-model="transInput" class='mt-2.5 w-full')
             
-            Card(class='w-full mt-2.5')
+            Card(class='mt-2.5')
               a(class='w-full text-xl mb-2 font-bold	') 單字
               div(v-for='(input, index) in inputs' :key='index' class='flex justify-center items-center flex-row')
                 div(class="grid grid-cols-8 gap-4 mb-2.5")
@@ -20,7 +20,7 @@
                   input(type='text', v-model='input.chValue' placeholder='請輸入翻譯' class="col-span-3")
                   div(@click='remove(index)'  class='text-center col-span-2 custom-button') 刪除
               div(@click='addInput' class='custom-button') 新增
-            Card(class='w-full mt-2.5')
+            Card(class='mt-2.5')
               a(class='w-full  mb-2 font-bold text-gray-500') 轉出樣本
               a(class='w-full text-xl font-medium mb-2') {{fileInput}}
               a(class='text-textSecond text-gray-500') {{transInput}}
