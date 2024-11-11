@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {ENV} from './env.js';
-const env = ENV.DEV;
+const env = ENV.PRODUCTION;
 // 請求
 const requestInterceptor = (config: any) => {
 	// 請求10秒沒收到回應中斷
