@@ -5,10 +5,9 @@ const env = ENV.DEV;
 const requestInterceptor = (config: any) => {
 	// 請求10秒沒收到回應中斷
 	config.timeout = 10000;
-	// headers: {
-	//   Authorization: "Bearer " + auth,
-	//   "Content-Type": "application/x-www-form-urlencoded",
-	// },
+
+	let userToken = useCookie('userToken')?.value;
+	if (userToken) config.headers['Authorization'] = `Bearer ${userToken}`;
 	return config;
 };
 
@@ -23,7 +22,7 @@ const responseInterceptor = (response: any) => {
 		}
 	};
 
-	interface getText {
+	interface searchText {
 		file: string;
 		inputs: string;
 		translation: string;
@@ -32,8 +31,8 @@ const responseInterceptor = (response: any) => {
 	let target = response?.data;
 	if (target?.status === 'success') {
 		// 指定路由
-		if (response?.config?.url === '/getText') {
-			target?.data.forEach((item: getText) => {
+		if (response?.config?.url === '/searchText') {
+			target?.data.forEach((item: searchText) => {
 				try {
 					if (isJSON(item.inputs)) {
 						// 將 inputs 轉換成 JSON 格式數據
@@ -86,24 +85,34 @@ const fetchApi_Data = async (
 	}
 };
 interface log {
-	account: string;
-	password: string;
+	account?: string;
+	password?: string;
+}
+
+interface text {
+	file?: string;
+	translation?: string;
+	inputs?: string;
+	searchValue?: string;
 }
 
 const ServiceApi = {
-	addText: async (submitData: any) => {
-		console.log(submitData);
+	// text/新增
+	addText: async (submitData: text) => {
 		let data = await fetchApi_Data('POST', `/addText`, '', submitData);
 		return data;
 	},
-	getText: async () => {
-		let data = await fetchApi_Data('GET', `/getText`, '', '');
+	// text/搜尋
+	searchText: async (submitData: text) => {
+		let data = await fetchApi_Data('POST', `/searchText`, '', submitData);
 		return data;
 	},
+	// user/註冊
 	register: async (submitData: log) => {
 		let data = await fetchApi_Data('POST', `/register`, '', submitData);
 		return data;
 	},
+	// user/登入
 	login: async (submitData: log) => {
 		let data = await fetchApi_Data('POST', `/login`, '', submitData);
 		return data;

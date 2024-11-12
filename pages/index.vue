@@ -1,5 +1,5 @@
 <template lang="pug">
-LayoutsPage(class='h-svh')
+LayoutsPage(class='flex justify-center items-center h-svh')
   button(@click='logOut' class='mt-4 w-80') 登出
 </template>
 

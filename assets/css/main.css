@@ -2,10 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-.custom-layout {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+@media (min-width: 576px) {
+	.custom-layout {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 }
 
 .custom-container {
