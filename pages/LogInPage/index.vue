@@ -1,8 +1,8 @@
 <template lang="pug">
-LayoutsPage(class='h-svh flex-col')
+LayoutsPage(class='h-svh flex justify-center items-center flex-col ')
   VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
     form(@submit="handleSubmit($event, onSubmit)")
-      Card
+      Card(class='flex-col')
         VeeField(type="text" name="account" v-slot="{ field }")
           label 帳號
           input(type='text' placeholder='請輸入' v-model="account" class='w-full ' v-bind="field")
@@ -49,7 +49,7 @@ const onSubmit = async () => {
         maxAge: 60 * 60 * 24 * 7 // 7 天
       })
     userToken.value = target?.data?.user?.token
-    await auth.setAuth(true)
+    auth.setAuth(true)
     router.push({ path: "/" })
   }
 
