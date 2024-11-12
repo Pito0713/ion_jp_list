@@ -49,7 +49,7 @@ const onSubmit = async () => {
         maxAge: 60 * 60 * 24 * 7 // 7 天
       })
     userToken.value = target?.data?.user?.token
-    await auth.setAuth(true)
+    auth.setAuth(true)
     router.push({ path: "/" })
   }
 

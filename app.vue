@@ -9,11 +9,11 @@
 <script setup>
 import { authStore } from '../../store/authStore'
 const auth = authStore()
-let userToken = useCookie('userToken')
+let userToken = useCookie('userToken')?.value
 
 onMounted(() => {
-  if (userToken.value) {
-    auth.setAuth((userToken.value))
+  if (userToken) {
+    auth.setAuth((userToken))
   }
 })
 </script>
