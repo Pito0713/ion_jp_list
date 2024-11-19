@@ -26,19 +26,21 @@ import LayoutsPage from '../../layouts/LayoutsPage.vue'
 import ServiceApi from '~/service/service';
 const textInput = ref(null)
 
+const loadingIndicator = useLoadingIndicator();
+
 const List = reactive({
   data: {},
 });
 
 const search = async () => {
+  loadingIndicator.start()
   let submitData = {
     searchValue: textInput.value,
   }
   const response = await ServiceApi.searchText(submitData)
   if (response.status === "success") List.data = response.data
   else List.data = {}
-
-  console.log(List.data)
+  loadingIndicator.finish()
 }
 
 // 在組件掛載時調用 API
