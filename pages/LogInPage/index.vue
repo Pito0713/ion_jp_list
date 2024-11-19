@@ -41,24 +41,30 @@ const onSubmit = async () => {
     account: account.value,
     password: password.value,
   }
+
   let target = await ServiceApi.login(submitData)
   if (target?.status === "success") {
     let userToken = useCookie('userToken',
-      target?.data?.user?.token,
       {
         maxAge: 60 * 60 * 24 * 7 // 7 天
       })
-    userToken.value = target?.data?.user?.token
+    userToken.value = target?.data?.token
+    let userInfo = useCookie('userInfo',
+      {
+        maxAge: 60 * 60 * 24 * 7 // 7 天
+      })
+    userInfo.value = JSON.stringify(target?.data)
     auth.setAuth(true)
     router.push({ path: "/" })
   }
-
 }
 
 defineComponent({
   components: { Card, LayoutsPage },
 })
 defineExpose({
+  schema,
+  onSubmit
 })
 
 </script>

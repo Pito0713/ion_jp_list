@@ -9,12 +9,12 @@ import Card from '../../components/Card.vue'
 import LayoutsPage from '../../layouts/LayoutsPage.vue'
 import { authStore } from '../../store/authStore'
 const auth = authStore()
-let userToken = useCookie('userToken')?.value
 const router = useRouter()
+let userToken = useCookie('userToken')
 
 const logOut = () => {
   auth.setAuth(false)
-  userToken = null
+  userToken.value = null
   router.push({ path: "/LogInPage" })
 }
 defineComponent({
