@@ -1,7 +1,12 @@
 {
 	"name": "nuxt-app",
 	"private": true,
-	"type": "module",
+	"type": "commonjs",
+	"overrides": {
+		"string-width": {
+			"type": "module"
+		}
+	},
 	"scripts": {
 		"build": "nuxt build",
 		"dev": "nuxt dev",
@@ -10,6 +15,7 @@
 		"postinstall": "nuxt prepare"
 	},
 	"dependencies": {
+		"@nuxtjs/i18n": "^9.1.0",
 		"@pinia/nuxt": "^0.7.0",
 		"@vee-validate/nuxt": "^4.14.6",
 		"@vee-validate/yup": "^4.14.6",
