@@ -28,7 +28,7 @@ export default defineNuxtConfig({
 		defaultLocale: 'zhTW',
 		langDir: 'locales/',
 		lazy: true, // 使用懶加載
-		strategy: 'prefix', // URL 中添加語言前綴，如 /en 或 /zh
+		// strategy: 'prefix', // URL 中添加語言前綴，如 /en 或 /zh
 	},
 	veeValidate: {
 		// disable or enable auto imports

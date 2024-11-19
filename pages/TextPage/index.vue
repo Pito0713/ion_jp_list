@@ -37,11 +37,15 @@ import ServiceApi from '~/service/service';
 const textInput = ref(null)
 const tagArray = ref([])
 const activeColor = ref('bg-primary-color text-white')
+
+const loadingIndicator = useLoadingIndicator();
+
 const List = reactive({
   data: {},
 });
 
 const search = async () => {
+  loadingIndicator.start()
   let submitData = {
     searchValue: textInput.value,
     tags: tagArray.value.filter(item => item.active).map(item => item.name),
@@ -49,6 +53,7 @@ const search = async () => {
   const response = await ServiceApi.searchText(submitData)
   if (response.status === "success") List.data = response.data
   else List.data = {}
+  loadingIndicator.finish()
 }
 
 const handleTag = async (item, index) => {
