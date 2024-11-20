@@ -9,8 +9,9 @@
 	},
 	"scripts": {
 		"build": "nuxt build",
+		"setup": "rm -rf node_modules && yarn install",
 		"dev": "nuxt dev",
-		"generate": "nuxt generate",
+		"generate": "rm -rf node_modules && nuxt generate",
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare"
 	},
