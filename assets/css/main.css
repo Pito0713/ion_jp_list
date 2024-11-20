@@ -37,6 +37,10 @@ a {
 	color: #313a4a;
 }
 
+body {
+	background-color: rgb(229 231 235);
+}
+
 input {
 	font-size: 1.25rem;
 	border: 1px #313a4a solid;
@@ -59,4 +63,9 @@ button {
 	border-radius: 5px;
 	padding: 5px 10px;
 	cursor: pointer;
+}
+
+img {
+	max-width: none; /* Remove max-width */
+	height: inherit; /* Remove height */
 }

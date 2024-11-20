@@ -1,16 +1,17 @@
 <template lang="pug">
-  div(class='bg-gray-200 h-svh')
-    template(v-if='isLoggedIn')
-      div(class='flex justify-center items-center flex-col')
-        nav(class='custom-container bg-white')
-          div(class='flex border-2 py-4')
-            div(class="w-24 text-center font-bold ")
-              NuxtLink(to="/") Home
-            div(class="w-24 text-center font-bold ")
-              NuxtLink(to="/TextPage") TextPage
-    main(class='relative flex-1')
+  template(v-if='isLoggedIn')
+    div(class='flex justify-center items-center flex-col fixed z-50 w-dvw')
+      nav(class='custom-container bg-white')
+        div(class='flex border-2 py-4')
+          div(class="w-24 text-center font-bold ")
+            NuxtLink(to="/") Home
+          div(class="w-24 text-center font-bold ")
+            NuxtLink(to="/TextPage") TextPage
+  div(class="h-14 bg-gray-200")
+  div(class='custom-layout')
+    main(class='relative custom-container ')
       NuxtPage
-  </template>
+</template>
 
 <script setup>
 import { ref, reactive, onMounted, watch, computed, defineComponent, defineExpose } from 'vue'
