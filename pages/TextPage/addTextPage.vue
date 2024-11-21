@@ -44,7 +44,6 @@
 
 <script setup>
 import { ref, reactive, onMounted, watch, computed, defineComponent, defineExpose } from 'vue'
-import Card from '../../components/Card.vue'
 import LayoutsPage from '../../layouts/LayoutsPage.vue'
 import ServiceApi from '~/service/service';
 import * as yup from 'yup';
@@ -90,8 +89,8 @@ onMounted(async () => {
   try {
     let userInfo = useCookie('userInfo')
     let userObject = JSON.parse(JSON.stringify(userInfo.value));
-    if (userObject?.tag?.length > 0) {
-      tagArray.value = userObject.tag.map(item => {
+    if (userObject?.tags?.length > 0) {
+      tagArray.value = userObject.tags.map(item => {
         // ['verb', 'noun', 'adjective', 'particle']
         return { name: item, active: false }
       });
@@ -102,7 +101,7 @@ onMounted(async () => {
 })
 
 defineComponent({
-  components: { Card, LayoutsPage },
+  components: { LayoutsPage },
 })
 defineExpose({
   textInput,

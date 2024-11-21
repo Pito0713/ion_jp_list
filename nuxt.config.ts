@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
 	ssr: true,
 	compatibilityDate: '2024-04-03',
+	components: true, // 確保自動加載組件功能已啟用
 	devtools: {enabled: true},
 	css: ['~/assets/css/main.css'],
 	postcss: {
@@ -18,7 +19,16 @@ export default defineNuxtConfig({
 		'@vee-validate/nuxt',
 		'@pinia/nuxt',
 		'@nuxtjs/i18n',
+		'@nuxt/image',
 	],
+	runtimeConfig: {
+		public: {
+			NEW_API_KEY: process.env.NEW_API_KEY || 'secret-key',
+		},
+		private: {
+			// secretKey: process.env.NEW_API_KEY || 'secret-key',
+		},
+	},
 	i18n: {
 		locales: [
 			{code: 'zhTW', language: 'zhTW', name: '繁體中文', file: 'zhTW.json'},

@@ -20,7 +20,7 @@ logs
 .env
 .env.*
 !.env.example
-
+/config.env
 
 # 忽略 package-lock.json 和 yarn.lock
 package-lock.json

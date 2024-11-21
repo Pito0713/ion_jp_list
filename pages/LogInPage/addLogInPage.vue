@@ -23,7 +23,6 @@ LayoutsPage(class='flex justify-center items-center h-svh flex-col')
 
 <script setup>
 import { ref, reactive, onMounted, watch, computed, defineComponent, defineExpose } from 'vue'
-import Card from '../../components/Card.vue'
 import LayoutsPage from '../../layouts/LayoutsPage.vue'
 import { authStore } from '../../store/authStore'
 import * as yup from 'yup';
@@ -55,7 +54,7 @@ const onSubmit = async () => {
 }
 
 defineComponent({
-  components: { Card, LayoutsPage },
+  components: { LayoutsPage },
 })
 defineExpose({
   account,
