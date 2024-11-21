@@ -1,5 +1,5 @@
 <template lang="pug">
-LayoutsPage(class='flex justify-center items-center h-svh flex-col')
+LayoutsPage(class='flex justify-center items-center h-vh flex-col mt-40')
   VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
     form(@submit="handleSubmit($event, onSubmit)")
       Card(class='flex-col')
@@ -22,14 +22,12 @@ LayoutsPage(class='flex justify-center items-center h-svh flex-col')
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, watch, computed, defineComponent, defineExpose } from 'vue'
+import { ref, reactive, onMounted, watch, computed, defineComponent } from 'vue'
 import LayoutsPage from '../../layouts/LayoutsPage.vue'
-import { authStore } from '../../store/authStore'
 import * as yup from 'yup';
-import ServiceApi from '~/service/service';
+const { $api } = useNuxtApp();
 
 const { t } = useI18n()
-const auth = authStore()
 const router = useRouter()
 
 const schema = yup.object({
@@ -47,7 +45,7 @@ const onSubmit = async () => {
     account: account.value,
     password: password.value,
   }
-  let target = await ServiceApi.register(submitData)
+  let target = await $api.register(submitData)
   if (target?.status === "success") {
     router.push({ path: "/LogInPage" })
   }
@@ -63,7 +61,6 @@ defineExpose({
   onSubmit,
   schema,
   router,
-  auth,
   yup,
 })
 

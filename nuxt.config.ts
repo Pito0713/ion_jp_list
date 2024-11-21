@@ -5,11 +5,16 @@ export default defineNuxtConfig({
 	components: true, // 確保自動加載組件功能已啟用
 	devtools: {enabled: true},
 	css: ['~/assets/css/main.css'],
+	plugins: ['~/plugins/auth', '~/plugins/api', '~/plugins/nav'],
 	postcss: {
 		plugins: {
 			tailwindcss: {},
 			autoprefixer: {},
 		},
+	},
+	routeRules: {
+		// '/': {prerender: true},
+		// '/TextPage/*': {swr: 3600},
 	},
 	typescript: {
 		typeCheck: true,
@@ -24,6 +29,8 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			NEW_API_KEY: process.env.NEW_API_KEY || 'secret-key',
+			ENV_DEV_DOMAIN: process.env.ENV_DEV_DOMAIN || 'http://localhost:8080',
+			ENV_PRODUCTION_DOMAIN: process.env.ENV_PRODUCTION_DOMAIN || 'http://localhost:8080',
 		},
 		private: {
 			// secretKey: process.env.NEW_API_KEY || 'secret-key',

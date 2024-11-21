@@ -1,5 +1,5 @@
 <template lang="pug">
-LayoutsPage(class='h-svh flex justify-center items-center flex-col ')
+LayoutsPage(class='h-vh flex justify-center items-center flex-col mt-40')
   VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
     form(@submit="handleSubmit($event, onSubmit)")
       Card(class='flex-col')
@@ -14,21 +14,22 @@ LayoutsPage(class='h-svh flex justify-center items-center flex-col ')
           VeeErrorMessage(name="password" class='ml-2 w-full text-red-700 text-sm')
         button(type="submit" class='mt-4 w-80') {{$t('login')}}
   div( class='mt-4 w-80 text-end') 
-    // NuxtLink(to="/LogInPage/addLogInPage") {{$t('account_register')}}
-
- 
+    NuxtLinkLocale(to="/LogInPage/addLogInPage") {{$t('account_register')}}
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, watch, computed, defineComponent, defineExpose } from 'vue'
+import { ref, reactive, onMounted, watch, computed, defineComponent } from 'vue'
 import LayoutsPage from '../../layouts/LayoutsPage.vue'
-import { authStore } from '../../store/authStore'
 import * as yup from 'yup';
-import ServiceApi from '~/service/service';
+const { $api } = useNuxtApp();
 
-const auth = authStore()
 const router = useRouter()
 const { t } = useI18n()
+const authState = useState('authState', () => null);
+const infoState = useState('infoState', () => null);
+const navState = useState('navState', () => {
+  { nav: false };
+});
 
 const schema = yup.object({
   account: yup.string().required(t('required')),
@@ -38,26 +39,29 @@ const schema = yup.object({
 const account = ref(null);
 const password = ref(null);
 
-
 const onSubmit = async () => {
   let submitData = {
     account: account.value,
     password: password.value,
   }
 
-  let target = await ServiceApi.login(submitData)
+  let target = await $api.login(submitData)
+
   if (target?.status === "success") {
     let userToken = useCookie('userToken',
       {
         maxAge: 60 * 60 * 24 * 7 // 7 天
       })
     userToken.value = target?.data?.token
+    authState.value = { token: target?.data?.token };
+    navState.value = { nav: true }
+
     let userInfo = useCookie('userInfo',
       {
         maxAge: 60 * 60 * 24 * 7 // 7 天
       })
     userInfo.value = JSON.stringify(target?.data)
-    auth.setAuth(true)
+    infoState.value = { info: JSON.stringify(target?.data) };
     router.push({ path: "/" })
   }
 }
