@@ -21,14 +21,20 @@ export default defineNuxtConfig({
 	],
 	i18n: {
 		locales: [
-			{code: 'zhTW', language: 'zh-TW', name: '繁體中文', file: 'zhTW.json'},
-			{code: 'zhHant', language: 'zh-Hant', name: '簡體中文', file: 'zhHant.json'},
-			{code: 'en', language: 'en-US', name: 'English', file: 'en.json'},
+			{code: 'zhTW', language: 'zhTW', name: '繁體中文', file: 'zhTW.json'},
+			{code: 'zhHant', language: 'zhHant', name: '簡體中文', file: 'zhHant.json'},
+			{code: 'en', language: 'en', name: 'English', file: 'en.json'},
+			{code: 'jp', language: 'jp', name: '日文', file: 'jp.json'},
 		],
 		defaultLocale: 'zhTW',
 		langDir: 'locales/',
 		lazy: true, // 使用懶加載
-		// strategy: 'prefix', // URL 中添加語言前綴，如 /en 或 /zh
+		strategy: 'prefix', // URL 中添加語言前綴，如 /en 或 /zh
+		detectBrowserLanguage: {
+			useCookie: true,
+			cookieKey: 'i18n_redirected',
+			redirectOn: 'root', // recommended
+		},
 	},
 	veeValidate: {
 		// disable or enable auto imports

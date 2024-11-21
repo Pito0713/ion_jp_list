@@ -5,9 +5,9 @@
         nav(class='custom-container bg-white')
           div(class='flex border-2 py-4')
             div(class="w-24 text-center font-bold ")
-              NuxtLink(to="/") Home
+              NuxtLinkLocale(to="/") {{$t('Home')}}
             div(class="w-24 text-center font-bold ")
-              NuxtLink(to="/TextPage") TextPage
+              NuxtLinkLocale(to="/TextPage") {{$t('TextList')}}
     main(class='relative flex-1')
       NuxtPage
   </template>

@@ -3,14 +3,14 @@
     div(class='relative flex justify-center items-center flex-col custom-container pb-16')
       Card(class=' w-full flex-col' )
         div(class='flex flex-row w-full' )
-          input(placeholder='請輸入日文' v-model="textInput" class='flex-1')
-          button(class='mx-2 px-5 flex-6' @click='search') 搜尋
+          input(:placeholder="$t('please_enter_word')" v-model="textInput" class="flex-1")
+          button(class='mx-2 px-5 flex-6' @click='search') {{$t('search')}}
         div(class='flex w-full' )
           template(v-for='(item, index) in tagArray' :key='item')
             Tag(@click='handleTag(item, index)' :class='item.active && activeColor')
               a(:class='item.active && activeColor') {{$t(item.name)}}
       div(class='fixed w-12 h-12 bg-slate-500 rounded-full bottom-4 right-4 md:right-1/2 md:translate-x-72 flex justify-center items-center')
-        NuxtLink(to="/TextPage/addTextPage") +
+        NuxtLinkLocale(to="/TextPage/addTextPage") +
       template(v-for='(item, index) in List.data' :key='item._id')
         Card(class='w-full my-2.5 flex-col' )
           template(v-if='item.tags.length > 0')
@@ -91,7 +91,10 @@ defineComponent({
 defineExpose({
   search,
   handleTag,
-  activeColor
+  activeColor,
+  tagArray,
+  textInput,
+  List,
 })
 
 </script>

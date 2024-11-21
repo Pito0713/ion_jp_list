@@ -4,17 +4,19 @@ LayoutsPage(class='h-svh flex justify-center items-center flex-col ')
     form(@submit="handleSubmit($event, onSubmit)")
       Card(class='flex-col')
         VeeField(type="text" name="account" v-slot="{ field }")
-          label 帳號
-          input(type='text' placeholder='請輸入' v-model="account" class='w-full ' v-bind="field")
+          label {{$t('account')}}
+          input(type='text' :placeholder="$t('please_enter_account')" v-model="account" class='w-full ' v-bind="field")
           VeeErrorMessage(name="account" class='ml-2 w-full text-red-700 text-sm')
         div( class='w-full my-2' )
         VeeField(type="text" name="password" v-slot="{ field }")
-          label 密碼
-          input(type='text' placeholder='請輸入' v-model="password" class='w-full ' v-bind="field")
+          label {{$t('password')}}
+          input(type='text' :placeholder="$t('please_enter_password')" v-model="password" class='w-full ' v-bind="field")
           VeeErrorMessage(name="password" class='ml-2 w-full text-red-700 text-sm')
-        button(type="submit" class='mt-4 w-80') 登入
+        button(type="submit" class='mt-4 w-80') {{$t('login')}}
   div( class='mt-4 w-80 text-end') 
-    NuxtLink(to="/LogInPage/addLogInPage") 註冊帳號
+    // NuxtLink(to="/LogInPage/addLogInPage") {{$t('account_register')}}
+
+ 
 </template>
 
 <script setup>
@@ -27,14 +29,16 @@ import ServiceApi from '~/service/service';
 
 const auth = authStore()
 const router = useRouter()
+const { t } = useI18n()
 
 const schema = yup.object({
-  account: yup.string().required('此欄位為必填'),
-  password: yup.string().required('此欄位為必填')
+  account: yup.string().required(t('required')),
+  password: yup.string().required(t('required')),
 });
 
 const account = ref(null);
 const password = ref(null);
+
 
 const onSubmit = async () => {
   let submitData = {
