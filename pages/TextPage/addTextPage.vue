@@ -2,7 +2,7 @@
   LayoutsPage
     VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
       form(@submit="handleSubmit($event, onSubmit)" class='w-full flex-1')
-        div(class='flex justify-center items-center flex-col custom-container')
+        div(class='flex justify-center items-center flex-col')
           div(class='w-full flex-1')
             Card(class='flex justify-center items-center flex-col mt-4')
               div(class='flex flex-col w-full')
