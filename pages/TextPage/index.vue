@@ -14,10 +14,18 @@ LayoutsPage
         ImageFC(src='/img/addCircle.png' :width='50' :height='50')
     template(v-for='(item, index) in List.data' :key='item._id')
       Card(class='w-full my-1 flex-col' )
-        template(v-if='item.tags.length > 0')
-          div(class='flex flex-row')
-            template(v-for='(item, index) in item.tags' :key='item')
-              a(class='mr-2 mb-1 text-gray-400 text-sm') {{$t(item)}}
+        div(class='w-full flex flex-row ')
+          div(class='w-9/12')
+            template(v-if='item.tags.length > 0')
+              div(class='flex flex-row')
+                template(v-for='(item, index) in item.tags' :key='item')
+                  a(class='mr-2 mb-1 text-gray-400 text-sm') {{$t(item)}}
+          div(class='w-3/12 flex flex-row justify-end')
+            NuxtLink(:to="{ path:localePath('/TextPage/editTextPage'), query: { value: JSON.stringify(item) } }" class='mr-3')
+              ImageFC(src='/img/edit.png' :width='22.5' :height='22.5')
+            div(@click='handleIsShowTop(item)' class='active:opacity-40')
+              ImageFC(v-if='item.isShowTop' src='/img/showDown.png' :width='22.5' :height='22.5' )
+              ImageFC(v-else src='/img/showUp.png' :width='22.5' :height='22.5')
         a(class='w-full text-xl font-medium mb-1') {{item.file}}
         a(class='text-textSecond text-gray-500 text-l') {{item.translation}}
         template(v-if='item.inputs.length > 0')
@@ -41,6 +49,7 @@ const List = reactive({
 
 const { $api } = useNuxtApp();
 const loadingIndicator = useLoadingIndicator();
+const localePath = useLocalePath()
 
 const search = async () => {
   loadingIndicator.start()
@@ -56,6 +65,20 @@ const search = async () => {
 
 const handleTag = async (item, index) => {
   tagArray.value[index].active = !tagArray.value[index].active
+}
+
+const handleIsShowTop = async (item) => {
+  loadingIndicator.start()
+  let submitData = {
+    _id: item._id,
+    isShowTop: !item.isShowTop
+  }
+
+  const response = await $api.editTextShowTop(submitData)
+  if (response.status === "success") {
+    await search()
+  }
+  loadingIndicator.finish()
 }
 
 // useFetch(search);
@@ -89,8 +112,10 @@ defineComponent({
   components: { LayoutsPage },
 })
 defineExpose({
+  localePath,
   search,
   handleTag,
+  handleIsShowTop,
   activeColor,
   tagArray,
   textInput,

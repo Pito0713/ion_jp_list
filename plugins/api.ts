@@ -6,7 +6,7 @@ export default defineNuxtPlugin(() => {
   env = ENV_PRODUCTION_DOMAIN & ENV_DEV_DOMAIN
 	Authorization requires token
 	*/
-	const env = config.public.ENV_PRODUCTION_DOMAIN;
+	const env = config.public.ENV_DEV_DOMAIN;
 	axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 	axios.defaults.baseURL = env;
 	// 請求
@@ -99,6 +99,7 @@ export default defineNuxtPlugin(() => {
 		translation?: string;
 		inputs?: string;
 		searchValue?: string;
+		isShowTop?: boolean;
 	}
 
 	// text/新增
@@ -109,6 +110,16 @@ export default defineNuxtPlugin(() => {
 	// text/搜尋
 	const searchText = async (submitData: text) => {
 		let data = await fetchApi_Data('POST', `/searchText`, '', submitData);
+		return data;
+	};
+	// text/更新
+	const editText = async (submitData: text) => {
+		let data = await fetchApi_Data('POST', `/editText`, '', submitData);
+		return data;
+	};
+	// text/更新
+	const editTextShowTop = async (submitData: text) => {
+		let data = await fetchApi_Data('POST', `/editTextShowTop`, '', submitData);
 		return data;
 	};
 	// user/註冊
@@ -127,6 +138,8 @@ export default defineNuxtPlugin(() => {
 			api: {
 				addText,
 				searchText,
+				editText,
+				editTextShowTop,
 				register,
 				login,
 			},

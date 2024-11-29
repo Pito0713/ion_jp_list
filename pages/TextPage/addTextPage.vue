@@ -29,6 +29,10 @@
                   div(@click='remove(index)'  class='text-center col-span-2 custom-button') {{$t('delete')}}
             Card(class='mt-2.5 flex-col ')
               a(class='w-full  mb-2 font-bold text-gray-500') {{$t('sample')}}
+              template(v-if='tagArray.length > 0')
+                div(class='flex flex-row')
+                  template(v-for='(item, index) in tagArray' :key='item')
+                    a(v-if='item.active' class='mr-2 mb-1 text-gray-400 text-sm') {{$t(item.name)}}
               a(class='w-full text-xl font-medium mb-2') {{textInput}}
               a(class='text-textSecond text-gray-500') {{transInput}}
               template(v-if='inputs?.length > 0')
@@ -68,6 +72,8 @@ const schema = yup.object({
   text: yup.string().required(t('required'))
 });
 
+
+const localePath = useLocalePath()
 const onSubmit = async () => {
   let submitData = {
     file: textInput.value,
@@ -78,7 +84,7 @@ const onSubmit = async () => {
 
   let target = await $api.addText(submitData)
   if (target?.status === "success") {
-    router.push({ path: "/TextPage" })
+    router.push(localePath("/TextPage"))
   }
 }
 
