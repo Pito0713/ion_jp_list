@@ -27,5 +27,14 @@
 	"search": "搜尋",
 	"log_out": "登出",
 	"login": "登入",
-	"account_register": "註冊帳號"
+	"success": "成功",
+	"error_unknown": "系統繁忙, 稍後再試",
+	"account_register": "註冊帳號",
+	"user_unauthorized": "憑證過期",
+	"user_authorized_not_pass": "使用者憑證錯誤",
+	"sever_request_failed": "伺服器請求失敗",
+	"account_password_required": "帳號密碼需必填",
+	"duplicate_account": "註冊帳號重複",
+	"password_error": "密碼輸入錯誤",
+	"account_error": "帳號輸入錯誤"
 }

@@ -1,6 +1,8 @@
 <template lang="pug">
+  // 外包在 layout 架構上
+  Modal
   template(v-if="isLoggedIn")
-    div(class='flex justify-center items-center flex-col fixed z-50 w-dvw')
+    div(class='flex justify-center items-center flex-col fixed z-40 w-dvw')
       nav(class='custom-container bg-white')
         div(class='flex border-2 justify-between py-4')
           div(class='flex')

@@ -27,5 +27,14 @@
 	"search": "搜索",
 	"log_out": "登出",
 	"login": "登录",
-	"account_register": "注册账号"
+	"success": "成功",
+	"account_register": "注册账号",
+	"error_unknown": "系统繁忙，请稍后再试",
+	"user_unauthorized": "凭证过期",
+	"user_authorized_not_pass": "用户凭证错误",
+	"sever_request_failed": "服务器请求失败",
+	"account_password_required": "账号密码必填",
+	"duplicate_account": "注册账号重复",
+	"password_error": "密码输入错误",
+	"account_error": "账号输入错误"
 }

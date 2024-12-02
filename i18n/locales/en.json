@@ -27,5 +27,14 @@
 	"search": "Search",
 	"log_out": "Log Out",
 	"login": "Log In",
-	"account_register": "Register Account"
+	"success": "Success",
+	"error_unknown": "The system is busy, please try again later",
+	"account_register": "Register Account",
+	"user_unauthorized": "Credentials expired",
+	"user_authorized_not_pass": "User credentials error",
+	"sever_request_failed": "Server request failed",
+	"account_password_required": "Account and password are required",
+	"duplicate_account": "Duplicate account registration",
+	"password_error": "Incorrect password",
+	"account_error": "Incorrect account"
 }
