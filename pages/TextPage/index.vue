@@ -1,6 +1,6 @@
 <template lang="pug">
 LayoutsPage
-  div(class='relative flex justify-center items-center flex-col custom-container pb-16')
+  div(class='relative flex justify-center items-center flex-col pb-16')
     Card(class='w-full flex-col mt-3' )
       div(class='flex flex-row w-full' )
         input(:placeholder="$t('please_enter_word')" v-model="textInput" class="flex-1")
@@ -26,7 +26,10 @@ LayoutsPage
             div(@click='handleIsShowTop(item)' class='active:opacity-40')
               ImageFC(v-if='item.isShowTop' src='/img/showDown.png' :width='22.5' :height='22.5' )
               ImageFC(v-else src='/img/showUp.png' :width='22.5' :height='22.5')
-        a(class='w-full text-xl font-medium mb-1') {{item.file}}
+        div(class='w-full flex flex-row justify-start items-center mb-1')
+          a(class=' text-xl font-medium mr-1') {{item.file}}
+          div(@click='handleCopy(item.file)' class='active:opacity-40')
+            ImageFC(src='/img/copy.png' :width='16' :height='16' )
         a(class='text-textSecond text-gray-500 text-l') {{item.translation}}
         template(v-if='item.inputs.length > 0')
           div(class='border-b-2 my-2.5' )
@@ -58,7 +61,7 @@ const search = async () => {
     tags: tagArray.value.filter(item => item.active).map(item => item.name),
   }
   const response = await $api.searchText(submitData)
-  if (response.status === "success") List.data = response.data
+  if (response.status === 1) List.data = response.data
   else List.data = {}
   loadingIndicator.finish()
 }
@@ -79,6 +82,18 @@ const handleIsShowTop = async (item) => {
     await search()
   }
   loadingIndicator.finish()
+}
+const handleCopy = async (_text) => {
+  /*
+  透過 navigator.clipboard 舊瀏覽器可能不支援
+  會返回 promise 若 error 進入 catch, 成功進入 resolved 
+  不需使用 resolved 狀態, 直接用 await 代替
+  */
+  try {
+    await navigator.clipboard.writeText(_text);
+  } catch (err) {
+    console.error('複製失敗:', err);
+  }
 }
 
 // useFetch(search);
@@ -116,6 +131,7 @@ defineExpose({
   search,
   handleTag,
   handleIsShowTop,
+  handleCopy,
   activeColor,
   tagArray,
   textInput,
