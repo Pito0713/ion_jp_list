@@ -27,5 +27,14 @@
 	"search": "検索",
 	"log_out": "ログアウト",
 	"login": "ログイン",
-	"account_register": "アカウント登録"
+	"success": "成功",
+	"account_register": "アカウント登録",
+	"error_unknown": "システムが混み合っています。後でもう一度お試しください",
+	"user_unauthorized": "資格情報の有効期限が切れています",
+	"user_authorized_not_pass": "ユーザー資格情報が間違っています",
+	"sever_request_failed": "サーバーリクエストに失敗しました",
+	"account_password_required": "アカウントとパスワードは必須です",
+	"duplicate_account": "アカウント登録が重複しています",
+	"password_error": "パスワードが間違っています",
+	"account_error": "アカウントが間違っています"
 }

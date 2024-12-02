@@ -46,7 +46,7 @@ const onSubmit = async () => {
     password: password.value,
   }
   let target = await $api.register(submitData)
-  if (target?.status === "success") {
+  if (target?.status === 1) {
     router.push({ path: "/LogInPage" })
   }
 }

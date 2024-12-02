@@ -49,7 +49,7 @@ const search = async () => {
     tags: tagArray.value.filter(item => item.active).map(item => item.name),
   }
   const response = await $api.searchText(submitData)
-  if (response.status === "success") List.data = response.data
+  if (response.status === 1) List.data = response.data
   else List.data = {}
   loadingIndicator.finish()
 }
