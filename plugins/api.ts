@@ -1,12 +1,13 @@
 // ~/plugins/api.js
 import axios from 'axios';
+import {getErrorCodeKey} from '../utils/errorCodes';
 export default defineNuxtPlugin(() => {
 	const config = useRuntimeConfig();
 	/*
   env = ENV_PRODUCTION_DOMAIN & ENV_DEV_DOMAIN
 	Authorization requires token
 	*/
-	const env = config.public.ENV_DEV_DOMAIN;
+	const env = config.public.ENV_PRODUCTION_DOMAIN;
 	axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 	axios.defaults.baseURL = env;
 	// 請求
@@ -19,7 +20,7 @@ export default defineNuxtPlugin(() => {
 		return config;
 	};
 
-	// 回應
+	// 回應成功
 	const responseInterceptor = (response: any) => {
 		const isJSON = (data: any) => {
 			try {
@@ -37,7 +38,7 @@ export default defineNuxtPlugin(() => {
 		}
 
 		let target = response?.data;
-		if (target?.status === 'success') {
+		if (target?.status === 1) {
 			// 指定路由
 			if (response?.config?.url === '/searchText') {
 				target?.data.forEach((item: searchText) => {
@@ -62,6 +63,10 @@ export default defineNuxtPlugin(() => {
 
 	// 回應錯誤
 	const responseInterceptorError = (error: any) => {
+		let errorTarget = error?.response?.data;
+		const store = modalStore();
+		store.ModalShow(getErrorCodeKey(errorTarget?.errorStatusCode || 0));
+
 		return Promise.reject(error);
 	};
 

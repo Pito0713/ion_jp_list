@@ -47,7 +47,7 @@ const onSubmit = async () => {
 
   let target = await $api.login(submitData)
 
-  if (target?.status === "success") {
+  if (target?.status === 1) {
     let userToken = useCookie('userToken',
       {
         maxAge: 60 * 60 * 24 * 7 // 7 天

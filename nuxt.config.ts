@@ -5,12 +5,21 @@ export default defineNuxtConfig({
 	components: true, // 確保自動加載組件功能已啟用
 	devtools: {enabled: true},
 	css: ['~/assets/css/main.css'],
-	plugins: ['~/plugins/auth', '~/plugins/api', '~/plugins/nav'],
+	/*
+	Pinia plugins 必須要最之前執行。
+	ex 如果導入 pinia 插件是 plugins/api.ts，
+	那 ~/plugins/pinia 需要 plugins/api.ts 之前，
+	需透過文件順續排序
+	*/
+	plugins: ['~/plugins/auth', '~/plugins/nav', '~/plugins/api'],
 	postcss: {
 		plugins: {
 			tailwindcss: {},
 			autoprefixer: {},
 		},
+	},
+	pinia: {
+		storesDirs: ['./store/**'],
 	},
 	routeRules: {
 		// '/': {prerender: true},

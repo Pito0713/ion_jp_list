@@ -83,8 +83,8 @@ const onSubmit = async () => {
   }
 
   let target = await $api.addText(submitData)
-  if (target?.status === "success") {
-    router.push(localePath("/TextPage"))
+  if (target?.status === 1) {
+    router.push({ path: "/TextPage" })
   }
 }
 
