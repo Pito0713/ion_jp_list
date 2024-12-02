@@ -91,7 +91,7 @@ const onSubmit = async () => {
   }
 
   let target = await $api.editText(submitData)
-  if (target?.status === "success") {
+  if (target?.status === "1") {
     // localePath for i18 translate
     router.push(localePath("/TextPage"))
   }
