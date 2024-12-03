@@ -11,7 +11,7 @@ LayoutsPage
             a(:class='item.active && activeColor') {{$t(item.name)}}
     div(class='fixed w-12 h-12 bottom-4 right-4 md:right-1/2 md:translate-x-72')
       NuxtLinkLocale(to="/TextPage/addTextPage")
-        ImageFC(src='/img/addCircle.png' :width='50' :height='50')
+        ImageFC(src='/img/add_circle.png' :width='50' :height='50')
     template(v-for='(item, index) in List.data' :key='item._id')
       Card(class='w-full my-1 flex-col' )
         div(class='w-full')
@@ -21,15 +21,15 @@ LayoutsPage
                 a(class='mr-2 mb-1 text-gray-400 text-sm') {{$t(item)}}
         div(class='w-full flex flex-row ')
           div(class='w-9/12 flex flex-row justify-start items-center mb-1')
-            a(class=' text-2xl font-medium mr-1 ') {{item.file}}
+            a(class=' text-2xl font-medium mr-2 ') {{item.file}}
             div(@click='handleCopy(item.file)' class='active:opacity-40 mt-1')
-              ImageFC(src='/img/copy.png' :width='16' :height='16' )
+              ImageFC(src='/img/item_copy.png' :width='16' :height='16' )
           div(class='w-3/12 flex flex-row justify-end items-center')
             NuxtLink(:to="{ path:localePath('/TextPage/editTextPage'), query: { value: JSON.stringify(item) } }" class='mr-3')
-              ImageFC(src='/img/edit.png' :width='22.5' :height='22.5')
+              ImageFC(src='/img/item_edit.png' :width='22.5' :height='22.5')
             div(@click='handleIsShowTop(item)' class='active:opacity-40')
-              ImageFC(v-if='item.isShowTop' src='/img/showDown.png' :width='22.5' :height='22.5' )
-              ImageFC(v-else src='/img/showUp.png' :width='22.5' :height='22.5')
+              ImageFC(v-if='item.isShowTop' src='/img/heart.png' :width='22.5' :height='22.5' )
+              ImageFC(v-else src='/img/heart_line.png' :width='22.5' :height='22.5')
         a(class='text-textSecond text-gray-500 text-l') {{item.translation}}
         template(v-if='item.inputs.length > 0')
           div(class='border-b-2 my-2.5' )

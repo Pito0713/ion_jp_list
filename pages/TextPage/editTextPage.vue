@@ -21,7 +21,7 @@ LayoutsPage(class='mb-16')
               div(class='flex justify-center items-center') 
                 a(class='text-xl font-bold') {{$t('supple_words')}}
               div(class='ml-2 flex justify-center items-center')
-                ImageFC(src='/img/addCircleLine.png' :width='20' :height='20')
+                ImageFC(src='/img/add_circle_line.png' :width='20' :height='20')
             div(v-for='(input, index) in inputs' :key='index' class='flex justify-center items-center flex-row')
               div(class="grid grid-cols-8 gap-4 mb-2.5")
                 input(type='text', v-model='input.jpValue' :placeholder="$t('please_enter_word')" class="col-span-3")
