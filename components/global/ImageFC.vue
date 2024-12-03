@@ -1,7 +1,5 @@
 <template lang="pug">
-div
-  NuxtImg(:src="src" :alt="alt" :width="width" :height="height" :class="customClass" :fit="fit")
-  slot
+img(:src="src" :alt="alt" :width="width" :height="height" :class="customClass")
 </template>
 
 <script setup>
