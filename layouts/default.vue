@@ -14,7 +14,7 @@
             select(name='language' id='language' v-model='localeLanguage' class='flex border-2 w-28 mr-8 p-1 rounded')
               option(v-for="locale in locales" :key="locale.code" :value="locale.code") {{ locale.name }}    
             div(class="pr-4 flex justify-center items-center" @click='logOut()')
-              img(src='/img/log_out.png' width='25' height='25')
+              ImageFC(src='/img/log_out.png' width='25' height='25')
   div(class="h-14 bg-gray-200")
   div(class='flex justify-center items-center flex-col z-50 w-svw')
     div(class='custom-layout w-dvw')
