@@ -22,7 +22,8 @@ LayoutsPage
         div(class='w-full flex flex-row ')
           div(class='w-9/12 flex flex-row justify-start items-center mb-1')
             a(class=' text-2xl font-medium mr-2 ') {{item.file}}
-            div(@click='handleCopy(item.file)' class='active:opacity-40 mt-1')
+            a(v-if='item.fileTranslate' class=' text-gray-500 text-xs font-medium mr-1 mt-3 ') {{item.fileTranslate}}
+            div(@click='handleCopy(item.file)' class='active:opacity-20 mt-2')
               ImageFC(src='/img/item_copy.png' :width='16' :height='16' )
           div(class='w-3/12 flex flex-row justify-end items-center')
             NuxtLink(:to="{ path:localePath('/TextPage/editTextPage'), query: { value: JSON.stringify(item) } }" class='mr-3')
@@ -53,6 +54,7 @@ const List = reactive({
 const { $api } = useNuxtApp();
 const loadingIndicator = useLoadingIndicator();
 const localePath = useLocalePath()
+const { t } = useI18n()
 
 const search = async () => {
   loadingIndicator.start()
@@ -83,7 +85,9 @@ const handleIsShowTop = async (item) => {
   }
   loadingIndicator.finish()
 }
+const store = modalStore();
 const handleCopy = async (_text) => {
+
   /*
   透過 navigator.clipboard 舊瀏覽器可能不支援
   會返回 promise 若 error 進入 catch, 成功進入 resolved 
@@ -91,8 +95,10 @@ const handleCopy = async (_text) => {
   */
   try {
     await navigator.clipboard.writeText(_text);
+    store.ModalShow('success_copy');
   } catch (err) {
-    console.error('複製失敗:', err);
+    store.ModalShow('fall_copy');
+    console.error('fall_copy:', err);
   }
 }
 

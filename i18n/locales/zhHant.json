@@ -14,7 +14,9 @@
 	"required": "此栏位为必填",
 	"password_inconsistent_please_re_enter": "密码不一致，请重新输入",
 	"single_word": "单词",
+	"single_word_translate": "单词翻译",
 	"please_enter_word": "请输入单词",
+	"please_enter_word_translate": "请输入单词翻译",
 	"please_enter_translate": "请输入翻译",
 	"please_enter": "请输入",
 	"sentences": "例句",
@@ -36,5 +38,7 @@
 	"account_password_required": "账号密码必填",
 	"duplicate_account": "注册账号重复",
 	"password_error": "密码输入错误",
-	"account_error": "账号输入错误"
+	"account_error": "账号输入错误",
+	"success_copy": "复制成功",
+	"fall_copy": "复制失败"
 }

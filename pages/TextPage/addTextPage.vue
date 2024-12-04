@@ -10,7 +10,9 @@
                 VeeField(name="text" type="text" v-slot="{ field }")
                   input(:placeholder="$t('please_enter_word')" v-model="textInput" class=' w-full' v-bind="field")
                 VeeErrorMessage(name="text" class='ml-2.5 w-full text-red-700 text-sm')
-              div(class='flex flex-row w-full ml-2')
+                a(class='w-full text-base font-bold mt-2 mb-1 text-gray-800') {{`${$t('single_word_translate')}(${$t('optional')})`}}
+                input(:placeholder="$t('please_enter_word_translate')" v-model="textTransInput" class=' w-full')
+              div(class='flex flex-row w-full')
                 template(v-for='(item, index) in tagArray' :key='item')
                   Tag(@click='handleTag(item, index)' :class='item.active && activeColor')
                     a(:class='item.active && activeColor') {{$t(item.name)}}
@@ -33,7 +35,9 @@
                 div(class='flex flex-row')
                   template(v-for='(item, index) in tagArray' :key='item')
                     a(v-if='item.active' class='mr-2 mb-1 text-gray-400 text-sm') {{$t(item.name)}}
-              a(class='w-full text-xl font-medium mb-2') {{textInput}}
+              div(class='w-full mb-2')
+                a(class='text-xl font-medium ') {{textInput}}
+                a(class='font-medium text-xs ml-1 text-gray-500') {{textTransInput}}
               a(class='text-textSecond text-gray-500') {{transInput}}
               template(v-if='inputs?.length > 0')
                 div(class='border-b-2 my-2.5' )
@@ -52,6 +56,7 @@ const { $api } = useNuxtApp();
 
 const textInput = ref(null);
 const transInput = ref(null);
+const textTransInput = ref(null);
 const inputs = ref([]);
 const tagArray = ref([])
 const activeColor = ref('bg-primary-color text-white')
@@ -77,6 +82,7 @@ const localePath = useLocalePath()
 const onSubmit = async () => {
   let submitData = {
     file: textInput.value,
+    fileTranslate: textTransInput.value,
     translation: transInput.value,
     inputs: JSON.stringify(inputs.value),
     tags: tagArray.value.filter(item => item.active).map(item => item.name),
@@ -110,6 +116,7 @@ defineComponent({
 })
 defineExpose({
   textInput,
+  textTransInput,
   transInput,
   remove,
   addInput,

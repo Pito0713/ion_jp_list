@@ -14,7 +14,9 @@
 	"required": "この項目は必須です",
 	"password_inconsistent_please_re_enter": "パスワードが一致しません。再入力してください",
 	"single_word": "単語",
+	"single_word_translate": "単語翻訳",
 	"please_enter_word": "単語を入力してください",
+	"please_enter_word_translate": "単語翻訳を入力してください",
 	"please_enter_translate": "翻訳を入力してください",
 	"please_enter": "入力してください",
 	"sentences": "例文",
@@ -36,5 +38,7 @@
 	"account_password_required": "アカウントとパスワードは必須です",
 	"duplicate_account": "アカウント登録が重複しています",
 	"password_error": "パスワードが間違っています",
-	"account_error": "アカウントが間違っています"
+	"account_error": "アカウントが間違っています",
+	"success_copy": "コピーに成功しました",
+	"fall_copy": "コピーに失敗しました"
 }

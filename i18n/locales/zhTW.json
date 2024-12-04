@@ -14,7 +14,9 @@
 	"required": "此欄位為必填",
 	"password_inconsistent_please_re_enter": "密碼不一致，請重新輸入",
 	"single_word": "單字",
+	"single_word_translate": "單字翻譯",
 	"please_enter_word": "請輸入單字",
+	"please_enter_word_translate": "請輸入單字翻譯",
 	"please_enter_translate": "請輸入翻譯",
 	"please_enter": "請輸入",
 	"sentences": "範句",
@@ -36,5 +38,7 @@
 	"account_password_required": "帳號密碼需必填",
 	"duplicate_account": "註冊帳號重複",
 	"password_error": "密碼輸入錯誤",
-	"account_error": "帳號輸入錯誤"
+	"account_error": "帳號輸入錯誤",
+	"success_copy": "複製成功",
+	"fall_copy": "複製失敗"
 }
