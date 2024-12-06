@@ -40,5 +40,7 @@
 	"password_error": "密码输入错误",
 	"account_error": "账号输入错误",
 	"success_copy": "复制成功",
-	"fall_copy": "复制失败"
+	"fall_copy": "复制失败",
+	"answer_success": "回答正确",
+	"answer_failed": "回答错误"
 }

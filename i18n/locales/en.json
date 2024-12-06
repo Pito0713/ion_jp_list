@@ -40,5 +40,7 @@
 	"password_error": "Incorrect password",
 	"account_error": "Incorrect account",
 	"success_copy": "Copy successful",
-	"fall_copy": "Copy failed"
+	"fall_copy": "Copy failed",
+	"answer_success": "Correct answer",
+	"answer_failed": "Wrong answer"
 }
