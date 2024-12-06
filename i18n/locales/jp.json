@@ -36,5 +36,7 @@
 	"account_password_required": "アカウントとパスワードは必須です",
 	"duplicate_account": "アカウント登録が重複しています",
 	"password_error": "パスワードが間違っています",
-	"account_error": "アカウントが間違っています"
+	"account_error": "アカウントが間違っています",
+	"answer_success": "正解です",
+	"answer_failed": "間違っています"
 }

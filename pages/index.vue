@@ -1,58 +1,83 @@
 <template lang="pug">
 LayoutsPage(class='flex h-vh flex-col')
-  //- template(v-for='(item, index) in articles' :key='item.url')
-  //-   Card(class='h-svh flex justify-start items-center w-full mt-2 mb-0' @click='windowOpen(item.url)')
-  //-     ImageFC(:src="item.urlToImage" :width='125' :height='50' :fit="'fill'" class='mr-2 rounded-lg')
-  //-     div(class='flex flex-col overflow-hidden')
-  //-       a(class='mr-2 text-base ')  {{item.title}}
-  //-       p(class='mr-2 text-sm truncate text-gray-500')  {{item.description}}
-</template>
+  Card(class='flex flex-col justify-start items-start w-full mt-3 mb-0')
+    div(class='my-2 text-xl ml-1')
+      a(v-if='!answer' ) {{ articles.translationA }} &nbsp; &nbsp; &nbsp; {{ articles.translationB }}
+      a(v-else) {{ articles.translationA }} &nbsp; {{answer}} &nbsp; {{ articles.translationB }}
+    template(v-for='(item, index) in articles.targetTagArray' :key='item')
+      div(class='ml-1 text-base my-1' @click='handleAnswer(item)')
+        a {{index+1}} . {{item}}
+    button(type="submit" :disabled="!answer" class='mt-3 text-base' @click='handleSubmit()') {{$t('submit')}}
 
+</template>
 <script setup>
 import { ref, reactive, onMounted, watch, computed, defineComponent } from 'vue'
-// import axios from 'axios';
 import LayoutsPage from '../../layouts/LayoutsPage.vue'
-// const articles = ref([]);
+const articles = ref([]);
+const answer = ref(null);
+const { $api } = useNuxtApp();
+const loadingIndicator = useLoadingIndicator();
 
-// const windowOpen = async (e) => {
-//   await navigateTo(e, {
-//     open: {
-//       target: '_blank',
-//       windowFeatures: {
-//         width: 500,
-//         height: 500
-//       }
-//     }
-//   })
-// }
+const handleAnswer = (_value) => {
+  answer.value = _value
+}
 
-// const config = useRuntimeConfig()
+const handleSubmit = async () => {
+  loadingIndicator.start()
+  let submitData = {
+    _id: articles.value._id,
+    file: answer.value,
+  }
+  let target = await $api.answerTest(submitData)
+  if (target.status === 1) {
+    const store = modalStore();
+    store.ModalShow(target.message);
+    answer.value = null
+    callTest()
+  }
+  loadingIndicator.finish()
+}
 
-// onMounted(
-//   async () => {
-//     const apiKey = config.public.NEW_API_KEY;
-//     const domains = 'nhk.or.jp';
-//     const today = new Date(); // 取得當前日期
-//     today.setDate(today.getDate() - 1); // 設定為前一天
-//     const formatDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+const callTest = async () => {
+  let target = await $api.textTest()
+  if (target.status === 1) {
+    let str = target.data.translation;
+    const indexOfPart = str.indexOf('()');
 
-//     const url = `https://newsapi.org/v2/everything?domains=${domains}&from=${formatDate}&page=1&pageSize=10&apiKey=${apiKey}`;
+    let partA = null
+    let partB = null
 
-//     try {
-//       const { data } = await axios.get(url);
-//       if (data.status == 'ok') articles.value = data.articles || [];
-//       console.log(articles.value);
-//     } catch (error) {
-//       console.error('Error fetching top headlines:', error);
-//     }
-//   }
-// )
+    if (indexOfPart > -1) {
+      partA = str.split('(')[0] + ` (`;
+      partB = `) ` + str.split(')')[1];
+      if (indexOfPart === 0) {
+        partA = ` (`
+      }
+    } else {
+      partA = target.data.translation
+    }
+
+    articles.value = {
+      _id: target.data._id,
+      translationA: partA,
+      translationB: partB ? partB : '',
+      targetTagArray: target.data.targetTagArray
+    }
+  }
+}
+
+onMounted(
+  () => {
+    callTest()
+  }
+)
 
 defineComponent({
   components: { LayoutsPage },
 })
 defineExpose({
-  // windowOpen
+  handleAnswer,
+  handleSubmit,
 })
 
 </script>

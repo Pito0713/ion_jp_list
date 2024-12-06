@@ -138,6 +138,18 @@ export default defineNuxtPlugin(() => {
 		return data;
 	};
 
+	// text/測驗
+	const textTest = async (submitData: text) => {
+		let data = await fetchApi_Data('POST', `/textTest`, '', submitData);
+		return data;
+	};
+
+	// text/驗證
+	const answerTest = async (submitData: text) => {
+		let data = await fetchApi_Data('POST', `/answerTest`, '', submitData);
+		return data;
+	};
+
 	return {
 		provide: {
 			api: {
@@ -147,6 +159,8 @@ export default defineNuxtPlugin(() => {
 				editTextShowTop,
 				register,
 				login,
+				textTest,
+				answerTest,
 			},
 		},
 	};

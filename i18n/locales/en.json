@@ -36,5 +36,7 @@
 	"account_password_required": "Account and password are required",
 	"duplicate_account": "Duplicate account registration",
 	"password_error": "Incorrect password",
-	"account_error": "Incorrect account"
+	"account_error": "Incorrect account",
+	"answer_success": "Correct answer",
+	"answer_failed": "Wrong answer"
 }
