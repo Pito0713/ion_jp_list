@@ -38,5 +38,6 @@
 	"password_error": "密码输入错误",
 	"account_error": "账号输入错误",
 	"answer_success": "回答正确",
-	"answer_failed": "回答错误"
+	"answer_failed": "回答错误",
+	"next_question": "下一题"
 }

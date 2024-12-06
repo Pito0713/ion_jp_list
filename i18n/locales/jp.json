@@ -38,5 +38,6 @@
 	"password_error": "パスワードが間違っています",
 	"account_error": "アカウントが間違っています",
 	"answer_success": "正解です",
-	"answer_failed": "間違っています"
+	"answer_failed": "間違っています",
+	"next_question": "次の質問"
 }

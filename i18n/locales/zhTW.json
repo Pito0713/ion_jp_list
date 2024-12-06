@@ -38,5 +38,6 @@
 	"password_error": "密碼輸入錯誤",
 	"account_error": "帳號輸入錯誤",
 	"answer_success": "回答正確",
-	"answer_failed": "回答錯誤"
+	"answer_failed": "回答錯誤",
+	"next_question": "下一題"
 }

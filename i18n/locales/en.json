@@ -38,5 +38,6 @@
 	"password_error": "Incorrect password",
 	"account_error": "Incorrect account",
 	"answer_success": "Correct answer",
-	"answer_failed": "Wrong answer"
+	"answer_failed": "Wrong answer",
+	"next_question": "Next Question"
 }
