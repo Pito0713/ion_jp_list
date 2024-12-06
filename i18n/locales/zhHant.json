@@ -42,5 +42,6 @@
 	"success_copy": "复制成功",
 	"fall_copy": "复制失败",
 	"answer_success": "回答正确",
-	"answer_failed": "回答错误"
+	"answer_failed": "回答错误",
+	"next_question": "下一题"
 }

@@ -42,5 +42,6 @@
 	"success_copy": "Copy successful",
 	"fall_copy": "Copy failed",
 	"answer_success": "Correct answer",
-	"answer_failed": "Wrong answer"
+	"answer_failed": "Wrong answer",
+	"next_question": "Next Question"
 }

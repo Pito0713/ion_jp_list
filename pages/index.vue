@@ -4,10 +4,12 @@ LayoutsPage(class='flex h-vh flex-col')
     div(class='my-2 text-xl ml-1')
       a(v-if='!answer' ) {{ articles.translationA }} &nbsp; &nbsp; &nbsp; {{ articles.translationB }}
       a(v-else) {{ articles.translationA }} &nbsp; {{answer}} &nbsp; {{ articles.translationB }}
-    template(v-for='(item, index) in articles.targetTagArray' :key='item')
+    template(v-for='(item, index) in articles.targetTagArray' :key='item + index')
       div(class='ml-1 text-base my-1' @click='handleAnswer(item)')
         a {{index+1}} . {{item}}
-    button(type="submit" :disabled="!answer" class='mt-3 text-base' @click='handleSubmit()') {{$t('submit')}}
+    div
+      button(type="submit" :disabled="isSubmit || !answer" class='mt-3 text-base disabled:bg-slate-500' @click='handleSubmit()') {{$t('submit')}}
+      button(class='ml-2 mt-3 text-base' @click='handleCallTest()') {{$t('next_question')}}
 
 </template>
 <script setup>
@@ -15,11 +17,12 @@ import { ref, reactive, onMounted, watch, computed, defineComponent } from 'vue'
 import LayoutsPage from '../../layouts/LayoutsPage.vue'
 const articles = ref([]);
 const answer = ref(null);
+const isSubmit = ref(false);
 const { $api } = useNuxtApp();
 const loadingIndicator = useLoadingIndicator();
 
 const handleAnswer = (_value) => {
-  answer.value = _value
+  if (!isSubmit.value) answer.value = _value
 }
 
 const handleSubmit = async () => {
@@ -32,15 +35,25 @@ const handleSubmit = async () => {
   if (target.status === 1) {
     const store = modalStore();
     store.ModalShow(target.message);
-    answer.value = null
-    callTest()
+    articles.value.targetTagArray.forEach((item, index) => {
+      if (item == target.data) return articles.value.targetTagArray[index] = item + ` (O)`
+      else articles.value.targetTagArray[index] = item + ` (X)`
+    })
+    isSubmit.value = true
+
   }
   loadingIndicator.finish()
+}
+
+const handleCallTest = async () => {
+  answer.value = null
+  await callTest()
 }
 
 const callTest = async () => {
   let target = await $api.textTest()
   if (target.status === 1) {
+    isSubmit.value = false;
     let str = target.data.translation;
     const indexOfPart = str.indexOf('()');
 
@@ -78,6 +91,7 @@ defineComponent({
 defineExpose({
   handleAnswer,
   handleSubmit,
+  handleCallTest,
 })
 
 </script>

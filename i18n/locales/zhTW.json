@@ -42,5 +42,6 @@
 	"success_copy": "複製成功",
 	"fall_copy": "複製失敗",
 	"answer_success": "回答正確",
-	"answer_failed": "回答錯誤"
+	"answer_failed": "回答錯誤",
+	"next_question": "下一題"
 }

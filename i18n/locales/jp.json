@@ -42,5 +42,6 @@
 	"success_copy": "コピーに成功しました",
 	"fall_copy": "コピーに失敗しました",
 	"answer_success": "正解です",
-	"answer_failed": "間違っています"
+	"answer_failed": "間違っています",
+	"next_question": "次の質問"
 }
