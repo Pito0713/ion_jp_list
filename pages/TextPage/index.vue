@@ -4,7 +4,7 @@ LayoutsPage
     Card(class='w-full flex-col mt-3' )
       div(class='flex flex-row w-full' )
         input(:placeholder="$t('please_enter_word')" v-model="textInput" class="flex-1")
-        button(class='mx-2 px-5 flex-6' @click='search') {{$t('search')}}
+        button(class='mx-2 px-5 flex-6' @click='handleSearch') {{$t('search')}}
       div(class='flex w-full' )
         template(v-for='(item, index) in tagArray' :key='item')
           Tag(@click='handleTag(item, index)' :class='item.active && activeColor')
@@ -39,6 +39,9 @@ LayoutsPage
             div
               a(class='mr-2 font-medium text-lg') {{input.jpValue}}
               a(class='text-textSecond text-gray-500 text-sm') {{input.chValue}}
+    div(class='w-full'  id='layout')
+      a(v-if='hasMoreData') loading
+      a(v-else) end
 </template>
 
 <script setup>
@@ -50,6 +53,12 @@ const activeColor = ref('bg-primary-color text-white')
 const List = reactive({
   data: {},
 });
+const init = ref(false)
+const hasMoreData = ref(false)
+const currentPageNumber = ref(1)
+const pageSize = ref(10)
+const totalCount = ref(0)
+
 
 const { $api } = useNuxtApp();
 const loadingIndicator = useLoadingIndicator();
@@ -61,11 +70,32 @@ const search = async () => {
   let submitData = {
     searchValue: textInput.value,
     tags: tagArray.value.filter(item => item.active).map(item => item.name),
+    pageNumber: currentPageNumber.value,
+    pageSize: pageSize.value
   }
   const response = await $api.searchText(submitData)
-  if (response.status === 1) List.data = response.data
-  else List.data = {}
+  if (response.status === 1) {
+    if (init.value) {
+      List.data = response.data
+    } else {
+      if (List.data.length > 0) {
+        List.data = [...List.data, ...response.data]
+      } else List.data = response.data
+    }
+    totalCount.value = response.total
+  } else {
+    List.data = {}
+
+  }
+  init.value = false
   loadingIndicator.finish()
+}
+
+const handleSearch = async (item, index) => {
+  init.value = true
+  currentPageNumber.value = 1
+  totalCount.value = 0
+  await search()
 }
 
 const handleTag = async (item, index) => {
@@ -89,10 +119,11 @@ const store = modalStore();
 const handleCopy = async (_text) => {
 
   /*
-  透過 navigator.clipboard 舊瀏覽器可能不支援
-  會返回 promise 若 error 進入 catch, 成功進入 resolved 
-  不需使用 resolved 狀態, 直接用 await 代替
+    透過 navigator.clipboard 舊瀏覽器可能不支援
+    會返回 promise 若 error 進入 catch, 成功進入 resolved 
+    不需使用 resolved 狀態, 直接用 await 代替
   */
+
   try {
     await navigator.clipboard.writeText(_text);
     store.ModalShow('success_copy');
@@ -124,6 +155,23 @@ onMounted(async () => {
 onMounted(async () => {
   try {
     await search()
+
+    const intersectionObserver = new IntersectionObserver(async (entries) => {
+      if (entries[0].isIntersecting) {
+        currentPageNumber.value += 1
+        if (!init.value) await search()
+        if (currentPageNumber.value * pageSize.value >= totalCount.value) {
+          hasMoreData.value = false;
+        } else {
+          hasMoreData.value = true;
+        }
+      }
+    });
+    // 監聽
+    intersectionObserver.observe(document.querySelector("#layout"));
+
+
+
   } catch (err) {
     console.error("Failed to fetch text:", err)
   }
@@ -138,6 +186,7 @@ defineExpose({
   handleTag,
   handleIsShowTop,
   handleCopy,
+  handleSearch,
   activeColor,
   tagArray,
   textInput,
