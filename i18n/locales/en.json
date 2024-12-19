@@ -2,7 +2,7 @@
 	"verb": "Verb",
 	"noun": "Noun",
 	"adjective": "Adjective",
-	"particle": "Particle",
+	"particle": "Adverb",
 	"Home": "Home",
 	"TextList": "Notes",
 	"account": "Account",
@@ -43,5 +43,6 @@
 	"fall_copy": "Copy failed",
 	"answer_success": "Correct answer",
 	"answer_failed": "Wrong answer",
-	"next_question": "Next Question"
+	"next_question": "Next Question",
+	"reached_the_bottom": "Reached the bottom"
 }

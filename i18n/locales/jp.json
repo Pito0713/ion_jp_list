@@ -2,7 +2,7 @@
 	"verb": "動詞",
 	"noun": "名詞",
 	"adjective": "形容詞",
-	"particle": "助詞",
+	"particle": "副詞",
 	"Home": "ホーム",
 	"TextList": "メモ",
 	"account": "アカウント",
@@ -43,5 +43,6 @@
 	"fall_copy": "コピーに失敗しました",
 	"answer_success": "正解です",
 	"answer_failed": "間違っています",
-	"next_question": "次の質問"
+	"next_question": "次の質問",
+	"reached_the_bottom": "一番下まで来ました"
 }

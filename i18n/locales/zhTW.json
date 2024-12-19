@@ -2,7 +2,7 @@
 	"verb": "動詞",
 	"noun": "名詞",
 	"adjective": "形容詞",
-	"particle": "助詞",
+	"particle": "副詞",
 	"Home": "主頁",
 	"TextList": "筆記",
 	"account": "帳號",
@@ -43,5 +43,6 @@
 	"fall_copy": "複製失敗",
 	"answer_success": "回答正確",
 	"answer_failed": "回答錯誤",
-	"next_question": "下一題"
+	"next_question": "下一題",
+	"reached_the_bottom": "已到底部了"
 }

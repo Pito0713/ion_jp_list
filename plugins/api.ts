@@ -122,7 +122,7 @@ export default defineNuxtPlugin(() => {
 		let data = await fetchApi_Data('POST', `/editText`, '', submitData);
 		return data;
 	};
-	// text/更新
+	// text/更新是否置頂
 	const editTextShowTop = async (submitData: text) => {
 		let data = await fetchApi_Data('POST', `/editTextShowTop`, '', submitData);
 		return data;
