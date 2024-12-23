@@ -7,7 +7,7 @@ export default defineNuxtPlugin(() => {
   env = ENV_PRODUCTION_DOMAIN & ENV_DEV_DOMAIN
 	Authorization requires token
 	*/
-	const env = config.public.ENV_DEV_DOMAIN;
+	const env = config.public.ENV_PRODUCTION_DOMAIN;
 	axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 	axios.defaults.baseURL = env;
 	// 請求
@@ -107,10 +107,13 @@ export default defineNuxtPlugin(() => {
 	}
 
 	interface text {
+		_id?: string;
 		file?: string;
+		fileTranslate?: string;
 		translation?: string;
 		inputs?: string;
 		searchValue?: string;
+		tags: string[]; // 定義 tags 是一個字串陣列
 		isShowTop?: boolean;
 	}
 
@@ -134,6 +137,17 @@ export default defineNuxtPlugin(() => {
 		let data = await fetchApi_Data('POST', `/editTextShowTop`, '', submitData);
 		return data;
 	};
+
+	// text/單筆刪除
+	// @param {string} _id
+	const deleteOneText = async (submitData: text) => {
+		let params = {
+			_id: submitData._id,
+		};
+		let data = await fetchApi_Data('DELETE', `/deleteOneText`, '', params);
+		return data;
+	};
+
 	// user/註冊
 	const register = async (submitData: log) => {
 		let data = await fetchApi_Data('POST', `/register`, '', submitData);
@@ -164,6 +178,7 @@ export default defineNuxtPlugin(() => {
 				searchText,
 				editText,
 				editTextShowTop,
+				deleteOneText,
 				register,
 				login,
 				textTest,
