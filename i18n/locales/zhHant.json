@@ -43,5 +43,6 @@
 	"fall_copy": "复制失败",
 	"answer_success": "回答正确",
 	"answer_failed": "回答错误",
-	"next_question": "下一题"
+	"next_question": "下一题",
+	"delete_data_error": "删除资料时发生错误"
 }

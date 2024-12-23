@@ -43,5 +43,6 @@
 	"fall_copy": "Copy failed",
 	"answer_success": "Correct answer",
 	"answer_failed": "Wrong answer",
-	"next_question": "Next Question"
+	"next_question": "Next Question",
+	"delete_data_error": "Error occurred while deleting the data"
 }
