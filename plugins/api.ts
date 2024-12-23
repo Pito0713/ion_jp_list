@@ -64,8 +64,15 @@ export default defineNuxtPlugin(() => {
 	// 回應錯誤
 	const responseInterceptorError = (error: any) => {
 		let errorTarget = error?.response?.data;
+		/* 
+			調用 全域 useState 
+			inject value {
+				_text: String --> errorCode translate errorText,
+				_status: Number 
+			}
+		*/
 		const store = modalStore();
-		store.ModalShow(getErrorCodeKey(errorTarget?.errorStatusCode || 0));
+		store.ModalShow(getErrorCodeKey(errorTarget?.errorStatusCode || 0), errorTarget?.statusCode);
 
 		return Promise.reject(error);
 	};
