@@ -14,6 +14,8 @@ export const getErrorCodeKey = (code: Number) => {
 			return 'password_error';
 		case 1007:
 			return 'account_error';
+		case 1008:
+			return 'delete_data_error';
 		default:
 			return 'error_unknown'; //系统繁忙，请稍后重试
 	}

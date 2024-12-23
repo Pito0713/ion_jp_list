@@ -44,5 +44,6 @@
 	"answer_success": "回答正確",
 	"answer_failed": "回答錯誤",
 	"next_question": "下一題",
-	"reached_the_bottom": "已到底部了"
+	"reached_the_bottom": "已到底部了",
+	"delete_data_error": "刪除資料時發生錯誤"
 }
