@@ -24,7 +24,8 @@ LayoutsPage
         div(class='w-full flex flex-row ')
           div(class='w-9/12 flex flex-row justify-start items-center mb-1')
             a(class=' text-2xl font-medium mr-2 ') {{item.file}}
-            a(v-if='item.fileTranslate' class=' text-gray-500 text-xs font-medium mr-1 mt-3 ') {{item.fileTranslate}}
+            a(v-if='item.fileHiragana' class=' text-gray-500 text-xs font-medium mr-1 mt-3 ') {{item.fileHiragana}}
+            a(v-if='item.fileTranslate' class=' text-base font-medium ml-3 mr-1 mt-2 ') {{item.fileTranslate}}
             div(@click='handleCopy(item.file)' class='active:opacity-20 mt-2')
               ImageFC(src='/img/item_copy.png' :width='16' :height='16' )
           div(class='w-3/12 flex flex-row justify-end items-center')

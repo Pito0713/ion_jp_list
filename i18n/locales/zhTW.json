@@ -45,5 +45,11 @@
 	"answer_failed": "回答錯誤",
 	"next_question": "下一題",
 	"reached_the_bottom": "已到底部了",
-	"delete_data_error": "刪除資料時發生錯誤"
+	"delete_data_error": "刪除資料時發生錯誤",
+	"words_Kanji": "日文單字(漢字)",
+	"hiragana_words": "平假名單字",
+	"word_translation": "日文單字翻譯",
+	"please_enter_words_Kanji": "請輸入日文單字(漢字)",
+	"please_enter_hiragana_words": "請輸入平假名單字",
+	"please_enter_word_translation": "請輸入日文單字翻譯"
 }
