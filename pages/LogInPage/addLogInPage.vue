@@ -29,6 +29,7 @@ const { $api } = useNuxtApp();
 
 const { t } = useI18n()
 const router = useRouter()
+const localePath = useLocalePath()
 
 const schema = yup.object({
   account: yup.string().required(t('required')),
@@ -47,7 +48,7 @@ const onSubmit = async () => {
   }
   let target = await $api.register(submitData)
   if (target?.status === 1) {
-    router.push({ path: "/LogInPage" })
+    router.push(localePath("/LogInPage"))
   }
 }
 

@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+	app: {
+		baseURL: '/', // 从环境变量中获取 base URL
+	},
 	ssr: true,
 	compatibilityDate: '2024-04-03',
 	components: true, // 確保自動加載組件功能已啟用
@@ -58,7 +61,7 @@ export default defineNuxtConfig({
 		strategy: 'prefix', // URL 中添加語言前綴，如 /en 或 /zh
 		detectBrowserLanguage: {
 			useCookie: true,
-			cookieKey: 'i18n_redirected',
+			cookieKey: 'i18n_redirected_ion', // cookie key
 			redirectOn: 'root', // recommended
 		},
 	},
