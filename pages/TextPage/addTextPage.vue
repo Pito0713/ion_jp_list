@@ -9,21 +9,21 @@
                 div(class='flex flex-col w-1/2 mr-2')
                   a(class='text-xl mb-2 font-bold') {{$t('words_Kanji')}}
                   VeeField(name="text" type="text" v-slot="{ field }")
-                    input(:placeholder="$t('please_enter_words_Kanji')" v-model="textInput" class='w-full text-base' v-bind="field")
+                    input(:placeholder="$t('please_enter_words_Kanji')" v-model="textInput" class='w-full text-lg' v-bind="field")
                   VeeErrorMessage(name="text" class='ml-2.5 w-full text-red-700 text-sm')
                 div(class='flex flex-col w-1/2 mr-2')
                   a(class='text-xl mb-2 font-bold') {{`${$t('hiragana_words')}(${$t('optional')})`}}
-                  input(:placeholder="$t('please_enter_hiragana_words')" v-model="textHiraganaInput" class='w-full text-base')
+                  input(:placeholder="$t('please_enter_hiragana_words')" v-model="textHiraganaInput" class='w-full text-lg')
               div(class='flex flex-col w-full')
                 a(class='w-full text-base font-bold mt-2 mb-1 text-gray-800') {{`${$t('word_translation')}(${$t('optional')})`}}
-                input(:placeholder="$t('please_enter_word_translation')" v-model="textTransInput" class='w-full text-base')
+                input(:placeholder="$t('please_enter_word_translation')" v-model="textTransInput" class='w-full text-lg')
               div(class='flex flex-row w-full')
                 template(v-for='(item, index) in tagArray' :key='item')
                   Tag(@click='handleTag(item, index)' :class='item.active && activeColor')
                     a(:class='item.active && activeColor') {{$t(item.name)}}
             Card(class='mt-2.5 flex-col')
               a(class='w-full text-xl font-bold') {{`${$t('sentences')} / ${$t('translate')}(${$t('optional')})`}}
-              textarea(:placeholder="`${$t('please_enter')}${$t('sentences')} / ${$t('translate')}(${$t('optional')})`" v-model="transInput" class='my-2.5 w-full text-base')
+              textarea(:placeholder="`${$t('please_enter')}${$t('sentences')} / ${$t('translate')}(${$t('optional')})`" v-model="transInput" class='my-2.5 w-full text-lg')
               div(class='w-full flex flex-row mb-2' @click='addInput')
                 div(class='flex justify-center items-center') 
                   a(class='text-xl font-bold') {{$t('supple_words')}}
@@ -31,8 +31,8 @@
                   ImageFC(src='/img/add_circle_line.png' :width='20' :height='20')
               div(v-for='(input, index) in inputs' :key='index' class='flex justify-center items-center flex-row')
                 div(class="grid grid-cols-8 gap-4 mb-2.5")
-                  input(type='text', v-model='input.jpValue' :placeholder="$t('please_enter_word')" class="col-span-3 text-base")
-                  input(type='text', v-model='input.chValue' :placeholder="$t('please_enter_translate')" class="col-span-3 text-base")
+                  input(type='text', v-model='input.jpValue' :placeholder="$t('please_enter_word')" class="col-span-3 text-lg")
+                  input(type='text', v-model='input.chValue' :placeholder="$t('please_enter_translate')" class="col-span-3 text-lg")
                   div(@click='remove(index)'  class='text-center col-span-2 custom-button') {{$t('delete')}}
             Card(class='mt-2.5 flex-col ')
               a(class='w-full  mb-2 font-bold text-gray-500') {{$t('sample')}}

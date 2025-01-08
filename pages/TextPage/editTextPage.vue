@@ -9,21 +9,21 @@ LayoutsPage(class='mb-16')
               div(class='flex flex-col w-1/2 mr-2')
                 a(class='text-xl mb-2 font-bold') {{$t('words_Kanji')}}
                 VeeField(name="text" type="text" v-slot="{ field }" v-model="textInput")
-                  input(:placeholder="$t('please_enter_words_Kanji')"  class='w-full text-base' v-bind="field")
+                  input(:placeholder="$t('please_enter_words_Kanji')"  class='w-full text-lg' v-bind="field")
                 VeeErrorMessage(name="text" class='ml-2.5 w-full text-red-700 text-sm')
               div(class='flex flex-col w-1/2 mr-2')
                 a(class='text-xl mb-2 font-bold') {{`${$t('hiragana_words')}(${$t('optional')})`}}
-                input(:placeholder="$t('please_enter_hiragana_words')" v-model="textHiraganaInput" class=' w-full text-base')
+                input(:placeholder="$t('please_enter_hiragana_words')" v-model="textHiraganaInput" class=' w-full text-lg')
             div(class='flex flex-col w-full')
               a(class='w-full text-base font-bold mt-2 mb-1 text-gray-800') {{`${$t('word_translation')}(${$t('optional')})`}}
-              input(:placeholder="$t('please_enter_word_translation')" v-model="textTransInput" class='w-full text-base')
+              input(:placeholder="$t('please_enter_word_translation')" v-model="textTransInput" class='w-full text-lg')
             div(class='flex flex-row w-full ml-2')
               template(v-for='(item, index) in tagArray' :key='item')
                 Tag(@click='handleTag(item, index)' :class='item.active && activeColor')
                   a(:class='item.active && activeColor') {{$t(item.name)}}
           Card(class='mt-2.5 flex-col')
             a(class='w-full text-xl font-bold') {{`${$t('sentences')} / ${$t('translate')}(${$t('optional')})`}}
-            textarea(:placeholder="`${$t('please_enter')}${$t('sentences')} / ${$t('translate')}(${$t('optional')})`" v-model="transInput" class='my-2.5 w-full text-base')
+            textarea(:placeholder="`${$t('please_enter')}${$t('sentences')} / ${$t('translate')}(${$t('optional')})`" v-model="transInput" class='my-2.5 w-full text-lg')
             div(class='w-full flex flex-row mb-2' @click='handleAddInput')
               div(class='flex justify-center items-center') 
                 a(class='text-xl font-bold') {{$t('supple_words')}}
@@ -63,7 +63,7 @@ import LayoutsPage from '../../layouts/LayoutsPage.vue'
 // data verification plugin
 import * as yup from 'yup';
 
-/* value */
+// ----- State
 const textInput = ref(null);
 const transInput = ref(null);
 const textHiraganaInput = ref(null);
@@ -72,15 +72,17 @@ const inputs = ref([]);
 const tagArray = ref([])
 const activeColor = ref('bg-primary-color text-white')
 
-/* use config */
+// ----- use hook config
 const { $api } = useNuxtApp();
+// ----- router
 const route = useRoute()
 const router = useRouter()
+// ----- i18
 const { t } = useI18n()
 const loadingIndicator = useLoadingIndicator();
 const localePath = useLocalePath()
 
-/* use Pinia */
+// ----- Pinia
 const store = modalStore();
 
 // route query data transaction
