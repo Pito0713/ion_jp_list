@@ -58,7 +58,6 @@ const logOut = () => {
   userInfo.value = null // 清除 cookies
   navState.value = { nav: false }; // set useState
   clearNuxtState('authState') // 內建原生function 清除useState狀態
-  router.push({ path: `/${i18n}` }) // 返回 登入頁
   router.push(localePath("/LogInPage"))
 }
 
