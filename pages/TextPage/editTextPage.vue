@@ -53,35 +53,43 @@ LayoutsPage(class='mb-16')
                 a(class='text-textSecond text-gray-500 text-sm') {{input.chValue}}
         button(type="submit" class='mt-4 w-80') {{$t('submit')}}
   div(class='w-full flex justify-center items-center')
-    button(@click='handleDelete()' class='mt-4 w-80') {{$t('delete')}}
+    button(@click='handleDelete()' class='mt-4 w-80'  :disabled="isSubmit") {{$t('delete')}}
 </template>
 
 <script setup>
 import { ref, reactive, onMounted, watch, computed, defineComponent } from 'vue'
 import LayoutsPage from '../../layouts/LayoutsPage.vue'
 
-// data verification plugin
-import * as yup from 'yup';
+// ------- use config hook
+const { $api } = useNuxtApp();
+const loadingIndicator = useLoadingIndicator();
 
-/* value */
+// ------- State
 const textInput = ref(null);
 const transInput = ref(null);
 const textHiraganaInput = ref(null);
 const textTransInput = ref(null);
 const inputs = ref([]);
 const tagArray = ref([])
-const activeColor = ref('bg-primary-color text-white')
+const activeColor = ref('bg-primary-color text-white') // css variable
+const isSubmit = ref(false) // 提交按鈕 avoid 重複點擊
 
-/* use config */
-const { $api } = useNuxtApp();
+// ------- router
 const route = useRoute()
 const router = useRouter()
+
+// ------- i18
 const { t } = useI18n()
-const loadingIndicator = useLoadingIndicator();
 const localePath = useLocalePath()
 
-/* use Pinia */
+// ------- use Pinia
 const store = modalStore();
+
+// ------- validation
+import * as yup from 'yup';
+const schema = yup.object({
+  text: yup.string().required(t('required')) // 必填
+}); // 自定義驗證綱要
 
 // route query data transaction
 const TargetQuery = route.query?.value ? JSON.parse(route.query?.value) : null
@@ -94,7 +102,7 @@ const handleAddInput = () => {
 /*移除對應 input 資料
   inject: {
     _index: <Number> of items index
-  }*/
+}*/
 const handleRemoveInput = (_index) => {
   inputs.value.splice(_index, 1);
 }
@@ -106,14 +114,11 @@ const handleTag = async (_item, _index) => {
   tagArray.value[_index].active = !tagArray.value[_index].active
 }
 
-// 定義驗證架構
-const schema = yup.object({
-  text: yup.string().required(t('required')) // 必填
-});
-
+// @Api editText
 // 提交資料
 const onSubmit = async () => {
-  loadingIndicator.start()
+  loadingIndicator.start() // loading
+  isSubmit.value = true  // button loading disabled
   let submitData = {
     _id: TargetQuery._id, // Object id <String>
     file: textInput.value, // <String>
@@ -132,12 +137,14 @@ const onSubmit = async () => {
     // localePath for i18 translate
     router.push(localePath("/TextPage"))
   }
-  loadingIndicator.finish()
+  isSubmit.value = false // button loading disabled
+  loadingIndicator.finish() // loading
 }
 
+// @Api deleteOneText
 // 資料刪除
 const handleDelete = async () => {
-  loadingIndicator.start()
+  loadingIndicator.start() // loading
   // api
   let target = await $api.deleteOneText({
     _id: TargetQuery._id, // <String>
@@ -150,7 +157,7 @@ const handleDelete = async () => {
     // localePath for i18 translate
     router.push(localePath("/TextPage"))
   }
-  loadingIndicator.finish()
+  loadingIndicator.finish()  // loading
 }
 
 /* Nuxt useState
@@ -159,19 +166,17 @@ const handleDelete = async () => {
 const infoState = useState('infoState')
 onMounted(async () => {
   try {
-    if (infoState?.value?.info) {
-      if (infoState?.value?.info?.tags?.length > 0) {
-        tagArray.value = infoState?.value?.info?.tags.map(item => {
-          // if item matches the TargetTag form routeDate return active true
-          if (TargetQuery?.tags?.length > 0) {
-            let match = TargetQuery?.tags.filter(_item => item === _item);
-            if (match.length > 0) {
-              return { name: item, active: true }
-            }
+    if (infoState?.value?.info?.tags?.length > 0) {
+      tagArray.value = infoState?.value?.info?.tags.map(item => {
+        // if item matches the TargetTag form routeDate return active true
+        if (TargetQuery?.tags?.length > 0) {
+          let match = TargetQuery?.tags.filter(_item => item === _item);
+          if (match.length > 0) {
+            return { name: item, active: true }
           }
-          return { name: item, active: false }
-        });
-      }
+        }
+        return { name: item, active: false }
+      });
     }
   } catch (err) {
     console.error("Failed to fetch text:", err)
