@@ -74,6 +74,19 @@ export default defineNuxtPlugin(() => {
 		const store = modalStore();
 		store.ModalShow(getErrorCodeKey(errorTarget?.errorStatusCode || 0), errorTarget?.statusCode);
 
+		// error: 憑證過期
+		if ([1001, 1002].includes(errorTarget?.errorStatusCode)) {
+			const i18n = useCookie('i18n_redirected_ion')?.value || 'zhTW'; // default i18n
+			const navState = useState('navState');
+			// 清除 cookie
+			useCookie('userToken').value = null;
+			useCookie('userInfo').value = null;
+			navState.value = {nav: false}; // set useState
+			clearNuxtState('authState'); // 內建原生 function 清除useState狀態
+			// 重新導向
+			navigateTo(`/${i18n}/LogInPage`);
+		}
+
 		return Promise.reject(error);
 	};
 
