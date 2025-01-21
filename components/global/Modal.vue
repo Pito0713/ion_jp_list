@@ -13,10 +13,11 @@ import { ref, reactive, onMounted, watch, computed, defineExpose } from 'vue'
 const store = modalStore();
 const primary_color = ref('bg-white')
 const failed_color = ref('bg-red-200')
+const success_color = ref('bg-blue-100')
 const activeColor = () => {
   if (!['', undefined, null].includes(store.modalStatus)) {
     // 若 httpCode = '200' return success
-    // if (store.modalStatus === 200) return success_color.value
+    if (store.modalStatus === 'success') return success_color.value
     if (![200].includes(store.modalStatus)) return failed_color.value
   } else return primary_color.value // color
 }

@@ -48,5 +48,6 @@
 	"delete_data_error": "Error occurred while deleting the data",
 	"please_enter_words_Kanji": "Please enter Japanese words (Kanji)",
 	"please_enter_hiragana_words": "Please enter Hiragana words",
-	"please_enter_word_translation": "Please enter Japanese word translation"
+	"please_enter_word_translation": "Please enter Japanese word translation",
+	"blank_appropriate_answer": "Blank with the appropriate answer"
 }
