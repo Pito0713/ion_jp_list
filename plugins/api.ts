@@ -7,7 +7,7 @@ export default defineNuxtPlugin(() => {
   env = ENV_PRODUCTION_DOMAIN & ENV_DEV_DOMAIN
 	Authorization requires token
 	*/
-	const env = config.public.ENV_PRODUCTION_DOMAIN;
+	const env = config.public.ENV_DEV_DOMAIN;
 	axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 	axios.defaults.baseURL = env;
 	// 請求
@@ -22,6 +22,7 @@ export default defineNuxtPlugin(() => {
 
 	// 回應成功
 	const responseInterceptor = (response: any) => {
+		// 判斷是否 JSON
 		const isJSON = (data: any) => {
 			try {
 				JSON.parse(data);
@@ -39,7 +40,7 @@ export default defineNuxtPlugin(() => {
 
 		let target = response?.data;
 		if (target?.status === 1) {
-			// 指定路由
+			// 判斷 指定路由資料調整
 			if (response?.config?.url === '/searchText') {
 				target?.data.forEach((item: searchText) => {
 					try {
@@ -64,8 +65,7 @@ export default defineNuxtPlugin(() => {
 	// 回應錯誤
 	const responseInterceptorError = (error: any) => {
 		let errorTarget = error?.response?.data;
-		/* 
-			調用 全域 useState 
+		/* 調用 全域 useState 
 			inject value {
 				_text: String --> errorCode translate errorText,
 				_status: Number 
@@ -81,19 +81,11 @@ export default defineNuxtPlugin(() => {
 	axios.interceptors.request.use(requestInterceptor, requestInterceptorError);
 	axios.interceptors.response.use(responseInterceptor, responseInterceptorError);
 
-	const fetchApi_Data = async (
-		method: string,
-		url: string,
-		params: string | undefined,
-		body: any
-	) => {
+	const fetchApi_Data = async (method: string, url: string, body: any) => {
 		try {
 			const response = await axios({
 				method: method,
-				url: url + params,
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-				},
+				url: url,
 				data: body,
 			});
 			return response.data;
@@ -116,58 +108,63 @@ export default defineNuxtPlugin(() => {
 		tags: string[]; // 定義 tags 是一個字串陣列
 		isShowTop?: boolean;
 	}
+	// ------------- user -------------
+	// user/註冊
+	const register = async (submitData: log) => {
+		let data = await fetchApi_Data('POST', `/register`, submitData);
+		return data;
+	};
 
-	// text/新增
+	// user/登入
+	const login = async (submitData: log) => {
+		let data = await fetchApi_Data('POST', `/login`, submitData);
+		return data;
+	};
+
+	// ------------- text -------------
+	// text/新增單字
 	const addText = async (submitData: text) => {
-		let data = await fetchApi_Data('POST', `/addText`, '', submitData);
-		return data;
-	};
-	// text/搜尋
-	const searchText = async (submitData: text) => {
-		let data = await fetchApi_Data('POST', `/searchText`, '', submitData);
-		return data;
-	};
-	// text/更新
-	const editText = async (submitData: text) => {
-		let data = await fetchApi_Data('POST', `/editText`, '', submitData);
-		return data;
-	};
-	// text/更新是否置頂
-	const editTextShowTop = async (submitData: text) => {
-		let data = await fetchApi_Data('POST', `/editTextShowTop`, '', submitData);
+		let data = await fetchApi_Data('POST', `/addText`, submitData);
 		return data;
 	};
 
-	// text/單筆刪除
+	// text/單字搜尋
+	const searchText = async (submitData: text) => {
+		let data = await fetchApi_Data('POST', `/searchText`, submitData);
+		return data;
+	};
+
+	// text/修改單字
+	const editText = async (submitData: text) => {
+		let data = await fetchApi_Data('POST', `/editText`, submitData);
+		return data;
+	};
+
+	// text/單字是否置頂
+	const editTextShowTop = async (submitData: text) => {
+		let data = await fetchApi_Data('POST', `/editTextShowTop`, submitData);
+		return data;
+	};
+
+	// text/刪除單個單字文本
 	// @param {string} _id
 	const deleteOneText = async (submitData: text) => {
 		let params = {
 			_id: submitData._id,
 		};
-		let data = await fetchApi_Data('DELETE', `/deleteOneText`, '', params);
+		let data = await fetchApi_Data('DELETE', `/deleteOneText`, params);
 		return data;
 	};
 
-	// user/註冊
-	const register = async (submitData: log) => {
-		let data = await fetchApi_Data('POST', `/register`, '', submitData);
-		return data;
-	};
-	// user/登入
-	const login = async (submitData: log) => {
-		let data = await fetchApi_Data('POST', `/login`, '', submitData);
-		return data;
-	};
-
-	// text/測驗
+	// text/提供測驗題目
 	const textTest = async (submitData: text) => {
-		let data = await fetchApi_Data('POST', `/textTest`, '', submitData);
+		let data = await fetchApi_Data('GET', `/textTest`, submitData);
 		return data;
 	};
 
-	// text/驗證
+	// text/回答測驗
 	const answerTest = async (submitData: text) => {
-		let data = await fetchApi_Data('POST', `/answerTest`, '', submitData);
+		let data = await fetchApi_Data('POST', `/answerTest`, submitData);
 		return data;
 	};
 
