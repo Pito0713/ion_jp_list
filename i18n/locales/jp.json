@@ -51,5 +51,6 @@
 	"word_translation": "日本語単語の翻訳",
 	"please_enter_words_Kanji": "日本語の単語（漢字）を入力してください",
 	"please_enter_hiragana_words": "平仮名の単語を入力してください",
-	"please_enter_word_translation": "日本語単語の翻訳を入力してください"
+	"please_enter_word_translation": "日本語単語の翻訳を入力してください",
+	"blank_appropriate_answer": "答えを入力してください"
 }

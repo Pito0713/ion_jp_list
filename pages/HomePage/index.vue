@@ -1,15 +1,26 @@
 <template lang="pug">
 LayoutsPage(class='flex h-vh flex-col')
   Card(class='flex flex-col justify-start items-start w-full mt-3 mb-0')
-    div(class='my-2 text-xl ml-1')
-      a(v-if='!answer' ) {{ question.questionA }} &nbsp; &nbsp; &nbsp; {{ question.questionB }}
-      a(v-else) {{ question.questionA }} &nbsp; {{answer}} &nbsp; {{ question.questionB }}
-    template(v-for='(item, index) in question.questionTagArray' :key='item + index')
-      div(class='ml-1 text-base my-1' @click='handleAnswer(item.file)')
-        a(:class='item?.correct && activeColor') {{index+1}} . {{item.file}}
-    div(class='flex justify-between items-start w-full mt-3 mb-0')
+    div(class='flex flex-row justify-between items-center w-full border-b-2 pb-2')
+      a(class='ml-2 text-xl font-medium') {{$t('blank_appropriate_answer')}} 
+      button(class='ml-6 text-base bg-slate-500 ' @click='changeTextTest()') {{$t('next_question')}}
+    template(v-if='!loading')
+      div(class='my-2 text-xl ml-1')
+        a(v-if='!answer' ) {{ question.questionA }} &nbsp; &nbsp; &nbsp; {{ question.questionB }}
+        a(v-else) {{ question.questionA }} &nbsp; {{answer}} &nbsp; {{ question.questionB }}
+      template(v-for='(item, index) in question.questionTagArray' :key='item + index')
+        div(class='ml-1 text-base my-1' @click='handleAnswer(item.file)')
+          a(:class='item?.correct && activeColor') {{index+1}} . {{item.file}}
+    template(v-else)
+      div(class='w-full my-1 flex-col' )
+        div(class="animate-pulse")
+          div(class="flex-1 space-y-6 py-1")
+            div(class="space-y-3")
+              div(class="h-6 bg-slate-300 rounded")
+              div(class="grid grid-cols-6 gap-8")
+                div(class="h-24 bg-slate-300 rounded  col-span-4")
+    div(class='flex justify-between items-start w-full mt-2 mb-0')
       button(type="submit" :disabled="isSubmit || !answer" class='mt-3 text-base disabled:bg-slate-500' @click='handleSubmit()') {{$t('submit')}}
-      button(class='ml-2 mt-3 text-base' @click='changeTextTest()') {{$t('next_question')}}
 
 </template>
 <script setup>
@@ -19,7 +30,8 @@ import LayoutsPage from '../../layouts/LayoutsPage.vue'
 const question = ref({}); // 題目
 const answer = ref(null); // 答案
 const isSubmit = ref(false); // 提交按鈕 for disabled
-const activeColor = ref('font-extrabold bg-slate-100') // 目標激活顏色
+const loading = ref(false); // 載入中
+const activeColor = ref('font-extrabold bg-slate-200 py-1 rounded') // 目標激活顏色
 // ----- use hook config 
 const { $api } = useNuxtApp();
 const loadingIndicator = useLoadingIndicator();
@@ -47,7 +59,7 @@ const handleSubmit = async () => {
   if (res.status === 1) {
     // 引用 Pinia 全域值 modalStore
     const store = modalStore();
-    store.ModalShow(res.message); // 公用彈窗導入
+    store.ModalShow(res.message, 'success'); // 公用彈窗導入
 
     // assign res.data
     const correctAnswerFile = res.data.correctAnswer.file // 正確答案
@@ -88,11 +100,13 @@ const changeTextTest = async () => {
 
 // @Api textTest api
 const callTextTest = async () => {
+  loading.value = true; // ��入中
   let target = await $api.textTest()
 
   // success 
   if (target.status === 1) {
     isSubmit.value = false; // question 初始化 提交按鈕關閉
+    loading.value = false; // 載入中
     let str = target.data.question;
 
     /*
