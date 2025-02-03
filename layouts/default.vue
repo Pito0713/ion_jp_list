@@ -15,7 +15,7 @@ template(v-if="isLoggedIn")
           div(class="pr-4 flex justify-center items-center" @click='logOut()')
             ImageFC(src='/img/log_out.png' width='25' height='25')
 div(class="h-14 bg-gray-200")
-div(class='flex justify-center items-center flex-col z-50 w-svw')
+div(class='flex justify-center items-center flex-col w-svw')
   div(class='custom-layout w-dvw')
     main(class='relative custom-container ')
       NuxtPage
