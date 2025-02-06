@@ -118,7 +118,7 @@ export default defineNuxtPlugin(() => {
 		translation?: string;
 		inputs?: string;
 		searchValue?: string;
-		tags: string[]; // 定義 tags 是一個字串陣列
+		tags?: string[]; // 定義 tags 是一個字串陣列
 		isShowTop?: boolean;
 	}
 	// ------------- user -------------
@@ -170,8 +170,8 @@ export default defineNuxtPlugin(() => {
 	};
 
 	// text/提供測驗題目
-	const textTest = async (submitData: text) => {
-		let data = await fetchApi_Data('GET', `/textTest`, submitData);
+	const textTest = async () => {
+		let data = await fetchApi_Data('GET', `/textTest`, '');
 		return data;
 	};
 
