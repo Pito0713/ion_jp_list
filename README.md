@@ -1,8 +1,6 @@
 # ION_JP_Frontend 文檔
 
-## 當前版本: [V1.0.13](###V1.0.13)
-
-## 後端文檔: [ION_JP_API 文檔](https://hackmd.io/@2yWSjTRTT7Sj1GtQLLoU2g/B1IErITNyl)
+## 當前版本: [V1.0.12](###V1.0.12)
 
 ## 專案
 
@@ -46,8 +44,19 @@ project/
 │   ├── route_middleware    # 路由中介
 ├── pages/                  # 頁面
 │   ├── LogInPage           # 登入頁
+│   │   ├── LogInUI         # 登入頁 UI
+│   │   ├── useLogInHook    # 登入頁 邏輯
+│   │   └── index           # 登入頁 主頁
+│   ├── Register            # 註冊頁
+│   │   ├── RegisterUI      # 註冊頁 UI
+│   │   ├── useRegisterHook # 註冊頁 邏輯
+│   │   └── index           # 註冊頁 主頁
 │   ├── TextPage            # 單字功能頁
 │   └── HomePage            # 主頁
+│       ├── HomeUI          # 註冊頁 UI
+│       ├── useHomeHook     # 註冊頁 邏輯
+│       ├── LoadingSkeleton  # 載入動畫 組件
+│       └── index           # 註冊頁 主頁
 ├── plugins/                # Nuxt 插件
 │   ├── api                 # Api 功能
 │   ├── auth                # token 驗證
@@ -81,6 +90,18 @@ project/
 - release 版本分支：合併功能開發分支。
 
 ## 版本
+
+### V1.0.14
+
+```
+BUG 修正 token 過期不轉跳問題
+
+修改 LogInPage 重構拆分, 使用 SRP 原則
+修改 HomePage 重構拆分, 使用 SRP 原則
+
+新增 無限捲動, 頁面固定筆數減輕瀏覽器記憶體
+新增 Resgister 頁面(原addLogInPage)
+```
 
 ### V1.0.13
 
