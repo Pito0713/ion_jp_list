@@ -7,7 +7,7 @@ export default defineNuxtPlugin(() => {
   env = ENV_PRODUCTION_DOMAIN & ENV_DEV_DOMAIN
 	Authorization requires token
 	*/
-	const env = config.public.ENV_DEV_DOMAIN;
+	const env = config.public.ENV_PRODUCTION_DOMAIN;
 	axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 	axios.defaults.baseURL = env;
 	// 請求
