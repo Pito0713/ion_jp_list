@@ -12,21 +12,26 @@ export function useHomeHook() {
 	const answer = ref(''); // 答案
 	const isSubmit = ref(false); // 提交按鈕 for disabled
 	const loading = ref(false); // 載入中
+	const homeList = reactive({
+		data: {},
+	}); // for api responses data
 
 	// ----- use hook config
 	const {$api} = useNuxtApp();
 	const loadingIndicator = useLoadingIndicator();
 
+	// @timeRange
+	const now = new Date();
+	const tomorrow = new Date(now).setHours(24, 0, 0, 0); // 設定到今天 23:59:59
+	const untilSecondsDay = Math.floor((new Date(tomorrow).getTime() - now.getTime()) / 1000);
+
 	const handleAnswer = (_value: string) => {
-		/* @props : {
-      _value: string
-    }*/
 		if (!isSubmit.value) answer.value = _value;
 	};
 
-	// @Api answerTest api 提交答題資料
+	// @Api answerTest /提交答題資料
 	const handleSubmit = async () => {
-		loadingIndicator.start(); // start loading
+		loadingIndicator.start();
 		let submitData = {
 			_id: question.value._id, // 題目的 object id
 			file: answer.value, // 使用者提交的答案
@@ -41,12 +46,11 @@ export function useHomeHook() {
 			store.ModalShow(res.message, 'success'); // 公用彈窗導入
 
 			// assign res.data
-			const correctAnswerFile = res.data.correctAnswer.file; // 正確答案
+			const correctAnswerFile = res.data.correctAnswer; // 正確答案
 			const fileAnswerTranslation = res.data.answerFile; // 各個選項的翻譯資料
 
-			/*
-        question 答題資料進行 reset
-        當提交回答問題後, 由 api 提供的各個選項資料進行重組
+			/*question 答題資料進行 reset
+				當提交回答問題後, 由 api 提供的各個選項資料進行重組
         補上 各個選項資料的 平假 與 翻譯
         邏輯: 
         1. forEach 資料 find id
@@ -60,36 +64,61 @@ export function useHomeHook() {
 				let targetTranslation = fileAnswerTranslation.find((e: any) => {
 					return target?._id === e._id;
 				}); // 找到對應 api 回傳選項翻譯資料
-				// reset to new file
-				// ex: 若い (わかい) 年輕的
+				// reset to new file ex: 若い (わかい) 年輕的
 				let resetAnswerFile = `${targetTranslation.file}     ${targetTranslation?.fileHiragana ? `(${targetTranslation?.fileHiragana})` : ''} ${targetTranslation?.fileTranslate || ''} `;
 
-				if (item.file == correctAnswerFile) {
+				if (item.file == correctAnswerFile.file) {
 					target.file = resetAnswerFile + ` (O)`; // 正確的
 					target.correct = true;
-				} // 正確的
-				else target.file = resetAnswerFile + ` (X)`; // 錯誤的
+				} else target.file = resetAnswerFile + ` (X)`; // 錯誤的
 			});
+
+			// @Cookies untilSecondsDay: 限制只到12點
+			let dailyText = useCookie('dailyText', {maxAge: untilSecondsDay});
+
+			if (!dailyText.value) dailyText.value = JSON.stringify([correctAnswerFile._id]);
+			else {
+				let dailyArray = JSON.parse(JSON.stringify(dailyText.value)); // 解析
+				// unshift() 方法會添加一個或多個元素至陣列的開頭，並且回傳陣列的新長度。
+				dailyArray.unshift(correctAnswerFile._id);
+				dailyText.value = JSON.stringify(dailyArray);
+			}
+
+			await nextTick(); // 等待 DOM 更新
+			answerDaily(); // 更新每日回答題目
+
 			isSubmit.value = true; // 提交按鈕 disabled
 		}
 		loadingIndicator.finish();
 	};
 
-	// 更換問題題目
-	const changeTextTest = async () => {
-		answer.value = '';
-		await callTextTest(); // 重新呼叫資料
+	// 每日測驗題目
+	const answerDaily = async () => {
+		loadingIndicator.start();
+		let dailyText = useCookie('dailyText', {maxAge: untilSecondsDay})?.value;
+		if (dailyText) {
+			let res = await $api.answerDaily({
+				selectId: JSON.stringify(dailyText),
+			});
+			homeList.data = res.data;
+		}
+		loadingIndicator.finish();
 	};
 
-	// @Api textTest api
-	const callTextTest = async () => {
-		loading.value = true; // ��入中
+	// 更換問題題目
+	const changeTextQuiz = async () => {
+		answer.value = '';
+		await callTextQuiz(); // 重新呼叫資料
+	};
+
+	// @Api textTest 測驗題目
+	const callTextQuiz = async () => {
+		loading.value = true; // 載入中
 		let target = await $api.textTest();
 
 		// success
 		if (target.status === 1) {
 			isSubmit.value = false; // question 初始化 提交按鈕關閉
-			loading.value = false; // 載入中
 			let str = target.data.question;
 
 			/*
@@ -121,17 +150,51 @@ export function useHomeHook() {
 				questionB: partB ? partB : '', // 若問題中沒有 )直接回傳 空值
 				questionTagArray: target.data.randomTagTestArray,
 			};
+			loading.value = false;
+		}
+	};
+	// 引用 Pinia 全域值 modalStore
+	const store = modalStore();
+	/*handleCopy 透過 navigator.clipboard 舊瀏覽器可能不支援
+    會返回 promise 若 error 進入 catch, 成功進入 resolved 
+		不需使用 resolved 狀態, 直接用 await 代替*/
+	const handleCopy = async (_text: string) => {
+		try {
+			await navigator.clipboard.writeText(_text);
+			store.ModalShow('success_copy'); // 彈窗文字
+		} catch (err) {
+			store.ModalShow('fall_copy'); // 彈窗文字
+			console.error('fall_copy:', err);
+		}
+	};
+
+	// @Api editTextShowTop 更新是否置頂
+	const showTop = async (item: {_id: string; isShowTop: boolean}) => {
+		loadingIndicator.start();
+		let submitData = {
+			_id: item._id, // _id of object
+			isShowTop: !item.isShowTop, // 是否置頂
+		};
+
+		const response = await $api.editTextShowTop(submitData);
+		// success
+		if (response.status === 1) {
+			await answerDaily();
 		}
 	};
 
 	return {
 		question,
 		answer,
+		homeList,
 		isSubmit,
 		loading,
 		handleAnswer,
 		handleSubmit,
-		changeTextTest,
-		callTextTest,
+		changeTextQuiz,
+		callTextQuiz,
+		handleCopy,
+		showTop,
+		answerDaily,
 	};
 }

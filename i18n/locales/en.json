@@ -49,5 +49,7 @@
 	"please_enter_words_Kanji": "Please enter Japanese words (Kanji)",
 	"please_enter_hiragana_words": "Please enter Hiragana words",
 	"please_enter_word_translation": "Please enter Japanese word translation",
-	"blank_appropriate_answer": "Blank with the appropriate answer"
+	"blank_appropriate_answer": "Blank with the appropriate answer",
+	"daily_quiz": "Daily Quiz",
+	"daily_resource_not_found": "Daily quiz not found"
 }
