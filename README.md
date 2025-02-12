@@ -1,6 +1,6 @@
 # ION_JP_Frontend 文檔
 
-## 當前版本: [V1.0.14](###V1.0.14)
+## 當前版本: [V1.0.15](###V1.0.15)
 
 ## 專案
 
@@ -41,7 +41,7 @@ project/
 │   └── zhTW.json           # 繁體中文
 ├── layouts/                # 頁面佈局子件
 ├── middleware/             # 中介
-│   ├── route_middleware    # 路由中介
+│   └── route_middleware    # 路由中介
 ├── pages/                  # 頁面
 │   ├── LogInPage           # 登入頁
 │   │   ├── LogInUI         # 登入頁 UI
@@ -51,14 +51,29 @@ project/
 │   │   ├── RegisterUI      # 註冊頁 UI
 │   │   ├── useRegisterHook # 註冊頁 邏輯
 │   │   └── index           # 註冊頁 主頁
-│   ├── TextPage            # 單字功能頁
-│   └── HomePage            # 主頁
-│       ├── HomeUI          # 註冊頁 UI
-│       ├── useHomeHook     # 註冊頁 邏輯
-│       ├── LoadingSkeleton  # 載入動畫 組件
-│       └── index           # 註冊頁 主頁
+│   ├── AddTextPage         # 新增單字 功能頁
+│   │   ├── addTextUI       # 新增單字 UI
+│   │   ├── useAddTextHook  # 新增單字 邏輯
+│   │   └── index           # 新增單字 主頁
+│   ├── EditTextPage        # 修改單字 功能頁
+│   │   ├── EditTextUI      # 修改單字 UI
+│   │   ├── useEditTextHook # 修改單字 邏輯
+│   │   └── index           # 修改單字 主頁
+│   ├── TextPage            # 單字 功能頁
+│   │   ├── TextUI_List     # 單字 清單 UI
+│   │   ├── TextUI_Search   # 單字 搜尋 UI
+│   │   ├── useTextHook     # 單字 邏輯
+│   │   ├── useInfiniteScrollHook # 無限捲動 邏輯
+│   │   └── index           # 單字 主頁
+│   └── HomePage            # 首頁
+│       ├── HomeUI          # 首頁 UI
+│       ├── ListUI          # 首頁 UI
+│       ├── useHomeHook     # 首頁 邏輯
+│       ├── LoadingSkeleton # 載入動畫 組件
+│       └── index           # 首頁 主頁
 ├── plugins/                # Nuxt 插件
 │   ├── api                 # Api 功能
+│   ├── configUtils         # 共用邏輯設定 功能
 │   ├── auth                # token 驗證
 │   └── nav                 # 導航欄 驗證
 ├── public/                 # 公共資源
@@ -90,6 +105,19 @@ project/
 - release 版本分支：合併功能開發分支。
 
 ## 版本
+
+### V1.0.15
+
+```
+修改 HomePage 顯示每日作答題目
+修改 HomePage UI 介面
+修改 TextPage 重構拆分, 使用 SRP 原則, 拆分 add / edit 頁面頁面
+
+新增 共用邏輯設定 /plugins/configUtils
+新增 AddTextPage 頁面(原addTextPage)
+新增 EditTextPage 頁面(原editTextPage)
+新增 route 判斷未申請設定路徑, 跳出警告提示
+```
 
 ### V1.0.14
 
