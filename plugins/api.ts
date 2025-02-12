@@ -7,7 +7,7 @@ export default defineNuxtPlugin(() => {
   env = ENV_PRODUCTION_DOMAIN & ENV_DEV_DOMAIN
 	Authorization requires token
 	*/
-	const env = config.public.ENV_PRODUCTION_DOMAIN;
+	const env = config.public.ENV_DEV_DOMAIN;
 	axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 	axios.defaults.baseURL = env;
 	// 請求
@@ -94,12 +94,34 @@ export default defineNuxtPlugin(() => {
 	axios.interceptors.request.use(requestInterceptor, requestInterceptorError);
 	axios.interceptors.response.use(responseInterceptor, responseInterceptorError);
 
-	const fetchApi_Data = async (method: string, url: string, body: any) => {
+	interface props {
+		method?: string;
+		url?: string;
+		body?: any;
+		params?: any;
+	}
+
+	// Data properties
+	const fetchApi_Data = async (props: props) => {
 		try {
 			const response = await axios({
-				method: method,
-				url: url,
-				data: body,
+				method: props.method,
+				url: props.url,
+				data: props.body,
+			});
+			return response.data;
+		} catch (error: any) {
+			return error;
+		}
+	};
+
+	// params filter search properties
+	const fetchApi_Params = async (props: props) => {
+		try {
+			const response = await axios({
+				method: props.method,
+				url: props.url,
+				params: props.params,
 			});
 			return response.data;
 		} catch (error: any) {
@@ -123,68 +145,113 @@ export default defineNuxtPlugin(() => {
 		selectId?: string; // 定義 tags 是一個字串陣列
 	}
 	// ------------- user -------------
-	// user/註冊
+	// @user/ 註冊
 	const register = async (submitData: log) => {
-		let data = await fetchApi_Data('POST', `/register`, submitData);
+		let data = await fetchApi_Data({
+			method: 'POST',
+			url: '/register',
+			body: submitData,
+		});
 		return data;
 	};
 
-	// user/登入
+	// @user/ 登入
 	const login = async (submitData: log) => {
-		let data = await fetchApi_Data('POST', `/login`, submitData);
+		let data = await fetchApi_Data({
+			method: 'POST',
+			url: '/login',
+			body: submitData,
+		});
 		return data;
 	};
 
 	// ------------- text -------------
-	// text/新增單字
-	const addText = async (submitData: text) => {
-		let data = await fetchApi_Data('POST', `/addText`, submitData);
-		return data;
-	};
 
-	// text/單字搜尋
+	// @text/ 單字搜尋
 	const searchText = async (submitData: text) => {
-		let data = await fetchApi_Data('POST', `/searchText`, submitData);
+		let data = await fetchApi_Params({
+			method: 'GET',
+			url: '/searchText',
+			params: submitData,
+		});
 		return data;
 	};
 
-	// text/修改單字
+	// @text/ 新增單字
+	const addText = async (submitData: text) => {
+		let data = await fetchApi_Data({
+			method: 'POST',
+			url: '/addText',
+			body: submitData,
+		});
+		return data;
+	};
+
+	// @text/ 修改單字
 	const editText = async (submitData: text) => {
-		let data = await fetchApi_Data('POST', `/editText`, submitData);
+		let data = await fetchApi_Data({
+			method: 'POST',
+			url: '/editText',
+			body: submitData,
+		});
 		return data;
 	};
 
-	// text/單字是否置頂
+	// @text 單字是否置頂
 	const editTextShowTop = async (submitData: text) => {
-		let data = await fetchApi_Data('POST', `/editTextShowTop`, submitData);
+		let data = await fetchApi_Data({
+			method: 'POST',
+			url: '/editTextShowTop',
+			body: submitData,
+		});
 		return data;
 	};
 
-	// text/刪除單個單字文本
-	// @param {string} _id
+	/*@text 刪除單個單字文本
+	  @param _id {String} */
 	const deleteOneText = async (submitData: text) => {
 		let params = {
 			_id: submitData._id,
 		};
-		let data = await fetchApi_Data('DELETE', `/deleteOneText`, params);
+		let data = await fetchApi_Params({
+			method: 'DELETE',
+			url: '/deleteOneText',
+			params: params,
+		});
 		return data;
 	};
 
-	// text/提供測驗題目
-	const textTest = async () => {
-		let data = await fetchApi_Data('GET', `/textTest`, '');
+	// @text 測驗題目
+	const textQuiz = async () => {
+		let data = await fetchApi_Params({
+			method: 'GET',
+			url: '/textQuiz',
+			params: '',
+		});
 		return data;
 	};
 
-	// text/回答測驗
-	const answerTest = async (submitData: text) => {
-		let data = await fetchApi_Data('POST', `/answerTest`, submitData);
+	/*@text 測驗題目答案驗證
+		@param file {String}
+		@param _id {String}
+		@param extraId {String}*/
+	const answerQuiz = async (submitData: text) => {
+		let data = await fetchApi_Params({
+			method: 'GET',
+			url: '/answerQuiz',
+			params: submitData,
+		});
 		return data;
 	};
 
-	// text/ 每日測驗題目
+	/*@text 每日測驗題目
+		@param selectId {String}*/
 	const answerDaily = async (submitData: text) => {
-		let data = await fetchApi_Data('POST', `/answerDaily`, submitData);
+		let data = await fetchApi_Params({
+			method: 'GET',
+			url: '/answerDaily',
+			params: submitData,
+		});
 		return data;
 	};
 
@@ -198,8 +265,8 @@ export default defineNuxtPlugin(() => {
 				deleteOneText,
 				register,
 				login,
-				textTest,
-				answerTest,
+				textQuiz,
+				answerQuiz,
 				answerDaily,
 			},
 		},

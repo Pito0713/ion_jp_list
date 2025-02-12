@@ -29,7 +29,7 @@ export function useHomeHook() {
 		if (!isSubmit.value) answer.value = _value;
 	};
 
-	// @Api answerTest /提交答題資料
+	// @Api answerQuiz /提交答題資料
 	const handleSubmit = async () => {
 		loadingIndicator.start();
 		let submitData = {
@@ -37,7 +37,7 @@ export function useHomeHook() {
 			file: answer.value, // 使用者提交的答案
 			extraId: JSON.stringify(question.value.questionTagArray), // 全部選項 id
 		};
-		let res = await $api.answerTest(submitData);
+		let res = await $api.answerQuiz(submitData);
 
 		// success
 		if (res.status === 1) {
@@ -111,10 +111,10 @@ export function useHomeHook() {
 		await callTextQuiz(); // 重新呼叫資料
 	};
 
-	// @Api textTest 測驗題目
+	// @Api textQuiz 測驗題目
 	const callTextQuiz = async () => {
 		loading.value = true; // 載入中
-		let target = await $api.textTest();
+		let target = await $api.textQuiz();
 
 		// success
 		if (target.status === 1) {
