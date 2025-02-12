@@ -19,15 +19,28 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   // ----- Router value
   // 以下對 router 進行分類, 兩部分 unAuthRoutes, AuthRoutes
   const allRouter = useRouter().getRoutes().map(route => { return route.name }) // get all routes
-  /* flatMap 功能類似 map return 結果 並且進行 reduce 扁平化處理的值 */
-  const unAuth = ['LogInPage', "index"] // unauth routes
+  /* 
+    flatMap 功能類似 map return 結果 
+    並且進行 reduce 扁平化處理的值 
+  */
+  const unAuth = ['LogInPage', "index", 'Register'] // unauth routes
   const unAuthRoutes = [...new Set(
     unAuth.flatMap((e) => { return allRouter.filter(route => route.includes(e)) })
   )];
-  const Auth = ['HomePage', 'TextPage'] // auth routes
+  const Auth = ['HomePage', 'TextPage', 'AddTextPage', 'EditTextPage'] // auth routes
   const AuthRoutes = [...new Set(
     Auth.flatMap((e) => { return allRouter.filter(route => route.includes(e)) })
   )];
+
+  // 所有已設定的 routes
+  const definedRoutes = new Set([...unAuthRoutes, ...AuthRoutes]);
+
+  // 檢查未被設定的 routes
+  const undefinedRoutes = allRouter.filter(route => !definedRoutes.has(route));
+
+  if (undefinedRoutes.length > 0) {
+    console.warn(`** ${undefinedRoutes.join(', ')} ** this route not setting`);
+  }
 
   // Condition: 有auth token 但是導向無權限的 route
   if (unAuthRoutes.includes(to.name)) {
