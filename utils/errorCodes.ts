@@ -16,6 +16,8 @@ export const getErrorCodeKey = (code: Number) => {
 			return 'account_error';
 		case 1008:
 			return 'delete_data_error';
+		case 1009:
+			return 'daily_resource_not_found';
 		default:
 			return 'error_unknown'; //系统繁忙，请稍后重试
 	}

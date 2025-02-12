@@ -52,5 +52,7 @@
 	"please_enter_words_Kanji": "請輸入日文單字(漢字)",
 	"please_enter_hiragana_words": "請輸入平假名單字",
 	"please_enter_word_translation": "請輸入日文單字翻譯",
-	"blank_appropriate_answer": "填入適合的答案"
+	"blank_appropriate_answer": "填入適合的答案",
+	"daily_quiz": "每日作答題目",
+	"daily_resource_not_found": "查無每日作答題目"
 }

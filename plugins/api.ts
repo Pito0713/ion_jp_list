@@ -120,6 +120,7 @@ export default defineNuxtPlugin(() => {
 		searchValue?: string;
 		tags?: string[]; // 定義 tags 是一個字串陣列
 		isShowTop?: boolean;
+		selectId?: string; // 定義 tags 是一個字串陣列
 	}
 	// ------------- user -------------
 	// user/註冊
@@ -181,6 +182,12 @@ export default defineNuxtPlugin(() => {
 		return data;
 	};
 
+	// text/ 每日測驗題目
+	const answerDaily = async (submitData: text) => {
+		let data = await fetchApi_Data('POST', `/answerDaily`, submitData);
+		return data;
+	};
+
 	return {
 		provide: {
 			api: {
@@ -193,6 +200,7 @@ export default defineNuxtPlugin(() => {
 				login,
 				textTest,
 				answerTest,
+				answerDaily,
 			},
 		},
 	};

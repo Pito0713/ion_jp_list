@@ -1,9 +1,7 @@
 <template lang="pug">
-Card(class='flex flex-col justify-start items-start w-full mt-3 mb-0')
+Card(class='flex flex-col justify-start items-start w-full mt-3 mb-0 p-3')
   div(class='flex flex-row justify-between items-center w-full border-b-2 pb-2')
     a(class='ml-2 text-xl font-medium') {{$t('blank_appropriate_answer')}} 
-    button(class='ml-6 text-base bg-slate-500' @click='$emit("change-test")') {{$t('next_question')}}
-
   template(v-if='!loading')
     div(class='my-2 text-xl ml-1')
       a(v-if='!answer') {{ question.questionA }} &nbsp; &nbsp; &nbsp; {{ question.questionB }}
@@ -15,14 +13,19 @@ Card(class='flex flex-col justify-start items-start w-full mt-3 mb-0')
 
   LoadingSkeleton(v-else)
   
-  div(class='flex justify-between items-start w-full mt-2 mb-0')
-    button(
-      type="submit" 
-      :disabled="isSubmit || !answer" 
-      class='mt-3 text-base disabled:bg-slate-500' 
-      @click='$emit("submit-answer")'
-    ) {{$t('submit')}}
-
+  div(class='flex justify-end items-start w-full mb-0')
+    template(v-if='!isSubmit')
+      button(
+        type="submit" 
+        :disabled="!answer" 
+        class='mt-1 text-base disabled:bg-slate-500' 
+        @click='$emit("submit-answer")'
+      ) {{$t('submit')}}
+    template(v-else)
+      button(
+        class='mt-1 text-base disabled:bg-slate-500' 
+        @click='$emit("change-quiz")'
+      ) {{$t('next_question')}}
 </template>
 
 <script setup>
@@ -36,5 +39,5 @@ defineProps({
   answer: String,
   isSubmit: Boolean,
 })
-defineEmits(['change-test', 'select-answer', 'submit-answer'])
+defineEmits(['change-quiz', 'select-answer', 'submit-answer'])
 </script>
