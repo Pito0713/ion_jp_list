@@ -1,7 +1,8 @@
 <template lang="pug">
 div
-  div(class='mt-3 mx-2 text-xl font-medium')
-    a {{$t('daily_quiz')}}
+  template(v-if='homeList.data.length > 0')
+    div(class='mt-3 mx-2 text-xl font-medium')
+      a {{$t('daily_quiz')}}
   template(v-for='(item, index) in homeList.data' :key='item._id')
     Card(class='w-full my-1 flex-col p-2' )
       div(class='w-full')
@@ -24,7 +25,6 @@ div
 </template>
 
 <script setup>
-const { t } = useI18n()
 defineProps({
   homeList: Object,
 })
