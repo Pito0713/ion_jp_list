@@ -57,5 +57,6 @@
 	"daily_resource_not_found": "毎日のクイズが見つかりません",
 	"key_terms": "キーワード",
 	"last_updated_forward": "更新日降順",
-	"last_updated_reverse": "更新日昇順"
+	"last_updated_reverse": "更新日昇順",
+	"no_more_data": "データがありません"
 }
