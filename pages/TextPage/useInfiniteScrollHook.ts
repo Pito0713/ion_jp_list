@@ -12,7 +12,8 @@ export function useInfiniteScrollHook(
 	currentPageNumber: {value: number},
 	pageSize: {value: number},
 	List: List, // interface ts
-	isPrev: {value: boolean}
+	isPrev: {value: boolean},
+	selectOption: {value: string}
 ) {
 	//@use hook
 	const {$api} = useNuxtApp();
@@ -26,6 +27,7 @@ export function useInfiniteScrollHook(
 			tags: tagArray.value.filter((item) => item.active).map((item) => item.name), // 選擇篩選出有激活啟用的 tag 詞語資料
 			pageNumber: currentPageNumber.value,
 			pageSize: pageSize.value,
+			sortValue: selectOption.value,
 		};
 
 		const response = await $api.searchText(submitData);
@@ -64,6 +66,7 @@ export function useInfiniteScrollHook(
 			tags: tagArray.value.filter((item) => item.active).map((item) => item.name), // 選擇篩選出有激活啟用的 tag 詞語資料
 			pageNumber: currentPageNumber.value,
 			pageSize: pageSize.value,
+			sortValue: selectOption.value,
 		};
 
 		const response = await $api.searchText(submitData);

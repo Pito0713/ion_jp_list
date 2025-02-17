@@ -2,8 +2,11 @@
 LayoutsPage(class='relative w-full' )
   TextUI_Search(
     v-model:propTextInput="textInput"
+    v-model:propSelect="selectOption"
     :propTagArray="tagArray"
+    :SELECTIONS='SELECTIONS'
     @select-Tag="handleTag"
+    @select-Option="handleOption"
     @init-Search="handleInitSearch"
   )
   TextUI_List(
@@ -24,6 +27,7 @@ import { useInfiniteScrollHook } from './useInfiniteScrollHook'
 import LayoutsPage from '../../layouts/LayoutsPage.vue'
 import TextUI_Search from './TextUI_Search.vue'
 import TextUI_List from './TextUI_List.vue'
+import { SELECTIONS } from './config'
 
 // 解構 useTextHook 
 const {
@@ -36,6 +40,7 @@ const {
   currentPageNumber,
   pageSize,
   totalCount,
+  selectOption,
   handleInitSearch,
   handleTag,
   handleCopy,
@@ -48,7 +53,7 @@ const {
 const {
   searchPrevData,
   searchMoreData
-} = useInfiniteScrollHook(textInput, tagArray, currentPageNumber, pageSize, List, isPrev);
+} = useInfiniteScrollHook(textInput, tagArray, currentPageNumber, pageSize, List, isPrev, selectOption);
 
 const infoState = useState('infoState') // 全域狀態 infoState 
 const hasMoreData = ref(false) // 是否有更多資料
@@ -159,9 +164,11 @@ defineComponent({
   components: { LayoutsPage, TextUI_Search, TextUI_List },
 })
 defineExpose({
+  SELECTIONS,
   handleTag,
   handleCopy,
   handleShowTop,
+  handleScrollTo
 })
 
 </script>

@@ -7,6 +7,7 @@ export function useTextHook() {
 	const List = reactive<{data: any[]}>({
 		data: [],
 	}); // for api responses data
+	const selectOption = ref('key_terms');
 
 	// @variables for scroll
 	const currentPageNumber = ref(1); // 當前頁面, 默認起始 1
@@ -27,6 +28,7 @@ export function useTextHook() {
 			tags: tagArray.value.filter((item) => item.active).map((item) => item.name), // 選擇篩選出有激活啟用的 tag 詞語資料
 			pageNumber: currentPageNumber.value,
 			pageSize: pageSize.value,
+			sortValue: selectOption.value,
 		};
 
 		const response = await $api.searchText(submitData);
@@ -120,6 +122,7 @@ export function useTextHook() {
 		totalCount,
 		isCallTopUP,
 		isPrev,
+		selectOption,
 		initSearch,
 		handleShowTop,
 		handleInitSearch,

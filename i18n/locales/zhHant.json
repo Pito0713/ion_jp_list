@@ -54,5 +54,8 @@
 	"please_enter_word_translation": "请输入日语单词翻译",
 	"blank_appropriate_answer": "填入适合的答案",
 	"daily_quiz": "每日作答题目",
-	"daily_resource_not_found": "查无每日作答题目"
+	"daily_resource_not_found": "查无每日作答题目",
+	"key_terms": "重点单词",
+	"last_updated_forward": "更新日期晚到早",
+	"last_updated_reverse": "更新日期早到晚"
 }
