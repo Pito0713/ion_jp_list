@@ -51,5 +51,6 @@
 	"please_enter_word_translation": "Please enter Japanese word translation",
 	"blank_appropriate_answer": "Blank with the appropriate answer",
 	"daily_quiz": "Daily Quiz",
-	"daily_resource_not_found": "Daily quiz not found"
+	"daily_resource_not_found": "Daily quiz not found",
+	"no_more_data": "No more data"
 }

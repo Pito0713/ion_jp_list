@@ -54,5 +54,6 @@
 	"please_enter_word_translation": "日本語単語の翻訳を入力してください",
 	"blank_appropriate_answer": "答えを入力してください",
 	"daily_quiz": "毎日のクイズ",
-	"daily_resource_not_found": "毎日のクイズが見つかりません"
+	"daily_resource_not_found": "毎日のクイズが見つかりません",
+	"no_more_data": "データがありません"
 }
