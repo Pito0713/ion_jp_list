@@ -6,7 +6,6 @@ LayoutsPage(class='relative w-full' )
     :propTagArray="tagArray"
     :SELECTIONS='SELECTIONS'
     @select-Tag="handleTag"
-    @select-Option="handleOption"
     @init-Search="handleInitSearch"
   )
   TextUI_List(
