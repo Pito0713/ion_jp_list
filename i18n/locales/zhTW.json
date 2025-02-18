@@ -58,5 +58,6 @@
 	"key_terms": "重點單字",
 	"last_updated_forward": "更新日期晚到早",
 	"last_updated_reverse": "更新日期早到晚",
-	"no_more_data": "沒有資料"
+	"no_more_data": "沒有資料",
+	"loading": "載入中"
 }

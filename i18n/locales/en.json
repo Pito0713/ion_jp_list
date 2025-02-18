@@ -56,5 +56,6 @@
 	"last_updated": "Last Updated",
 	"last_updated_forward": "Newest to Oldest",
 	"last_updated_reverse": "Oldest to Newest",
-	"no_more_data": "No more data"
+	"no_more_data": "No more data",
+	"loading": "Loading"
 }
