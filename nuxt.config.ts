@@ -36,7 +36,6 @@ export default defineNuxtConfig({
 		'@vee-validate/nuxt',
 		'@pinia/nuxt',
 		'@nuxtjs/i18n',
-		'@nuxt/image',
 	],
 	runtimeConfig: {
 		public: {
