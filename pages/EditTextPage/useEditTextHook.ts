@@ -23,6 +23,46 @@ export function useEditTextHook() {
 	// @Pinia
 	const store = modalStore();
 
+	/*
+	 * Nuxt useState
+	 * 頁面掛載後, 調用 infoState 個人狀態資料
+	 * 若 route.query 有 tag 對應資料進行啟用 active 狀態
+	 */
+	const infoState = useState<{info: {tags: string[]}}>('infoState');
+	onMounted(async () => {
+		try {
+			if (infoState?.value?.info?.tags?.length > 0) {
+				tagArray.value = infoState?.value?.info?.tags.map((item) => {
+					// if item matches the TargetTag form routeDate return active true
+					if (targetQuery?.tags?.length > 0) {
+						let match = targetQuery?.tags.filter((_item: string) => item === _item);
+						if (match.length > 0) {
+							return {name: item, active: true};
+						}
+					}
+					return {name: item, active: false};
+				});
+			}
+		} catch (err) {
+			console.error('Failed to fetch text:', err);
+		}
+	});
+
+	onMounted(async () => {
+		// update routeDate into the current Page
+		try {
+			if (route.query?.value) {
+				textInput.value = targetQuery.file;
+				textTransInput.value = targetQuery.fileTranslate;
+				textHiraganaInput.value = targetQuery.fileHiragana;
+				transInput.value = targetQuery.translation;
+				inputs.value = targetQuery.inputs;
+			}
+		} catch (err) {
+			console.error('Failed to fetch text:', err);
+		}
+	});
+
 	// 新增補充單字
 	const handleAddInput = () => {
 		inputs.value.push({jpValue: '', chValue: ''});
@@ -34,7 +74,9 @@ export function useEditTextHook() {
 	};
 	// 觸發對應 tag active 資料, 是否顯示
 	const handleTag = async (_index: number) => {
-		tagArray.value[_index].active = !tagArray.value[_index].active;
+		if (tagArray.value) {
+			tagArray.value[_index].active = !tagArray.value[_index].active;
+		}
 	};
 
 	// @Api /editText 提交資料
@@ -48,7 +90,9 @@ export function useEditTextHook() {
 			fileHiragana: textHiraganaInput.value ?? '', // <String | undefined>
 			translation: transInput.value ?? '', // <String | undefined>
 			inputs: JSON.stringify(inputs.value), // type Array turn type String for mongodb
-			tags: tagArray.value.filter((item) => item.active).map((item) => item.name), //  <String>[]
+			tags: tagArray.value
+				? tagArray.value.filter((item) => item.active).map((item) => item.name)
+				: [], //  <String>[]
 		};
 		let target = await $api.editText(submitData);
 

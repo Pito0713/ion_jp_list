@@ -70,23 +70,6 @@ const {
   handleInitSearch
 );
 
-const infoState = useState('infoState') // 全域狀態 infoState 
-onMounted(async () => {
-  // 若有info值 導入基礎tag值
-  try {
-    if (infoState?.value?.info) {
-      if (infoState?.value?.info?.tags?.length > 0) {
-        tagArray.value = infoState?.value?.info?.tags.map(item => {
-          // default value ['verb', 'noun', 'adjective', 'particle']
-          return { name: item, active: false }
-        });
-      }
-    }
-  } catch (err) {
-    console.error("Failed to fetch text:", err)
-  }
-})
-
 let infiniteScroll = null
 let topUp = null
 onMounted(async () => {

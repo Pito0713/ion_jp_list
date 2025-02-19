@@ -54,7 +54,6 @@ VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
 // @自定義 Hook
 import { useAddTextHook } from './useAddTextHook'
 const { t } = useI18n()
@@ -78,26 +77,6 @@ const {
   handleAddInput,
   handleRemoveInput
 } = useAddTextHook()
-
-/*
-* Nuxt useState
-* 頁面掛載後, 調用 infoState 個人狀態資料
-* 若 route.query 有 tag 對應資料進行啟用 active 狀態
-*/
-const infoState = useState('infoState')
-onMounted(async () => {
-  try {
-    // 若有 info 值 導入基礎 tag 值
-    if (infoState?.value?.info?.tags?.length > 0) {
-      tagArray.value = infoState?.value?.info?.tags.map(item => {
-        // default value ['verb', 'noun', 'adjective', 'particle']
-        return { name: item, active: false }
-      });
-    }
-  } catch (err) {
-    console.error("Failed to fetch text:", err)
-  }
-})
 
 defineExpose({
   textInput,

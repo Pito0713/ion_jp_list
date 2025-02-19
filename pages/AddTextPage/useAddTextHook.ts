@@ -17,6 +17,25 @@ export function useAddTextHook() {
 	const router = useRouter();
 	const localePath = useLocalePath();
 
+	/*
+	 * Nuxt useState
+	 * 頁面掛載後, 調用 infoState 個人狀態資料
+	 */
+	const infoState = useState<{info: {tags: string[]}}>('infoState');
+	onMounted(async () => {
+		try {
+			// 若有 info 值 導入基礎 tag 值
+			if (infoState?.value?.info?.tags?.length > 0) {
+				tagArray.value = infoState?.value?.info?.tags.map((item) => {
+					// default value ['verb', 'noun', 'adjective', 'particle']
+					return {name: item, active: false};
+				});
+			}
+		} catch (err) {
+			console.error('Failed to fetch text:', err);
+		}
+	});
+
 	// 新增補充單字
 	const handleAddInput = () => {
 		inputs.value.push({jpValue: '', chValue: ''});
@@ -37,7 +56,7 @@ export function useAddTextHook() {
 		loadingIndicator.start();
 		isSubmit.value = true; // button loading disabled
 		let submitData = {
-			file: textInput.value ?? '', // <String | undefined>
+			file: textInput.value ?? '', // <String | undefined>ㄩ
 			fileTranslate: textTransInput.value ?? '', // <String | undefined>
 			fileHiragana: textHiraganaInput.value ?? '', // <String | undefined>
 			translation: transInput.value ?? '', // <String | undefined>

@@ -55,19 +55,17 @@ VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
 // @自定義 Hook
 import { useEditTextHook } from './useEditTextHook'
 const { t } = useI18n()
 const { $configUtils } = useNuxtApp();
+const route = useRoute();
 
 // @validation
 import * as yup from 'yup';
 const schema = yup.object({
   text: yup.string().required(t('required')) // type string required
 }); // 自定義驗證綱要
-
-const route = useRoute();
 
 const {
   textInput,
@@ -77,7 +75,6 @@ const {
   transInput,
   inputs,
   isSubmit,
-  targetQuery,
   onSubmit,
   handleTag,
   handleAddInput,
@@ -85,48 +82,20 @@ const {
   handleDelete,
 } = useEditTextHook()
 
-/* 
-* Nuxt useState
-* 頁面掛載後, 調用 infoState 個人狀態資料
-* 若 route.query 有 tag 對應資料進行啟用 active 狀態
-*/
-const infoState = useState('infoState')
-onMounted(async () => {
-  try {
-    if (infoState?.value?.info?.tags?.length > 0) {
-      tagArray.value = infoState?.value?.info?.tags.map(item => {
-        // if item matches the TargetTag form routeDate return active true
-        if (targetQuery?.tags?.length > 0) {
-          let match = targetQuery?.tags.filter(_item => item === _item);
-          if (match.length > 0) {
-            return { name: item, active: true }
-          }
-        }
-        return { name: item, active: false }
-      });
-    }
-  } catch (err) {
-    console.error("Failed to fetch text:", err)
-  }
-})
-
-onMounted(async () => {
-  // update routeDate into the current Page
-  try {
-    if (route.query?.value) {
-      textInput.value = targetQuery.file
-      textTransInput.value = targetQuery.fileTranslate
-      textHiraganaInput.value = targetQuery.fileHiragana
-      transInput.value = targetQuery.translation
-      inputs.value = targetQuery.inputs
-    }
-  } catch (err) {
-    console.error("Failed to fetch text:", err)
-  }
-})
-
 defineExpose({
   schema,
+  tagArray,
+  isSubmit,
+  transInput,
+  inputs,
+  textInput,
+  textHiraganaInput,
+  textTransInput,
+  onSubmit,
+  handleTag,
+  handleAddInput,
+  handleRemoveInput,
+  handleDelete,
 })
 
 </script>
