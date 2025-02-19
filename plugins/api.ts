@@ -129,8 +129,8 @@ export default defineNuxtPlugin(() => {
 		}
 	};
 	interface log {
-		account?: string;
-		password?: string;
+		account?: string | null;
+		password?: string | null;
 	}
 
 	interface text {
