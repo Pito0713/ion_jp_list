@@ -1,26 +1,34 @@
 export function useRegisterHook() {
-	// -------  API 配置
+	// @use hook config
 	const {$api} = useNuxtApp();
 
-	// ------- Nuxt Router 相關函數
+	// @Router
 	const router = useRouter();
 
-	// ------- i18n 多語系
-	const localePath = useLocalePath(); // 路徑函數
+	// @router fit i18
+	const localePath = useLocalePath();
 
-	/**
-	 * @Api 註冊
-	 * param {Object} _values - 登入資料
-	 * property {string} _values.account - 帳號
-	 * property {string} _values.password - 密碼
-	 */
-	const onSubmit = async (_values: {account: string; password: string}) => {
-		let target = await $api.register(_values);
+	const account = ref(null);
+	const password = ref(null);
+	const passwordAgain = ref(null);
+
+	// @Api /register 註冊
+	const onSubmit = async (value: any) => {
+		let submitData = {
+			account: account.value, // property <string>
+			password: password.value, // property <string>
+		};
+		let target = await $api.register(submitData);
 		// success
 		if (target?.status === 1) {
 			router.push(localePath('/LogInPage'));
 		}
 	};
 
-	return {onSubmit};
+	return {
+		account,
+		password,
+		passwordAgain,
+		onSubmit,
+	};
 }
