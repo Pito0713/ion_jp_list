@@ -1,26 +1,35 @@
 export function useLogInHook() {
-	// -------  API 配置
+	// @use hook
 	const {$api} = useNuxtApp();
+	const loadingIndicator = useLoadingIndicator();
 
-	// ------- Nuxt Router 相關函數
+	// @router fit i18
 	const router = useRouter();
-
-	// ------- i18n 多語系
 	const localePath = useLocalePath(); // 路徑函數
 
-	// ------- 定義全域狀態管理 (StateManager)
+	// @statements
 	const authState = useState<object | null>('authState', () => null); // 用於存放 auth 狀態，初始值為 null
 	const infoState = useState<object | null>('infoState', () => null); // 用於存放 user info，初始值為 null
 	const navState = useState('navState', () => ({nav: false})); // 用於存放nav狀態，預設 nav 為 false
+	const account = ref(null);
+	const password = ref(null);
+	const isShowEye = ref(false);
 
-	/**
-	 * @Api 登入
-	 * param {Object} _values - 登入資料
-	 * property {string} _values.account - 帳號
-	 * property {string} _values.password - 密碼
-	 */
-	const onSubmit = async (_values: {account: string; password: string}) => {
-		let target = await $api.login(_values); // 向 API 發送登入請求
+	/* @Api /login 登入*/
+	const onSubmit = async () => {
+		if (
+			['', null, undefined].includes(account.value) &&
+			['', null, undefined].includes(password.value)
+		)
+			return;
+
+		loadingIndicator.start();
+
+		let submitData = {
+			account: account.value, // property <string>
+			password: password.value, //property <string>
+		};
+		let target = await $api.login(submitData);
 
 		// success
 		if (target?.status === 1) {
@@ -42,7 +51,18 @@ export function useLogInHook() {
 				router.go(0); // 刷新頁面 與 更新 pinia 狀態確保info正確
 			});
 		}
+		loadingIndicator.finish();
 	};
 
-	return {onSubmit};
+	const handleShowEye = () => {
+		isShowEye.value = !isShowEye.value;
+	};
+
+	return {
+		account,
+		password,
+		isShowEye,
+		onSubmit,
+		handleShowEye,
+	};
 }

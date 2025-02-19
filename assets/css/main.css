@@ -48,6 +48,15 @@ input {
 	padding: 5px 10px;
 }
 
+/* Autofill styles for Chrome 利用延遲使顯示不出現*/
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+	transition:
+		background-color 0s 600000s,
+		font-size 0s 600000s,
+		color 0s 600000s !important;
+}
+
 textarea {
 	font-size: 1.25rem;
 	border: 1px #313a4a solid;
