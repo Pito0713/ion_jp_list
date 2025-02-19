@@ -54,25 +54,8 @@ const {
   searchMoreData
 } = useInfiniteScrollHook(textInput, tagArray, currentPageNumber, pageSize, List, isPrev, selectOption);
 
-const infoState = useState('infoState') // 全域狀態 infoState 
 const hasMoreData = ref(false) // 是否有更多資料
 const isTopUP = ref(false) // 是否顯示置頂功能
-
-onMounted(async () => {
-  // 若有info值 導入基礎tag值
-  try {
-    if (infoState?.value?.info) {
-      if (infoState?.value?.info?.tags?.length > 0) {
-        tagArray.value = infoState?.value?.info?.tags.map(item => {
-          // default value ['verb', 'noun', 'adjective', 'particle']
-          return { name: item, active: false }
-        });
-      }
-    }
-  } catch (err) {
-    console.error("Failed to fetch text:", err)
-  }
-})
 
 let infiniteScroll = null
 let topUp = null

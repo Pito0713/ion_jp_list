@@ -38,7 +38,9 @@ export function useLogInHook() {
 			infoState.value = {info: JSON.stringify(target?.data)};
 
 			// 成功登入後導向至 HomePage
-			router.push(localePath('/HomePage'));
+			router.push(localePath('/HomePage')).then(() => {
+				router.go(0); // 刷新頁面 與 更新 pinia 狀態確保info正確
+			});
 		}
 	};
 

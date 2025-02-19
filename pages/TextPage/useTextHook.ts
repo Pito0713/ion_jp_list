@@ -16,6 +16,23 @@ export function useTextHook() {
 	const isCallTopUP = ref(false); // 是否觸發置頂功能
 	const isPrev = ref(false); // 是否回滾觸發上一頁功能
 
+	const infoState = useState<{info: {tags: string[]}}>('infoState'); // 全域狀態 infoState
+	onMounted(async () => {
+		// 若有info值 導入基礎tag值
+		try {
+			if (infoState?.value?.info) {
+				if (infoState?.value?.info?.tags?.length > 0) {
+					tagArray.value = infoState?.value?.info?.tags.map((item) => {
+						// default value ['verb', 'noun', 'adjective', 'particle']
+						return {name: item, active: false};
+					});
+				}
+			}
+		} catch (err) {
+			console.error('Failed to fetch text:', err);
+		}
+	});
+
 	// @use hook
 	const {$api} = useNuxtApp();
 	const loadingIndicator = useLoadingIndicator();
