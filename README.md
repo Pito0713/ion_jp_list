@@ -1,6 +1,11 @@
 # ION_JP_Frontend 文檔
 
-## 當前版本: [V1.0.16](###V1.0.16)
+## 當前版本: [V1.0.17](###V1.0.17)
+
+## API 文檔
+
+[ION_JP_Frontend 前端開發文檔](https://hackmd.io/@2yWSjTRTT7Sj1GtQLLoU2g/B1TrVcJUJe)
+[ION_JP_Frontend API文檔](https://hackmd.io/@2yWSjTRTT7Sj1GtQLLoU2g/B1IErITNyl)
 
 ## 專案
 
@@ -92,21 +97,40 @@ project/
 
 ### 元件代碼規範
 
-- 變數命名採用 camelCase (駝峰式)。
-- 共用子件採用 PascalCase (首字大寫)。
+- 變數命名採用 `camelCase` (駝峰式)。
+- 共用子件採用 `PascalCase` (首字大寫)。
 - TypeScript, 類型聲明必須完整準確。
-- 必要的註解, 清晰定義 prop 值。
+- 必要的註解, 清晰定義 `prop` 值。
+- 頁面開發需遵守單一組件應該只負責單一個職責
+  EX: `UI` (頁面UI), `useHook`(頁面邏輯), `index` (頁面 `props` 導入)
 
 ### Git
 
-- main 主分支：正式版本。
-- develop 開發分支：合併開發版本分支。
-- feature 功能分支：單一功能開發。
-- release 版本分支：合併功能開發分支。
+- `main` 主分支：正式版本。
+- `develop` 開發分支：合併開發版本分支。
+- `feature` 功能分支：單一功能開發。
+- `release` 版本分支：合併功能開發分支。
+- `BUG` BUG分支：修改BUG錯誤。
 
 ## 版本
 
-### V1.0.15
+### V1.0.17
+
+```
+新增 TextPage 載入提示字
+新增 LogPage 新增密碼 eye icon
+
+修改 TextPage 拆分 infiniteScroll 架構與導入方式
+修改 RegisterPage 子父件 props index 導入
+調整 LogPage 子父件 props index 導入
+
+移除 無使用 nuxtImage 套件
+
+BUG 修正 tag 載入 info pinia 未更新狀態
+BUG 修正筆記 無資料顯示文字提示
+```
+
+### V1.0.16
 
 ```
 修改 api 路徑與 method 調整
