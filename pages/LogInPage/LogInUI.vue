@@ -33,7 +33,8 @@ div
               ImageFC(v-else src='/img/eye-close.png' width='25' height='25')
           VeeErrorMessage(name="password" class='ml-2 w-full text-red-700 text-sm')
         button(type="submit" class='mt-4 w-80') {{$t('login')}}
-  div(class='mt-4 w-80 text-end') 
+  div(class='mt-4 w-full justify-between flex align-center') 
+    a(class='text-base text-end ml-2') {{config.public.appVersion}}
     NuxtLinkLocale(to="/Register") {{$t('account_register')}}
 </template>
 
@@ -45,6 +46,7 @@ const schema = yup.object({
   account: yup.string().required(t('required')), // 帳號必填
   password: yup.string().required(t('required')), // 密碼必填
 });
+const config = useRuntimeConfig();
 
 defineProps({
   propsAccount: String,
@@ -61,6 +63,7 @@ defineEmits([
 ])
 
 defineExpose({
-  schema
+  schema,
+  config
 })
 </script>
