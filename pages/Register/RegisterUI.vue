@@ -2,29 +2,29 @@
 VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
   form(@submit="handleSubmit($event, () => $emit('submit-register'))")
     Card(class='flex-col')
-      VeeField(type="text" name="account" v-slot="{ field }")
+      VeeField(type="text" name="account" :modelValue='propsAccount' v-slot="{ field, value}")
         label {{$t('account')}}
         input(
           type='text'
           :placeholder="$t('please_enter_account')"
-          :value='propsAccount'
+          :value='value'
           @input="$emit('update:propsAccount', $event.target.value)"
           class='w-full'
           v-bind="field")
         VeeErrorMessage(name="account" class='ml-2 w-full text-red-700 text-sm')
       div( class='w-full my-2' )
-      VeeField(type="text" name="password" v-slot="{ field }")
+      VeeField(type="text" name="password" :modelValue='propsPassword' v-slot="{ field, value}")
         label {{$t('password')}}
         input(
           type='text'
           :placeholder="$t('please_enter_password')"
-          :value='propsPassword'
+          :value='value'
           @input="$emit('update:propsPassword', $event.target.value)"
           class='w-full'
           v-bind="field")
         VeeErrorMessage(name="password" class='ml-2 w-full text-red-700 text-sm')
       div( class='w-full my-2' )
-      VeeField(type="text" name="passwordAgain" v-slot="{ field }")
+      VeeField(type="text" name="passwordAgain" :modelValue='propsPasswordAgain' v-slot="{ field , value}")
         label {{$t('please_enter_password_again')}}
         input(
           type='text'
