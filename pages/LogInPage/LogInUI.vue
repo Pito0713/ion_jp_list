@@ -3,27 +3,27 @@ div
   VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
     form(@submit="handleSubmit($event, () => $emit('submit-login'))")
       Card(class='flex-col')
-        VeeField(type="text" name="account" v-slot="{ field }")
+        VeeField(type="text" name="account" :modelValue='propsAccount' v-slot="{ field, value}")
           label {{$t('account')}}
           input(
             type='text'
             autocomplete='username'
             :placeholder="$t('please_enter_account')"
-            :value="propsAccount"
+            :value="value"
             class='w-full flex border border-current rounded-md mt-2 focus:outline-none'
             @input="$emit('update:propsAccount', $event.target.value)"
             v-bind="field"
           )
           VeeErrorMessage(name="account" class='ml-2 w-full text-red-700 text-sm')
         div(class='w-full my-2')
-        VeeField(type="text" name="password" v-slot="{ field }")
+        VeeField(type="text" name="password" :modelValue='propsPassword' v-slot="{ field, value }")
           label {{$t('password')}}
           div(class='w-full flex border border-current rounded-md mt-2 justify-between')
             input(
               :type="propIsShowEye? 'text': 'password'"
               autocomplete='current-password'
               :placeholder="$t('please_enter_password')"
-              :value="propsPassword"
+              :value="value"
               @input="$emit('update:propsPassword', $event.target.value)"
               v-bind="field"
               class='border-none w-5/6 focus:outline-none'
