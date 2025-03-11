@@ -1,6 +1,6 @@
 # ION_JP_Frontend 文檔
 
-## 當前版本: [V1.0.17](###V1.0.17)
+## 當前版本: [V1.0.18](###V1.0.18)
 
 ## API 文檔
 
@@ -113,6 +113,15 @@ project/
 - `BUG` BUG分支：修改BUG錯誤。
 
 ## 版本
+
+### V1.0.18
+
+```
+調整 LogPage VeeField value 綁定
+調整 RegisterPage VeeField value 綁定
+調整 editPage 主頁 props 導入方式
+調整 AddText 主頁 props 導入方式
+```
 
 ### V1.0.17
 
