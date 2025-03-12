@@ -32,5 +32,3 @@ defineProps({
   },
 })
 </script>
-
-<style

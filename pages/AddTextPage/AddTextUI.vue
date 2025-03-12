@@ -71,7 +71,12 @@ VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
             div
               a(class='mr-2 font-medium text-gray-800 text-lg') {{input.jpValue}}
               a(class='text-textSecond text-gray-500 text-sm') {{input.chValue}}
-      button(type="submit" class='mt-4 w-80' :disabled="propsIsSubmit") {{$t('submit')}}
+      LoadingBN(
+        :type="submit" 
+        :class="'mt-4 w-80'"
+        :text="'submit'"
+        :disabled="propsIsSubmit"
+      )
 </template>
 
 <script setup>

@@ -113,6 +113,7 @@ export function useHomeHook() {
 
 	// @Api textQuiz 測驗題目
 	const callTextQuiz = async () => {
+		loadingIndicator.start();
 		loading.value = true; // 載入中
 		let target = await $api.textQuiz();
 
@@ -152,6 +153,7 @@ export function useHomeHook() {
 			};
 			loading.value = false;
 		}
+		loadingIndicator.finish();
 	};
 	// 引用 Pinia 全域值 modalStore
 	const store = modalStore();

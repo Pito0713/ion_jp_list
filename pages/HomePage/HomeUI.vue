@@ -10,22 +10,23 @@ Card(class='flex flex-col justify-start items-start w-full mt-3 mb-0 p-3')
     template(v-for='(item, index) in question.questionTagArray' :key='item + index')
       div(class='ml-1 text-base my-1' @click='$emit("select-answer", item.file)')
         a(:class='item?.correct && "font-extrabold bg-slate-200 py-1 rounded"') {{index+1}} . {{item.file}}
-
   LoadingSkeleton(v-else)
   
   div(class='flex justify-end items-start w-full mb-0')
     template(v-if='!isSubmit')
-      button(
-        type="submit" 
+      LoadingBN(
+        :type="submit" 
+        :text="'submit'"
         :disabled="!answer" 
-        class='mt-1 text-base disabled:bg-slate-500' 
+        :class="'mt-1 text-base disabled:bg-slate-500'"
         @click='$emit("submit-answer")'
-      ) {{$t('submit')}}
+      )
     template(v-else)
-      button(
-        class='mt-1 text-base disabled:bg-slate-500' 
+      LoadingBN(
+        :text="'next_question'"
+        :class="'mt-1 text-base disabled:bg-slate-500'"
         @click='$emit("change-quiz")'
-      ) {{$t('next_question')}}
+      )
 </template>
 
 <script setup>
