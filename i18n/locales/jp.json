@@ -59,5 +59,6 @@
 	"last_updated_forward": "更新日降順",
 	"last_updated_reverse": "更新日昇順",
 	"no_more_data": "データがありません",
-	"loading": "読み込み中"
+	"loading": "読み込み中",
+	"please_add_at_least_4": "まず単語を追加してください。各品詞につき少なくとも4つ追加してください。"
 }

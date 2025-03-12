@@ -1,31 +1,33 @@
 <template lang="pug">
 Card(class='flex flex-col justify-start items-start w-full mt-3 mb-0 p-3')
-  div(class='flex flex-row justify-between items-center w-full border-b-2 pb-2')
-    a(class='ml-2 text-xl font-medium') {{$t('blank_appropriate_answer')}} 
-  template(v-if='!loading')
-    div(class='my-2 text-xl ml-1')
-      a(v-if='!answer') {{ question.questionA }} &nbsp; &nbsp; &nbsp; {{ question.questionB }}
-      a(v-else) {{ question.questionA }} &nbsp; {{answer}} &nbsp; {{ question.questionB }}
-    
-    template(v-for='(item, index) in question.questionTagArray' :key='item + index')
-      div(class='ml-1 text-base my-1' @click='$emit("select-answer", item.file)')
-        a(:class='item?.correct && "font-extrabold bg-slate-200 py-1 rounded"') {{index+1}} . {{item.file}}
+  a(v-if="isEmptyData" class='text-xl my-2 font-medium') {{$t('please_add_at_least_4')}} 
+  div(class='flex flex-col justify-start items-start w-full' v-else)
+    div(class='flex flex-row justify-between items-center w-full border-b-2 pb-2')
+      a(v-if="!isEmptyData" class='ml-2 text-xl font-medium') {{$t('blank_appropriate_answer')}} 
+    template(v-if='!loading')
+      div(class='my-2 text-xl ml-1')
+        a(v-if='!answer') {{ question.questionA }} &nbsp; &nbsp; &nbsp; {{ question.questionB }}
+        a(v-else) {{ question.questionA }} &nbsp; {{answer}} &nbsp; {{ question.questionB }}
+      
+      template(v-for='(item, index) in question.questionTagArray' :key='item + index')
+        div(class='ml-1 text-base my-1' @click='$emit("select-answer", item.file)')
+          a(:class='item?.correct && "font-extrabold bg-slate-200 py-1 rounded"') {{index+1}} . {{item.file}}
 
-  LoadingSkeleton(v-else)
-  
-  div(class='flex justify-end items-start w-full mb-0')
-    template(v-if='!isSubmit')
-      button(
-        type="submit" 
-        :disabled="!answer" 
-        class='mt-1 text-base disabled:bg-slate-500' 
-        @click='$emit("submit-answer")'
-      ) {{$t('submit')}}
-    template(v-else)
-      button(
-        class='mt-1 text-base disabled:bg-slate-500' 
-        @click='$emit("change-quiz")'
-      ) {{$t('next_question')}}
+    LoadingSkeleton(v-else)
+    
+    div(class='flex justify-end items-start w-full mb-0')
+      template(v-if='!isSubmit')
+        button(
+          type="submit" 
+          :disabled="!answer" 
+          class='mt-1 text-base disabled:bg-slate-500' 
+          @click='$emit("submit-answer")'
+        ) {{$t('submit')}}
+      template(v-else)
+        button(
+          class='mt-1 text-base disabled:bg-slate-500' 
+          @click='$emit("change-quiz")'
+        ) {{$t('next_question')}}
 </template>
 
 <script setup>
@@ -38,6 +40,7 @@ defineProps({
   loading: Boolean,
   answer: String,
   isSubmit: Boolean,
+  isEmptyData: Boolean,
 })
 defineEmits(['change-quiz', 'select-answer', 'submit-answer'])
 </script>

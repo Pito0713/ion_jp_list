@@ -57,5 +57,6 @@
 	"last_updated_forward": "Newest to Oldest",
 	"last_updated_reverse": "Oldest to Newest",
 	"no_more_data": "No more data",
-	"loading": "Loading"
+	"loading": "Loading",
+	"please_add_at_least_4": "Please add vocabulary first, at least 4 for each part of speech."
 }

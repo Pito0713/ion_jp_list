@@ -5,6 +5,7 @@ LayoutsPage(class='flex h-vh flex-col')
     :loading="loading"
     :answer="answer"
     :isSubmit="isSubmit"
+    :isEmptyData="isEmptyData"
     @select-answer="handleAnswer"
     @change-quiz="changeTextQuiz"
     @submit-answer="handleSubmit"
@@ -36,6 +37,7 @@ const {
   handleCopy,
   showTop,
   answerDaily,
+  isEmptyData,
 } = useHomeHook()
 
 onMounted(
