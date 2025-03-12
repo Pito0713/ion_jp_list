@@ -129,6 +129,11 @@ export function useTextHook() {
 		});
 	};
 
+	// 監聽 selectOption , 若 select 有變動更新資料
+	watch(selectOption, (value, pre) => { 
+		if (pre !== value) handleInitSearch();
+	})
+	
 	return {
 		init,
 		textInput,
