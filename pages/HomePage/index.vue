@@ -4,6 +4,7 @@ LayoutsPage(class='flex h-vh flex-col')
     :question="question"
     :loading="loading"
     :answer="answer"
+    :selectedAnswerId="selectedAnswerId"
     :isSubmit="isSubmit"
     @select-answer="handleAnswer"
     @change-quiz="changeTextQuiz"
@@ -29,6 +30,7 @@ const {
   homeList,
   isSubmit,
   loading,
+  selectedAnswerId,
   handleAnswer,
   handleSubmit,
   changeTextQuiz,
@@ -55,6 +57,7 @@ defineExpose({
   homeList,
   isSubmit,
   loading,
+  selectedAnswerId,
   handleAnswer,
   handleSubmit,
   changeTextQuiz,

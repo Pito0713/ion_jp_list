@@ -2,7 +2,7 @@
 div
   template(v-if='homeList.data.length > 0')
     div(class='mt-3 mx-2 text-xl font-medium')
-      a {{$t('daily_quiz')}}
+      a {{$t('daily_quiz')}} {{`(${homeList.data.length})`}}
   template(v-for='(item, index) in homeList.data' :key='item._id')
     Card(class='w-full my-1 flex-col p-2' )
       div(class='w-full')
@@ -21,7 +21,10 @@ div
           div(@click='$emit("show-top",item)' class='active:opacity-40')
             ImageFC(v-if='item.isShowTop' src='/img/heart.png' :width='20.5' :height='20.5' )
             ImageFC(v-else src='/img/heart_line.png' :width='20.5' :height='20.5')
-      a(class='text-textSecond text-gray-500 text-sm') {{item.translation}}
+      div(class='w-full flex flex-row ')
+        a(class='text-textSecond text-gray-500 text-sm') {{item.translation}}
+        div(@click='$emit("handle-copy",item.translation)' class='active:opacity-20 ml-2 mt-1')
+            ImageFC(src='/img/item_copy.png' :width='16' :height='16' )
 </template>
 
 <script setup>
