@@ -9,7 +9,7 @@ Card(class='custom-container flex-col mt-3 fixed top-14 left-15 z-40')
     )
     LoadingBN(
       :text="'search'"
-      class='mx-2 px-5 flex-6'
+      :customClass="'mx-2 px-5 flex-6'"
       @click='$emit("init-Search")'
     )
   div(class='flex w-full justify-between')

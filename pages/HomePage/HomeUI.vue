@@ -15,16 +15,16 @@ Card(class='flex flex-col justify-start items-start w-full mt-3 mb-0 p-3')
   div(class='flex justify-end items-start w-full mb-0')
     template(v-if='!isSubmit')
       LoadingBN(
-        :type="submit" 
+        :type="'submit'" 
         :text="'submit'"
         :disabled="!answer" 
-        :class="'mt-1 text-base disabled:bg-slate-500'"
+        :customClass="'mt-1 text-base disabled:bg-slate-500'"
         @click='$emit("submit-answer")'
       )
     template(v-else)
       LoadingBN(
         :text="'next_question'"
-        :class="'mt-1 text-base disabled:bg-slate-500'"
+        :customClass="'mt-1 text-base disabled:bg-slate-500'"
         @click='$emit("change-quiz")'
       )
 </template>

@@ -72,8 +72,8 @@ VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
               a(class='mr-2 font-medium text-gray-800 text-lg') {{input.jpValue}}
               a(class='text-textSecond text-gray-500 text-sm') {{input.chValue}}
       LoadingBN(
-        :type="submit" 
-        :class="'mt-4 w-80'"
+        :type="'submit'" 
+        :customClass="'mt-4 w-80'"
         :text="'submit'"
         :disabled="propsIsSubmit"
       )

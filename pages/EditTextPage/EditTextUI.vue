@@ -72,14 +72,14 @@ VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
               a(class='mr-2 font-medium text-gray-800 text-lg') {{input.jpValue}}
               a(class='text-textSecond text-gray-500 text-sm') {{input.chValue}}
       LoadingBN(
-        :type="submit" 
-        :class="'mt-8 w-80'"
+        :type="'submit'" 
+        :customClass="'mt-8 w-80'"
         :text="'submit'"
       )
   div(class="mt-4 w-full flex justify-center")
     LoadingBN(
       @click='handleDelete()'
-      :class="'mt-4 w-80'"
+      :customClass="'mt-4 w-80'"
       :text="'delete'"
       :disabled="propsIsSubmit"
     )

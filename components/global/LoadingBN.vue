@@ -4,7 +4,6 @@ button(
   :disabled='loadingIndicator.isLoading.value || disabled' 
   :class='customClass'
   :type='type'
-  @click="handleClick"
 ) {{$t(text)}}
   img(v-if='loadingIndicator.isLoading.value' src="/img/loading.svg" alt="loading" width="25" height="25" class='ml-2')
 </template>
@@ -34,4 +33,5 @@ defineProps({
     default: '', // 用於自定義類
   },
 })
+
 </script>

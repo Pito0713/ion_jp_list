@@ -94,7 +94,6 @@ export function useHomeHook() {
 
 	// 每日測驗題目
 	const answerDaily = async () => {
-		loadingIndicator.start();
 		let dailyText = useCookie('dailyText', {maxAge: untilSecondsDay})?.value;
 		if (dailyText) {
 			let res = await $api.answerDaily({
@@ -102,7 +101,6 @@ export function useHomeHook() {
 			});
 			homeList.data = res.data;
 		}
-		loadingIndicator.finish();
 	};
 
 	// 更換問題題目
@@ -172,7 +170,6 @@ export function useHomeHook() {
 
 	// @Api editTextShowTop 更新是否置頂
 	const showTop = async (item: {_id: string; isShowTop: boolean}) => {
-		loadingIndicator.start();
 		let submitData = {
 			_id: item._id, // _id of object
 			isShowTop: !item.isShowTop, // 是否置頂
