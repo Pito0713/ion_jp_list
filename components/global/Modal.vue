@@ -27,5 +27,3 @@ defineExpose({
   store
 })
 </script>
-
-<style
