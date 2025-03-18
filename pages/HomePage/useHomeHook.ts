@@ -13,6 +13,7 @@ export function useHomeHook() {
 	const selectedAnswerId = ref(''); // 答案 object id
 	const isSubmit = ref(false); // 提交按鈕 for disabled
 	const loading = ref(false); // 載入中
+	const isEmptyData = ref(false); // 載入中
 	const homeList = reactive({
 		data: {},
 	}); // for api responses data
@@ -124,7 +125,9 @@ export function useHomeHook() {
 		let target = await $api.textQuiz();
 
 		// success
-		if (target.status === 1) {
+		if (!target.data) return isEmptyData.value = true;
+		if (target.status === 1 && target.data) {
+			isEmptyData.value = false;
 			isSubmit.value = false; // question 初始化 提交按鈕關閉
 			let str = target.data.question;
 
@@ -157,9 +160,8 @@ export function useHomeHook() {
 				questionB: partB ? partB : '', // 若問題中沒有 )直接回傳 空值
 				questionTagArray: target.data.randomTagTestArray,
 			};
-			loading.value = false;
 		}
-		loadingIndicator.finish();
+		loading.value = false;
 	};
 	// 引用 Pinia 全域值 modalStore
 	const store = modalStore();
@@ -197,6 +199,7 @@ export function useHomeHook() {
 		homeList,
 		isSubmit,
 		loading,
+		isEmptyData,
 		handleAnswer,
 		handleSubmit,
 		changeTextQuiz,
