@@ -10,6 +10,7 @@ export function useHomeHook() {
 		questionB?: string;
 	}>({}); // 題目
 	const answer = ref(''); // 答案
+	const selectedAnswerId = ref(''); // 答案 object id
 	const isSubmit = ref(false); // 提交按鈕 for disabled
 	const loading = ref(false); // 載入中
 	const homeList = reactive({
@@ -25,8 +26,15 @@ export function useHomeHook() {
 	const tomorrow = new Date(now).setHours(24, 0, 0, 0); // 設定到今天 23:59:59
 	const untilSecondsDay = Math.floor((new Date(tomorrow).getTime() - now.getTime()) / 1000);
 
-	const handleAnswer = (_value: string) => {
-		if (!isSubmit.value) answer.value = _value;
+	// update answer
+	const handleAnswer = (_value: {
+		_id: string;
+		file: string;
+	}) => {
+		if (!isSubmit.value) {
+			answer.value = _value.file;
+			selectedAnswerId.value = _value._id;
+		}
 	};
 
 	// @Api answerQuiz /提交答題資料
@@ -186,6 +194,7 @@ export function useHomeHook() {
 	return {
 		question,
 		answer,
+		selectedAnswerId,
 		homeList,
 		isSubmit,
 		loading,

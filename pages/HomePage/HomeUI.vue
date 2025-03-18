@@ -8,8 +8,8 @@ Card(class='flex flex-col justify-start items-start w-full mt-3 mb-0 p-3')
       a(v-else) {{ question.questionA }} &nbsp; {{answer}} &nbsp; {{ question.questionB }}
     
     template(v-for='(item, index) in question.questionTagArray' :key='item + index')
-      div(class='ml-1 text-base my-1' @click='$emit("select-answer", item.file)')
-        a(:class='item?.correct && "font-extrabold bg-slate-200 py-1 rounded"') {{index+1}} . {{item.file}}
+      div(class='ml-1 text-base my-1' @click='$emit("select-answer", item)')
+        a(class='px-1 py-1' :class='[(selectedAnswerId === item._id) && "font-extrabold bg-slate-200 rounded", item?.correct && "font-extrabold bg-green-100 rounded"]') {{index+1}} . {{item.file}}
 
   LoadingSkeleton(v-else)
   
@@ -37,7 +37,8 @@ defineProps({
   question: Object,
   loading: Boolean,
   answer: String,
+  selectedAnswerId: String,
   isSubmit: Boolean,
 })
-defineEmits(['change-quiz', 'select-answer', 'submit-answer'])
+defineEmits(['change-quiz', 'select-answer', 'submit-answer',])
 </script>
