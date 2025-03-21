@@ -78,7 +78,7 @@ VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
       )
   div(class="mt-4 w-full flex justify-center")
     LoadingBN(
-      @click='handleDelete()'
+      @click='$emit("delete-text")'
       :customClass="'mt-4 w-80'"
       :text="'delete'"
       :disabled="propsIsSubmit"

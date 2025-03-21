@@ -36,7 +36,7 @@
               a(class='text-textSecond text-gray-500 text-sm') {{input.chValue}}
     div(class='w-full flex justify-center items-center mt-4 mr-6' id='infiniteScrollElement')
     template(v-if='propList.data.length > 0')
-      template(v-if='propTotalCount > propList.data.length & !propHasMoreData') 
+      template(v-if='propTotalCount > propList.data.length && propHasMoreData') 
         a(class='font-medium text-lg text-gray-500' ) {{$t('loading')}}
       template(v-else) 
         a(class='font-medium text-lg text-gray-500' ) {{$t('reached_the_bottom')}}

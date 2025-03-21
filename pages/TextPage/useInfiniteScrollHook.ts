@@ -17,13 +17,13 @@ export function useInfiniteScrollHook(
 	isCallTopUP: {value: boolean},
 	totalCount: {value: number},
 	init: {value: boolean},
+	hasMoreData: {value: boolean},
 	handleInitSearch: () => void
 ) {
 	//@use hook
 	const {$api} = useNuxtApp();
 	const loadingIndicator = useLoadingIndicator();
 	const isTopUP = ref(false); // 是否顯示置頂功能
-	const hasMoreData = ref(false); // 是否有更多資料
 
 	// @api /searchText  下拉更多搜尋
 	const searchMoreData = async () => {
@@ -43,15 +43,17 @@ export function useInfiniteScrollHook(
 				後續 由頁面載入觸發或 infinite Scroll 捲動觸發 searchMoreData
 				先判斷 List.data 是否有資料
 				若 List.data 有值, 將 response data 與 List.data 兩者進行擴展合併,
-				確保 List.data 長度不超過 pageSize * 2 的資料量
+				確保 List.data 無條件捨去個位數後 長度不超過 pageSize * 2 的資料量
 				splice() 刪除超過的資料量由開頭 0 到扣掉目前 List.data 長度 pageSize * 2 的多餘資料
-				ex: List.data.length = 30 , pageSize.value = 10
-						List.data.splice(0, 30 - 10 * 2) = List.data.splice(0, 10)
+				ex: List.data.length = 32 , pageSize.value = 10
+				    30(32無條件捨去個位數) > 20
+						List.data.splice(0, 32 - 10 * 2) = List.data.splice(0, 12)
 			*/
 
 			if (List.data.length > 0) {
 				List.data = [...List.data, ...response.data]; // 擴展運算 將兩者合併
-				if (List.data.length > pageSize.value * 2) {
+				const roundedValue = Math.floor(List.data.length / 10) * 10;
+				if (roundedValue > pageSize.value * 2) {
 					List.data.splice(0, List.data.length - pageSize.value * 2);
 				}
 			}
@@ -59,8 +61,13 @@ export function useInfiniteScrollHook(
 			// response status failed clear the list
 			List.data = [];
 		}
-
-		isPrev.value = false; // 是否回滾造成的狀態
+		// 當前頁面可容納的總筆數  若大於 api response 的 totalCount.value
+		// condition: 當前頁面筆數大於總比數
+		if (currentPageNumber.value * pageSize.value > totalCount.value) hasMoreData.value = false
+		// condition: 當前頁面筆數等於總比數
+		if (currentPageNumber.value * pageSize.value === totalCount.value) hasMoreData.value = false
+		// condition: 當前頁面筆數小於總比數
+		if (currentPageNumber.value * pageSize.value < totalCount.value) hasMoreData.value = true
 		loadingIndicator.finish();
 	};
 
@@ -97,7 +104,7 @@ export function useInfiniteScrollHook(
 			const scrollContainer = document.getElementById('scroll-container');
 			const previousScrollHeight = scrollContainer ? scrollContainer.scrollHeight : 0;
 			if (List.data.length > pageSize.value * 2) {
-				List.data.splice(pageSize.value * 2, pageSize.value);
+				List.data.splice(pageSize.value * 2 , List.data.length - pageSize.value*2);
 			}
 			await nextTick(); // 等待 DOM 更新
 			const addedHeight = scrollContainer ? scrollContainer.scrollHeight : 0;
@@ -111,8 +118,6 @@ export function useInfiniteScrollHook(
 			// response status failed clear the list
 			List.data = [];
 		}
-
-		isPrev.value = true; // 是否回滾造成的狀態
 		loadingIndicator.finish();
 	};
 
@@ -137,22 +142,15 @@ export function useInfiniteScrollHook(
 						return;
 					}
 
-					/* 如果這邊是回滾後 再往下拉
-					 *  會造成前後值資料插在最前端若只+1 會造成重複 這裡進行判斷*/
-					if (isPrev.value)
-						currentPageNumber.value += 2; // 頁籤 + 1
-					else currentPageNumber.value += 1; // 頁籤 + 1
-
-					/* 當前若不是初始狀態, 而且總筆數數大於 10 時(第一次 call )
-					 *  才可再次調用 API 收尋下一筆*/
-					if (!init.value && totalCount.value > 10) {
+					if(!init.value && totalCount.value >= currentPageNumber.value * pageSize.value) { 
+						// condition: 如果 List 筆數不足 20 觸發 且總筆數不足 20 則不觸發下拉呼叫
+						if (20 > List.data.length &&  20 > totalCount.value  && List.data.length > currentPageNumber.value * pageSize.value ) return;
+						/*如果這邊是回滾後 再往下拉
+					   *會造成前後值資料已存在 會造成重複 這裡進行判斷需 互叫下下筆資料*/
+						if (isPrev.value) currentPageNumber.value += 2; // 頁籤 + 2
+						else currentPageNumber.value += 1;
+						isPrev.value = false; // 是否是回滾狀態 ex: false 下拉狀態
 						await searchMoreData();
-						// 當前頁面可容納的總筆數  若大於 api response 的 totalCount.value
-						if (currentPageNumber.value * pageSize.value >= totalCount.value) {
-							hasMoreData.value = true; // 有更多值
-						} else {
-							hasMoreData.value = false; // 沒有更多值
-						}
 					}
 				}
 			});
@@ -172,16 +170,22 @@ export function useInfiniteScrollHook(
 				} else {
 					isTopUP.value = false;
 					if (currentPageNumber.value === 1) return;
-					if (currentPageNumber.value > 1) currentPageNumber.value -= 1; // 頁籤 + 1
+					if(currentPageNumber.value > 1 ) {
+						/*如果這邊是下拉後 再往回滾
+					   *會造成前後值資料已存在 會造成重複 這裡進行判斷需 互叫下下筆資料*/
+						if (!isPrev.value) currentPageNumber.value -= 2; // 頁籤 -2
+						else currentPageNumber.value -= 1;
+					}
 					/* 如果是觸發置頂功能 isCallTopUP , 在window scroll 置頂時重新拿取資料*/
 					if (isCallTopUP.value) {
 						hasMoreData.value = false;
 						handleInitSearch();
 						return;
 					}
-					if (!init.value && totalCount.value > 10) await searchPrevData();
-					/*當前若不是初始狀態, 而且總筆數數大於 10 時(第一次 call )
-            才可再次調用 API 收尋下一筆*/
+					// condition: 當前若不是初始狀態, 而且總筆數數大於 20 (頁面可容納最大筆數)時 才可再次調用 API 收尋下一筆
+					if (!init.value && totalCount.value > 20 && currentPageNumber.value > 0) await searchPrevData();
+
+					isPrev.value = true; // 是否回滾造成的狀態
 				}
 			});
 			// 監聽

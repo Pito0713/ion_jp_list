@@ -15,6 +15,7 @@ export function useTextHook() {
 	const totalCount = ref(0); // 資料總筆數
 	const isCallTopUP = ref(false); // 是否觸發置頂功能
 	const isPrev = ref(false); // 是否回滾觸發上一頁功能
+	const hasMoreData = ref(false); // 是否有更多資料
 
 	const infoState = useState<{info: {tags: string[]}}>('infoState'); // 全域狀態 infoState
 	onMounted(async () => {
@@ -32,7 +33,6 @@ export function useTextHook() {
 			console.error('Failed to fetch text:', err);
 		}
 	});
-
 	// @use hook
 	const {$api} = useNuxtApp();
 	const loadingIndicator = useLoadingIndicator();
@@ -55,6 +55,7 @@ export function useTextHook() {
 			/  response data 賦值到 List data 覆蓋前值資料*/
 			List.data = response.data;
 			totalCount.value = response.total;
+			if (totalCount.value > 10) hasMoreData.value = true
 		} else {
 			// response status failed clear the list
 			List.data = [];
@@ -73,6 +74,7 @@ export function useTextHook() {
 		totalCount.value = 0;
 		List.data = [];
 		isPrev.value = false;
+		hasMoreData.value = false;
 	};
 
 	// 觸發頁面初始化
@@ -145,6 +147,7 @@ export function useTextHook() {
 		isCallTopUP,
 		isPrev,
 		selectOption,
+		hasMoreData,
 		initSearch,
 		handleShowTop,
 		handleInitSearch,

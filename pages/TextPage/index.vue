@@ -42,6 +42,7 @@ const {
   pageSize,
   totalCount,
   selectOption,
+  hasMoreData,
   handleInitSearch,
   handleTag,
   handleCopy,
@@ -53,7 +54,6 @@ const {
 // 解構 無限捲動 useInfiniteScrollHook
 const {
   isTopUP,
-  hasMoreData,
   infiniteScrollObserve,
   topUpObserve,
 } = useInfiniteScrollHook(
@@ -67,6 +67,7 @@ const {
   isCallTopUP,
   totalCount,
   init,
+  hasMoreData,
   handleInitSearch
 );
 
