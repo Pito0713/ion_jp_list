@@ -162,6 +162,7 @@ export function useHomeHook() {
 			};
 		}
 		loading.value = false;
+		loadingIndicator.finish();
 	};
 	// 引用 Pinia 全域值 modalStore
 	const store = modalStore();
