@@ -118,6 +118,8 @@ project/
 ### V1.0.20
 
 ```
+新增 版本固定與新增@type/node
+新增 app title
 BUG homePage loadingIndicator 遺漏 bug
 調整 TextPage 修正InfiniteScroll捲動重複觸發
 調整 TextPage 單字筆數為個位數時, 資料不完全顯示
