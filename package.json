@@ -1,5 +1,5 @@
 {
-	"name": "nuxt-app",
+	"name": "ion-jp-list",
 	"private": true,
 	"type": "commonjs",
 	"scripts": {
@@ -20,11 +20,12 @@
 		"pug": "^3.0.3",
 		"pug-plain-loader": "^1.1.0",
 		"vee-validate": "^4.14.6",
-		"vue": "latest",
-		"vue-router": "latest",
+		"vue": "^3.5.13",
+		"vue-router": "^4.5.0",
 		"yup": "^1.4.0"
 	},
 	"devDependencies": {
+		"@types/node": "^22.13.12",
 		"autoprefixer": "^10.4.20",
 		"postcss": "^8.4.47",
 		"tailwindcss": "^3.4.14",
