@@ -51,6 +51,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     }
   }
 
+  // ----- *** 註解 改設定由 api token 判斷 token 憑證過期跳出彈窗後轉跳
   // Condition: 無 auth token 但是導向 有權限 route
   if (AuthRoutes.includes(to.name)) {
     // if (!authState.value?.token) {

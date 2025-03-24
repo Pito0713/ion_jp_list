@@ -1,8 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	app: {
-		baseURL: '/', // 从环境变量中获取 base URL
-	},
+	app: {baseURL: '/'},
 	ssr: true,
 	compatibilityDate: '2024-04-03',
 	components: true, // 確保自動加載組件功能已啟用
@@ -24,10 +22,7 @@ export default defineNuxtConfig({
 	pinia: {
 		storesDirs: ['./store/**'],
 	},
-	routeRules: {
-		// '/': {prerender: true},
-		// '/TextPage/*': {swr: 3600},
-	},
+	routeRules: {},
 	typescript: {
 		typeCheck: true,
 	},
