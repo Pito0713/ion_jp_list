@@ -1,11 +1,12 @@
 # ION_JP_Frontend 文檔
 
-## 當前版本: [V1.0.19](###V1.0.19)
+## 當前版本: [V1.0.20](###V1.0.20)
 
 ## API 文檔
 
-[ION_JP_Frontend 前端開發文檔](https://hackmd.io/@2yWSjTRTT7Sj1GtQLLoU2g/B1TrVcJUJe)
-[ION_JP_Frontend API文檔](https://hackmd.io/@2yWSjTRTT7Sj1GtQLLoU2g/B1IErITNyl)
+- [ION_JP_Frontend 前端開發文檔](https://hackmd.io/@2yWSjTRTT7Sj1GtQLLoU2g/B1TrVcJUJe)
+
+- [ION_JP_Frontend API文檔](https://hackmd.io/@2yWSjTRTT7Sj1GtQLLoU2g/B1IErITNyl)
 
 ## 專案
 
@@ -113,6 +114,15 @@ project/
 - `BUG` BUG分支：修改BUG錯誤。
 
 ## 版本
+
+### V1.0.20
+
+```
+BUG homePage loadingIndicator 遺漏 bug
+調整 TextPage 修正InfiniteScroll捲動重複觸發
+調整 TextPage 單字筆數為個位數時, 資料不完全顯示
+調整 route middleware 補上轉跳註解
+```
 
 ### V1.0.19
 
