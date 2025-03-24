@@ -1,6 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	app: {baseURL: '/'},
+	app: {
+		baseURL: '/',
+		head: {
+			title: "Nuxt - ION_JP_LIST"
+		},
+	},
 	ssr: true,
 	compatibilityDate: '2024-04-03',
 	components: true, // 確保自動加載組件功能已啟用
