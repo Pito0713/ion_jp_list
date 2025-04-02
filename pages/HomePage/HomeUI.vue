@@ -1,7 +1,7 @@
 <template lang="pug">
 Card(class='flex flex-col justify-start items-start w-full mt-3 mb-0 p-3')
   a(v-if="isEmptyData" class='text-xl my-2 font-medium') {{$t('please_add_at_least_4')}} 
-  div(class='flex flex-col justify-start items-start w-full' v-else)
+  div(v-else class='flex flex-col justify-start items-start w-full')
     div(class='flex flex-row justify-between items-center w-full border-b-2 pb-2')
       a(v-if="!isEmptyData" class='ml-2 text-xl font-medium') {{$t('blank_appropriate_answer')}} 
     template(v-if='!loading')
@@ -10,7 +10,7 @@ Card(class='flex flex-col justify-start items-start w-full mt-3 mb-0 p-3')
         a(v-else) {{ question.questionA }} &nbsp; {{answer}} &nbsp; {{ question.questionB }}
       template(v-for='(item, index) in question.questionTagArray' :key='item + index')
         div(class='ml-1 text-base my-1' @click='$emit("select-answer", item)')
-          a(class='px-1 py-1' :class='[(selectedAnswerId === item._id) && "font-extrabold bg-slate-200 rounded", item?.correct && "font-extrabold bg-green-100 rounded"]') {{index+1}} . {{item.file}}
+          a(class='px-1 py-1' :class='[(selectedAnswerId === item._id && item?.correct ) && "font-extrabold bg-green-100 rounded", (selectedAnswerId === item._id && !item?.correct ) && "font-extrabold bg-slate-200 rounded" , item?.correct && "font-extrabold bg-green-100 rounded"]') {{index+1}} . {{item.file}}
     LoadingSkeleton(v-else)
     div(class='flex justify-end items-start w-full mb-0')
       template(v-if='!isSubmit')
