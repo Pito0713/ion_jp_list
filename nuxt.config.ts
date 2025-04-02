@@ -11,6 +11,9 @@ export default defineNuxtConfig({
 	components: true, // 確保自動加載組件功能已啟用
 	devtools: {enabled: true},
 	css: ['~/assets/css/main.css'],
+	imports: {
+    autoImport: true,
+  },
 	/*
 	Pinia plugins 必須要最之前執行。
 	ex 如果導入 pinia 插件是 plugins/api.ts，

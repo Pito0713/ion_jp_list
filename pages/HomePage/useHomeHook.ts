@@ -6,7 +6,7 @@ export function useHomeHook() {
 	const question = ref<{
 		_id?: string;
 		questionTagArray?: any[];
-		questionA?: string;
+		questionA?: string | null;
 		questionB?: string;
 	}>({}); // 題目
 	const answer = ref(''); // 答案
@@ -142,8 +142,8 @@ export function useHomeHook() {
         ex: 若い()人  -> partA: 若い( ,   partB: )人
       */
 			const indexOfPart = str.indexOf('()');
-			let partA = null;
-			let partB = null;
+			let partA: string | null = null;
+			let partB: string | null = null;
 			if (indexOfPart > -1) {
 				// indexOf 沒有值回傳 -1
 				partA = str.split('(')[0] + ` (`; // 以 ( 判斷為前段 A
