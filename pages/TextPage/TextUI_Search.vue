@@ -1,15 +1,18 @@
 <template lang="pug">
 Card(class='custom-container flex-col mt-3 fixed top-14 left-15 z-40')
   div(class='flex flex-row w-full' )
-    input(
-      :placeholder="$t('please_enter_word')" 
-      :value="propTextInput"  
-      class="flex-1"
-      @input="$emit('update:propTextInput', $event.target.value)"
-    )
+    div(class='flex border-2 border-primary-color rounded-md flex-1 justify-between')
+      input(
+        :placeholder="$t('please_enter_word')" 
+        :value="propTextInput"  
+        class=" border-none flex-1 outline-none"
+        @input="$emit('update:propTextInput', $event.target.value)"
+      )
+      div(@click='$emit("init-input")')
+        ImageFC(src='/img/one_click.png' :width='40' :height='40')
     LoadingBN(
       :text="'search'"
-      :customClass="'mx-2 px-5 flex-6'"
+      :customClass="'mx-2 px-5'"
       @click='$emit("init-Search")'
     )
   div(class='flex w-full justify-between')
@@ -38,6 +41,7 @@ defineProps({
 // $emit 事件
 defineEmits([
   'init-Search',
+  'init-input',
   'select-Tag',
   'update:propTextInput',
   'update:propSelect'

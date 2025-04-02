@@ -131,6 +131,11 @@ export function useTextHook() {
 		});
 	};
 
+	// 觸發清除輸入筐
+	const initInput = () => {
+		textInput.value = '';
+	};
+
 	// 監聽 selectOption , 若 select 有變動更新資料
 	watch(selectOption, (value, pre) => { 
 		if (pre !== value) handleInitSearch();
@@ -154,5 +159,6 @@ export function useTextHook() {
 		handleTag,
 		handleCopy,
 		handleScrollTo,
+		initInput,
 	};
 }
