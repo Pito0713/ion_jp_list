@@ -1,5 +1,5 @@
 <template lang="pug">
-LayoutsPage(class='h-vh flex justify-center items-center flex-col mt-40')
+LayoutsPage(class='h-vh flex justify-center items-center flex-col mt-2')
   LogInUI(
     v-model:propsAccount="account"
     v-model:propsPassword="password"
