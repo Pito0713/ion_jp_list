@@ -20,12 +20,12 @@ Card(class='custom-container flex-col mt-3 fixed top-14 left-15 z-40')
     div(class='flex')
       template(v-for='(item, index) in propTagArray' :key='item')
         Tag(@click='$emit("select-Tag", index)' :class='item.active && "bg-primary-color text-white"')
-          a(class='text-sm md:text-base' :class='item.active && "bg-primary-color text-white"') {{$t(item.name)}}
+          a(class='text-xs md:text-base' :class='item.active && "bg-primary-color text-white"') {{$t(item.name)}}
     select(
       name='sort' 
       id='sort'
       :value='propSelect'
-      class='flex border-2 w-38 rounded mt-2 mr-2 pl-1' 
+      class='flex border-2 w-30 rounded mt-2 mr-2 pl-1' 
       @change="$emit('update:propSelect', $event.target.value)"
     )
       option(v-for="item in SELECTIONS" :key="item.id" :value="item.name") {{ $t(item.name) }}    
