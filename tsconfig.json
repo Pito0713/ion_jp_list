@@ -1,4 +1,21 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
-  "extends": "./.nuxt/tsconfig.json"
+  "extends": "./.nuxt/tsconfig.json", //  Nuxt 內部配置
+  "compilerOptions": {
+    "strict": true, // 嚴格模式
+    "alwaysStrict": true,
+    "noImplicitAny": false, // 可用 any type
+    "strictNullChecks": true, // null/undefined checks
+    "strictFunctionTypes": true, // 嚴格函式模式
+    "types": [
+      "@types/node",
+      "@nuxt/types",
+      "nuxt/schema",
+      "nuxt/app",
+      "nuxt"
+    ],
+    "allowJs": true, // JS 檔案
+    "skipLibCheck": true, // 跳過類型檢查
+    "forceConsistentCasingInFileNames": true // 避免檔名大小寫錯誤
+  }
 }
