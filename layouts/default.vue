@@ -9,8 +9,8 @@ template(v-if="isLoggedIn")
             NuxtLinkLocale(to="/HomePage") {{$t('Home')}}
           div(class="w-24 font-bold flex justify-center items-center")
             NuxtLinkLocale(to="/TextPage") {{$t('TextList')}} 
-        div(class='flex')
-          select(name='language' id='language' v-model='localeLanguage' class='flex border-2 w-28 mr-8 p-1 rounded')
+        div(class='flex items-center')
+          select(name='language' id='language' v-model='localeLanguage' class='flex border-2 w-28 mr-8 p-1 rounded h-8')
             option(v-for="locale in locales" :key="locale.code" :value="locale.code") {{ locale.name }}    
           div(class="pr-4 flex justify-center items-center" @click='logOut()')
             ImageFC(src='/img/log_out.png' width='25' height='25')

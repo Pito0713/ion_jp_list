@@ -3,6 +3,8 @@ div
   VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
     form(@submit="handleSubmit($event, () => $emit('submit-login'))")
       Card(class='flex-col')
+        div(class='flex justify-center items-center mb-5')
+          ImageFC(src='/img/title_icon.png' width='200' height='200')
         VeeField(type="text" name="account" :modelValue='propsAccount' v-slot="{ field, value}")
           label {{$t('account')}}
           input(

@@ -3,7 +3,13 @@ export default defineNuxtConfig({
 	app: {
 		baseURL: '/',
 		head: {
-			title: "Nuxt - ION_JP_LIST"
+			title: "ION_JP_LIST",
+			meta: [
+				{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
+			],
+			link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      ],
 		},
 	},
 	ssr: true,
