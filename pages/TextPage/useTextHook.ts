@@ -115,7 +115,7 @@ export function useTextHook() {
 	const handleCopy = async (_text: string) => {
 		try {
 			await navigator.clipboard.writeText(_text);
-			store.ModalShow('success_copy'); // 彈窗文字
+			store.ModalShow('success_copy', 'copy_color') // 彈窗文字
 		} catch (err) {
 			store.ModalShow('fall_copy'); // 彈窗文字
 			console.error('fall_copy:', err);
