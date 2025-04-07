@@ -5,9 +5,9 @@ template(v-if="isLoggedIn")
     nav(class='custom-container bg-white')
       div(class='flex border-2 justify-between py-4')
         div(class='flex')
-          div(class="w-24 font-bold flex justify-center items-center")
+          div(class="w-20 font-bold flex justify-center items-center")
             NuxtLinkLocale(to="/HomePage") {{$t('Home')}}
-          div(class="w-24 font-bold flex justify-center items-center")
+          div(class="w-20 font-bold flex justify-center items-center")
             NuxtLinkLocale(to="/TextPage") {{$t('TextList')}} 
         div(class='flex')
           select(name='language' id='language' v-model='localeLanguage' class='flex border-2 w-28 mr-8 p-1 rounded')

@@ -6,7 +6,7 @@ VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
         Card(class='flex justify-center items-center flex-col mt-4')
           div(class='flex w-full')
             div(class='flex flex-col w-1/2 mr-2')
-              a(class='text-xl mb-2 font-bold') {{$t('words_Kanji')}}
+              a(class='text-base md:text-xl mb-2 font-bold') {{$t('words_Kanji')}}
               VeeField(name="text" type="text" :modelValue="propsTextInput" v-slot="{ field, value }")
                 input(
                   :placeholder="$t('please_enter_words_Kanji')"
@@ -17,7 +17,7 @@ VeeForm(v-slot="{ handleSubmit }" :validation-schema="schema" as="div")
                 )
               VeeErrorMessage(name="text" class='ml-2.5 w-full text-red-700 text-sm')
             div(class='flex flex-col w-1/2 mr-2')
-              a(class='text-xl mb-2 font-bold') {{`${$t('hiragana_words')}(${$t('optional')})`}}
+              a(class='text-base md:text-xl mb-2 font-bold') {{`${$t('hiragana_words')}(${$t('optional')})`}}
               input(
                 :placeholder="$t('please_enter_hiragana_words')"
                 class=' w-full text-lg'
