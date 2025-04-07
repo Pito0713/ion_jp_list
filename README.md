@@ -1,6 +1,6 @@
 # ION_JP_Frontend 文檔
 
-## 當前版本: [V1.0.20](###V1.0.20)
+## 當前版本: [V1.0.21](###V1.0.21)
 
 ## API 文檔
 
@@ -114,6 +114,20 @@ project/
 - `BUG` BUG分支：修改BUG錯誤。
 
 ## 版本
+
+### V1.0.21
+
+```
+新增 新 ts 設定
+新增 專案 icon
+新增 homePage 輸入框 input 新增一鍵清除
+
+調整 Modal 複製彈窗顏色
+調整 TextPage 修正InfiniteScroll 下拉捲動條會停滯問題
+
+BUG homePage 正確答案文字顏色
+BUG 字體螢幕大小超出問題
+```
 
 ### V1.0.20
 
