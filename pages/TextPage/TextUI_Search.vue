@@ -19,7 +19,7 @@ Card(class='custom-container flex-col mt-3 fixed top-14 left-15 z-40')
     div(class='flex')
       template(v-for='(item, index) in propTagArray' :key='item')
         Tag(@click='$emit("select-Tag", index)' :class='item.active && "bg-primary-color text-white"')
-          a(:class='item.active && "bg-primary-color text-white"') {{$t(item.name)}}
+          a(class='text-sm md:text-base' :class='item.active && "bg-primary-color text-white"') {{$t(item.name)}}
     select(
       name='sort' 
       id='sort'
