@@ -1,16 +1,17 @@
 <template lang="pug">
 Card(class='custom-container flex-col mt-3 fixed top-14 left-15 z-40')
   div(class='flex flex-row w-full' )
-    div(class='flex border-2 border-primary-color rounded-md flex-1 justify-between')
+    div(class='flex border-2 border-primary-color rounded-md justify-between w-32 flex-1')
       input(
         :placeholder="$t('please_enter_word')" 
         :value="propTextInput"  
-        class=" border-none flex-1 outline-none"
+        class=" border-none outline-none w-32 flex-1"
         @input="$emit('update:propTextInput', $event.target.value)"
       )
       div(@click='$emit("init-input")')
         ImageFC(src='/img/one_click.png' :width='40' :height='40')
     LoadingBN(
+      class='w-18 flex-3'
       :text="'search'"
       :customClass="'mx-2 px-5'"
       @click='$emit("init-Search")'
