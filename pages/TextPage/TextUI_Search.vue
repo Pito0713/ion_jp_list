@@ -1,5 +1,5 @@
 <template lang="pug">
-Card(class='custom-container flex-col mt-3 fixed top-14 left-15 z-40')
+Card(class='custom-container flex-col fixed top-14 left-15 z-40 mt-3 pb-4')
   div(class='flex flex-row w-full' )
     div(class='flex border-2 border-primary-color rounded-md justify-between w-32 flex-1')
       input(
