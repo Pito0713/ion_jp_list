@@ -1,14 +1,15 @@
 {
 	"name": "ion-jp-list",
 	"private": true,
-	"type": "commonjs",
+	"type": "module",
 	"scripts": {
 		"build": "nuxt build",
 		"setup": "rm -rf node_modules && yarn install && npm run generate",
 		"dev": "nuxt dev",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
-		"postinstall": "nuxt prepare"
+		"postinstall": "nuxt prepare",
+		"start": "node .output/server/index.mjs"
 	},
 	"dependencies": {
 		"@nuxtjs/i18n": "^9.1.0",

@@ -6,6 +6,9 @@ export default defineNuxtConfig({
 			title: "Nuxt - ION_JP_LIST"
 		},
 	},
+	devServer: {
+		host: '0.0.0.0',
+	},
 	ssr: true,
 	compatibilityDate: '2024-04-03',
 	components: true, // 確保自動加載組件功能已啟用

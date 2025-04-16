@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  nuxt-app:
+    container_name: nuxt3-dev
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3000
+      - NODE_ENV=development
+      - NEW_API_KEY=${NEW_API_KEY}
+      - ENV_DEV_DOMAIN=${ENV_DEV_DOMAIN}
+      - ENV_PRODUCTION_DOMAIN=${ENV_PRODUCTION_DOMAIN}
+    command: npm run dev
