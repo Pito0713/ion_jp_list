@@ -13,7 +13,7 @@
 	"register": "Register",
 	"required": "This field is required",
 	"password_inconsistent_please_re_enter": "Passwords are inconsistent, please re-enter",
-	"single_word": "Single Word",
+	"single_word": "Word",
 	"single_word_translate": "Single Word Translation",
 	"please_enter_word": "Please enter word",
 	"please_enter_word_translate": "Please enter word Translation",
@@ -61,5 +61,12 @@
 	"last_updated_reverse": "Oldest to Newest",
 	"no_more_data": "No more data",
 	"loading": "Loading",
-	"please_add_at_least_4": "Please add vocabulary first, at least 4 for each part of speech."
+	"please_add_at_least_4": "Please add vocabulary first, at least 4 for each part of speech.",
+  "grammar": "Grammar",
+	"grammar_text": "Grammar Text",
+	"grammar_translation": "Grammar Translation",
+	"example_sentence": "Example Sentence",
+	"please_enter_grammar_text" : "Please enter grammar text",
+	"please_enter_grammar_translation" : "Please enter grammar translation",
+	"please_enter_example_sentence" : "Please enter an example sentence"
 }

@@ -11,6 +11,7 @@ export function useHomeHook() {
 	}>({}); // 題目
 	const answer = ref(''); // 答案
 	const selectedAnswerId = ref(''); // 答案 object id
+	const quizType = ref(''); // 題目型別
 	const isSubmit = ref(false); // 提交按鈕 for disabled
 	const loading = ref(false); // 載入中
 	const isEmptyData = ref(false); // 載入中
@@ -45,6 +46,7 @@ export function useHomeHook() {
 			_id: question.value._id, // 題目的 object id
 			file: answer.value, // 使用者提交的答案
 			extraId: JSON.stringify(question.value.questionTagArray), // 全部選項 id
+			type: quizType.value
 		};
 		let res = await $api.answerQuiz(submitData);
 
@@ -66,35 +68,52 @@ export function useHomeHook() {
         2. 若對應 id reset 並將平假和翻譯 ex: 若い (わかい) 年輕的 
         3. correct answer to (O) , error answer to (X)
       */
-			question.value.questionTagArray?.forEach((item, index) => {
-				let target = question.value.questionTagArray
-					? question.value.questionTagArray[index]
-					: null;
-				let targetTranslation = fileAnswerTranslation.find((e: any) => {
-					return target?._id === e._id;
-				}); // 找到對應 api 回傳選項翻譯資料
-				// reset to new file ex: 若い (わかい) 年輕的
-				let resetAnswerFile = `${targetTranslation.file}     ${targetTranslation?.fileHiragana ? `(${targetTranslation?.fileHiragana})` : ''} ${targetTranslation?.fileTranslate || ''} `;
+			if( res.data.type === 'grammar' ){
+				question.value.questionTagArray?.forEach((item, index) => {
+					let target = question.value.questionTagArray
+						? question.value.questionTagArray[index]
+						: null;
+					let targetTranslation = fileAnswerTranslation.find((e: any) => {
+						return target?._id === e._id;
+					}); // 找到對應 api 回傳選項翻譯資料
+					// reset to new file ex: 若い (わかい) 年輕的
+					let resetAnswerFile = `${targetTranslation.grammarInput}   (${targetTranslation?.grammarTransInput}) `;
 
-				if (item.file == correctAnswerFile.file) {
-					target.file = resetAnswerFile + ` (O)`; // 正確的
-					target.correct = true;
-				} else {
-					target.file = resetAnswerFile + ` (X)`; // 錯誤的
-					target.correct = false;
-				}
-			});
+					if (item.file == correctAnswerFile.grammarInput) {
+						target.file = resetAnswerFile + ` (O)`; // 正確的
+						target.correct = true;
+					} else target.file = resetAnswerFile + ` (X)`; // 錯誤的
+				});
+			}
+			if( res.data.type === 'text' ){
+				question.value.questionTagArray?.forEach((item, index) => {
+					let target = question.value.questionTagArray
+						? question.value.questionTagArray[index]
+						: null;
+					let targetTranslation = fileAnswerTranslation.find((e: any) => {
+						return target?._id === e._id;
+					}); // 找到對應 api 回傳選項翻譯資料
+					// reset to new file ex: 若い (わかい) 年輕的
+					let resetAnswerFile = `${targetTranslation.file}     ${targetTranslation?.fileHiragana ? `(${targetTranslation?.fileHiragana})` : ''} ${targetTranslation?.fileTranslate || ''} `;
+
+					if (item.file == correctAnswerFile.file) {
+						target.file = resetAnswerFile + ` (O)`; // 正確的
+						target.correct = true;
+					} else target.file = resetAnswerFile + ` (X)`; // 錯誤的
+				});
+			}
 
 			// @Cookies untilSecondsDay: 限制只到12點
 			let dailyText = useCookie('dailyText', {maxAge: untilSecondsDay});
 
-			if (!dailyText.value) dailyText.value = JSON.stringify([correctAnswerFile._id]);
+			if (!dailyText.value) dailyText.value = JSON.stringify([{_id: correctAnswerFile._id, type: res.data.type}]);
 			else {
 				let dailyArray = JSON.parse(JSON.stringify(dailyText.value)); // 解析
 				// unshift() 方法會添加一個或多個元素至陣列的開頭，並且回傳陣列的新長度。
-				dailyArray.unshift(correctAnswerFile._id);
+				dailyArray.unshift({_id: correctAnswerFile._id, type: res.data.type});
 				dailyText.value = JSON.stringify(dailyArray);
 			}
+
 
 			await nextTick(); // 等待 DOM 更新
 			answerDaily(); // 更新每日回答題目
@@ -135,7 +154,7 @@ export function useHomeHook() {
 			let str = target.data.question;
 
 			/*
-        整理理問題框內容, 若問題框有 () 將 () 分割
+        整理理問題框內容, 若問題框有 () 將 () 分
         按照 ( ) 前後將句子分成兩段
         邏輯: 
         1. indexOf() indexOfPart 查找若是否 () 
@@ -163,6 +182,7 @@ export function useHomeHook() {
 				questionB: partB ? partB : '', // 若問題中沒有 )直接回傳 空值
 				questionTagArray: target.data.randomTagTestArray,
 			};
+			quizType.value = target.data?.type
 		}
 		loading.value = false;
 		loadingIndicator.finish();
@@ -175,7 +195,7 @@ export function useHomeHook() {
 	const handleCopy = async (_text: string) => {
 		try {
 			await navigator.clipboard.writeText(_text);
-			store.ModalShow('success_copy', 'copy_color') // 彈窗文字
+			store.ModalShow('success_copy'); // 彈窗文字
 		} catch (err) {
 			store.ModalShow('fall_copy'); // 彈窗文字
 			console.error('fall_copy:', err);
@@ -183,13 +203,27 @@ export function useHomeHook() {
 	};
 
 	// @Api editTextShowTop 更新是否置頂
-	const showTop = async (item: {_id: string; isShowTop: boolean}) => {
+	const editTextShowTop = async (item: {_id: string; isShowTop: boolean}) => {
 		let submitData = {
 			_id: item._id, // _id of object
 			isShowTop: !item.isShowTop, // 是否置頂
 		};
 
 		const response = await $api.editTextShowTop(submitData);
+		// success
+		if (response.status === 1) {
+			await answerDaily();
+		}
+	};
+
+	// @Api editTextShowTop 更新是否置頂
+	const editGrammarShowTop = async (item: {_id: string; isShowTop: boolean}) => {
+		let submitData = {
+			_id: item._id, // _id of object
+			isShowTop: !item.isShowTop, // 是否置頂
+		};
+
+		const response = await $api.editGrammarShowTop(submitData);
 		// success
 		if (response.status === 1) {
 			await answerDaily();
@@ -209,7 +243,8 @@ export function useHomeHook() {
 		changeTextQuiz,
 		callTextQuiz,
 		handleCopy,
-		showTop,
+		editTextShowTop,
+		editGrammarShowTop,
 		answerDaily,
 	};
 }

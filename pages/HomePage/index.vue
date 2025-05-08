@@ -14,7 +14,8 @@ LayoutsPage(class='flex h-vh flex-col')
   ListUI(
     :homeList="homeList"
     @handle-copy='handleCopy'
-    @show-top='showTop'
+    @showText-top='editTextShowTop'
+    @showGrammar-top='editGrammarShowTop'
   )
 
 </template>
@@ -37,7 +38,8 @@ const {
   changeTextQuiz,
   callTextQuiz,
   handleCopy,
-  showTop,
+  editTextShowTop,
+  editGrammarShowTop,
   answerDaily,
   isEmptyData,
 } = useHomeHook()
@@ -64,7 +66,7 @@ defineExpose({
   handleSubmit,
   changeTextQuiz,
   handleCopy,
-  showTop,
+  editTextShowTop,
 })
 
 </script>

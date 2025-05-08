@@ -60,5 +60,12 @@
 	"last_updated_reverse": "更新日期早到晚",
 	"no_more_data": "沒有資料",
 	"loading": "載入中",
-	"please_add_at_least_4": "請先新增單字，至少每詞性各4筆"
+	"please_add_at_least_4": "請先新增單字，至少每詞性各4筆",
+	"grammar": "文法",
+	"grammar_text": "文法單字",
+	"grammar_translation": "文法翻譯",
+	"example_sentence": "例句",
+	"please_enter_grammar_text" : "請輸入文法單字",
+	"please_enter_grammar_translation" : "請輸入文法翻譯",
+	"please_enter_example_sentence" : "請輸入例句"
 }

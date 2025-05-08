@@ -1,28 +1,30 @@
 <template lang="pug">
-Modal
-template(v-if="isLoggedIn")
-  div(class='flex justify-center items-center flex-col fixed z-40 w-dvw')
-    nav(class='custom-container bg-white')
-      div(class='flex border-2 justify-between py-4')
-        div(class='flex')
-          div(class="w-20 font-bold flex justify-center items-center")
-            NuxtLinkLocale(to="/HomePage") {{$t('Home')}}
-          div(class="w-20 font-bold flex justify-center items-center")
-            NuxtLinkLocale(to="/TextPage") {{$t('TextList')}} 
-        div(class='flex items-center')
-          select(name='language' id='language' v-model='localeLanguage' class='flex border-2 w-28 mr-8 p-1 rounded h-8')
-            option(v-for="locale in locales" :key="locale.code" :value="locale.code") {{ locale.name }}    
-          div(class="pr-4 flex justify-center items-center" @click='logOut()')
-            ImageFC(src='/img/log_out.png' width='25' height='25')
-div(class="h-14 bg-gray-200")
-div(class='flex justify-center items-center flex-col w-svw')
-  div(class='custom-layout w-dvw')
-    main(class='relative custom-container ')
-      NuxtPage
-</template>
+  Modal
+  template(v-if="isLoggedIn")
+    div(class='flex justify-center items-center flex-col fixed z-40 w-dvw')
+      nav(class='custom-container bg-white')
+        div(class='flex border-2 justify-between py-4')
+          div(class='flex')
+            div(class="w-16 font-bold flex justify-center items-center ml-4")
+              NuxtLinkLocale(to="/HomePage") {{$t('Home')}}
+            div(class="w-16 font-bold flex justify-center items-center ")
+              NuxtLinkLocale(to="/TextPage") {{$t('single_word')}}
+            div(class="w-16 font-bold flex justify-center items-center")
+              NuxtLinkLocale(to="/GrammarPage") {{$t('grammar')}} 
+          div(class='flex')
+            select(name='language' id='language' v-model='localeLanguage' class='flex border-2 w-24 mr-4 p-1 rounded')
+              option(v-for="locale in locales" :key="locale.code" :value="locale.code") {{ locale.name }}    
+            div(class="pr-4 flex justify-center items-center" @click='logOut()')
+              ImageFC(src='/img/log_out.png' width='25' height='25')
+  div(class="h-14 bg-gray-200")
+  div(class='flex justify-center items-center flex-col w-svw')
+    div(class='custom-layout w-dvw')
+      main(class='relative custom-container ')
+        NuxtPage
+  </template>
 
 <script setup>
-import { ref, reactive, onMounted, watch, computed, defineComponent } from 'vue'
+import { ref, onMounted, watch, defineComponent } from 'vue'
 // ------- router
 const router = useRouter()
 const route = useRoute()

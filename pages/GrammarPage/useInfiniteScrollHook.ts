@@ -1,19 +1,13 @@
-interface Tag {
-	name: string;
-	active: false;
-}
 interface List {
 	data: any[];
 }
 
 export function useInfiniteScrollHook(
 	textInput: {value: string},
-	tagArray: {value: Tag[]}, // interface ts
 	currentPageNumber: {value: number},
 	pageSize: {value: number},
 	List: List, // interface ts
 	isPrev: {value: boolean},
-	selectOption: {value: string},
 	isCallTopUP: {value: boolean},
 	totalCount: {value: number},
 	init: {value: boolean},
@@ -25,18 +19,16 @@ export function useInfiniteScrollHook(
 	const loadingIndicator = useLoadingIndicator();
 	const isTopUP = ref(false); // 是否顯示置頂功能
 
-	// @api /searchText  下拉更多搜尋
+	// @api /searchGrammar  文法搜尋
 	const searchMoreData = async () => {
 		loadingIndicator.start();
 		let submitData = {
 			searchValue: textInput.value,
-			tags: tagArray.value.filter((item) => item.active).map((item) => item.name), // 選擇篩選出有激活啟用的 tag 詞語資料
 			pageNumber: currentPageNumber.value,
 			pageSize: pageSize.value,
-			sortValue: selectOption.value,
 		};
 
-		const response = await $api.searchText(submitData);
+		const response = await $api.searchGrammar(submitData);
 		// success
 		if (response.status === 1) {
 			/*      
@@ -71,22 +63,21 @@ export function useInfiniteScrollHook(
 		loadingIndicator.finish();
 	};
 
-	// @api /searchText  上拉更多搜尋
+	// @api /searchGrammar  上拉更多搜尋
 	const searchPrevData = async () => {
 		loadingIndicator.start(); // loading 條觸發
 		let submitData = {
 			searchValue: textInput.value,
-			tags: tagArray.value.filter((item) => item.active).map((item) => item.name), // 選擇篩選出有激活啟用的 tag 詞語資料
 			pageNumber: currentPageNumber.value,
-			pageSize: pageSize.value,
-			sortValue: selectOption.value,
+			pageSize: pageSize.value
 		};
 
-		const response = await $api.searchText(submitData);
+		const response = await $api.searchGrammar(submitData);
 		// success
 		if (response.status === 1) {
 			if (List.data.length > 0) {
 				// unshift() 方法會添加一個或多個元素至陣列的開頭，並且回傳陣列的新長度。
+				// 若筆數沒有超過30 造成資料重複堆疊
 				if(response.total > 30) List.data.unshift(...response.data);
 				await nextTick(); // 等待 DOM 更新
 			}
