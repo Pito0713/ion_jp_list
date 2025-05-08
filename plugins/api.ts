@@ -7,7 +7,7 @@ export default defineNuxtPlugin(() => {
   env = ENV_PRODUCTION_DOMAIN & ENV_DEV_DOMAIN
 	Authorization requires token
 	*/
-	const env = config.public.ENV_PRODUCTION_DOMAIN;
+	const env = config.public.ENV_DEV_DOMAIN;
 	axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 	axios.defaults.baseURL = env;
 	// 請求
@@ -33,20 +33,23 @@ export default defineNuxtPlugin(() => {
 		};
 
 		interface searchText {
-			file: string;
 			inputs: string;
-			translation: string;
+			extraTextInputs: string;
 		}
 
 		let target = response?.data;
 		if (target?.status === 1) {
 			// 判斷 指定路由資料調整
-			if (response?.config?.url === '/searchText') {
+			if ( ['/searchText', '/searchGrammar' ].includes(response?.config?.url)) {
 				target?.data.forEach((item: searchText) => {
 					try {
-						if (isJSON(item.inputs)) {
+						if (isJSON(item.inputs) && response?.config?.url === '/searchText') {
 							// 將 inputs 轉換成 JSON 格式數據
 							item.inputs = JSON.parse(item.inputs);
+						}
+						if (isJSON(item.extraTextInputs) && response?.config?.url === '/searchGrammar') {
+							// 將 inputs 轉換成 JSON 格式數據
+							item.extraTextInputs = JSON.parse(item.extraTextInputs);
 						}
 					} catch (error) {
 						console.log('解析失敗，非 JSON 格式：');
@@ -143,7 +146,22 @@ export default defineNuxtPlugin(() => {
 		tags?: string[]; // 定義 tags 是一個字串陣列
 		isShowTop?: boolean;
 		selectId?: string; // 定義 tags 是一個字串陣列
+		pageNumber?: number,
+		pageSize?: number,
 	}
+
+	interface grammar {
+		_id?: string;
+		grammarInput?: string;
+		grammarTransInput?: string;
+		extraTextInputs?: string;
+		sentenceInput?: string;
+		searchValue?: string;
+		isShowTop?: boolean;
+		pageNumber?: number,
+		pageSize?: number,
+	}
+
 	// ------------- user -------------
 	// @user/ 註冊
 	const register = async (submitData: log) => {
@@ -255,6 +273,63 @@ export default defineNuxtPlugin(() => {
 		return data;
 	};
 
+	// ------------- grammar -------------
+
+	// @grammar/ 文法搜尋
+	const searchGrammar = async (submitData: grammar) => {
+		let data = await fetchApi_Params({
+			method: 'GET',
+			url: '/searchGrammar',
+			params: submitData,
+		});
+		return data;
+	};
+
+	// @grammar/ 新增文法
+	const addGrammar = async (submitData: grammar) => {
+		let data = await fetchApi_Data({
+			method: 'POST',
+			url: '/addGrammar',
+			body: submitData,
+		});
+		return data;
+	};
+
+	// @grammar 文法是否置頂
+	const editGrammarShowTop = async (submitData: grammar) => {
+		let data = await fetchApi_Data({
+			method: 'POST',
+			url: '/editGrammarShowTop',
+			body: submitData,
+		});
+		return data;
+	};
+
+	// @grammar/ 修改文法
+	const editGrammar = async (submitData: grammar) => {
+		let data = await fetchApi_Data({
+			method: 'POST',
+			url: '/editGrammar',
+			body: submitData,
+		});
+		return data;
+	};
+
+	/*@grammar 刪除單個文法文本
+	  @param _id {String} */
+		const deleteOneGrammar = async (submitData: grammar) => {
+			let params = {
+				_id: submitData._id,
+			};
+			let data = await fetchApi_Params({
+				method: 'DELETE',
+				url: '/deleteOneGrammar',
+				params: params,
+			});
+			return data;
+		};
+
+
 	return {
 		provide: {
 			api: {
@@ -268,6 +343,11 @@ export default defineNuxtPlugin(() => {
 				textQuiz,
 				answerQuiz,
 				answerDaily,
+				searchGrammar,
+				addGrammar,
+				editGrammar,
+				editGrammarShowTop,
+				deleteOneGrammar
 			},
 		},
 	};

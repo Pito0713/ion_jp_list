@@ -1,55 +1,46 @@
 <template lang="pug">
-  LayoutsPage(class='relative w-full' )
-    TextUI_Search(
-      v-model:propTextInput="textInput"
-      v-model:propSelect="selectOption"
-      :propTagArray="tagArray"
-      :SELECTIONS='SELECTIONS'
-      @select-Tag="handleTag"
-      @init-Search="handleInitSearch"
-    )
-    TextUI_List(
-      :propIsTopUP='isTopUP'
-      :propList='List'
-      :propHasMoreData='hasMoreData'
-      :propInit='init'
-      :propTotalCount='totalCount'
-      @scroll-To='handleScrollTo'
-      @copy-text="handleCopy"
-      @show-top="handleShowTop"
-    )
-  </template>
-
+LayoutsPage(class='')
+  GrammarUI_Search(
+    v-model:propTextInput="textInput"
+    @init-Search="handleInitSearch"
+  )
+  GrammarUI_List(
+    :propIsTopUP='isTopUP'
+    :propList='List'
+    :propHasMoreData='hasMoreData'
+    :propInit='init'
+    :propTotalCount='totalCount'
+    @scroll-To='handleScrollTo'
+    @copy-text="handleCopy"
+    @show-top="handleShowTop"
+  )
+</template>
 <script setup>
-// @自定義 hook
-import { useTextHook } from './useTextHook'
-import { useInfiniteScrollHook } from './useInfiniteScrollHook'
 // @自定義 UI
 import LayoutsPage from '../../layouts/LayoutsPage.vue'
-import TextUI_Search from './TextUI_Search.vue'
-import TextUI_List from './TextUI_List.vue'
-import { SELECTIONS } from './config'
+import GrammarUI_List from './GrammarUI_List.vue'
+import GrammarUI_Search from './GrammarUI_Search'
+// @自定義 Hook
+import { useGrammarHook } from './useGrammarHook'
+import { useInfiniteScrollHook } from './useInfiniteScrollHook'
 
-// 解構 useTextHook 
+// 解構 useGrammarHook 
 const {
   init,
   textInput,
-  tagArray,
   List,
   isCallTopUP,
   isPrev,
   currentPageNumber,
   pageSize,
   totalCount,
-  selectOption,
   hasMoreData,
   handleInitSearch,
-  handleTag,
   handleCopy,
   handleShowTop,
   initSearch,
   handleScrollTo
-} = useTextHook();
+} = useGrammarHook()
 
 // 解構 無限捲動 useInfiniteScrollHook
 const {
@@ -58,12 +49,10 @@ const {
   topUpObserve,
 } = useInfiniteScrollHook(
   textInput,
-  tagArray,
   currentPageNumber,
   pageSize,
   List,
   isPrev,
-  selectOption,
   isCallTopUP,
   totalCount,
   init,
@@ -95,17 +84,18 @@ onBeforeUnmount(() => {
     topUp = null; // 設為 null 防止內存洩漏
   }
 })
-defineComponent({
-  components: { LayoutsPage, TextUI_Search, TextUI_List },
-})
+
 defineExpose({
   isTopUP,
   hasMoreData,
-  SELECTIONS,
-  handleTag,
   handleCopy,
   handleShowTop,
   handleScrollTo
+})
+
+
+defineComponent({
+  components: { LayoutsPage, GrammarUI_List, GrammarUI_Search },
 })
 
 </script>

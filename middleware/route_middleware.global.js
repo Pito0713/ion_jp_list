@@ -27,7 +27,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const unAuthRoutes = [...new Set(
     unAuth.flatMap((e) => { return allRouter.filter(route => route.includes(e)) })
   )];
-  const Auth = ['HomePage', 'TextPage', 'AddTextPage', 'EditTextPage'] // auth routes
+  const Auth = ['HomePage', 'TextPage', 'AddTextPage', 'EditTextPage', 'GrammarPage', 'EditGrammarPage', 'AddGrammarPage'] // auth routes
   const AuthRoutes = [...new Set(
     Auth.flatMap((e) => { return allRouter.filter(route => route.includes(e)) })
   )];
