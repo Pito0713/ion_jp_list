@@ -1,6 +1,6 @@
 # ION_JP_Frontend 文檔
 
-## 當前版本: [V1.0.21](###V1.0.21)
+## 當前版本: [V1.1.0](###V1.1.0)
 
 ## API 文檔
 
@@ -10,13 +10,13 @@
 
 ## 專案
 
-建立一個日文單字筆記操作網頁專案, 可輸入
+建立一個日文單字 & 文法筆記操作網頁專案, 可輸入
 
-1. 日文單字
-2. 單字漢字 & 平假名
+1. 日文單字 & 文法
+2. 單字漢字 & 平假名 & 文法
 3. 例句
 4. 補充額外單字
-5. 隨機單字考題
+5. 隨機單字 & 文法考題
 
 ## 技術
 
@@ -36,62 +36,77 @@
 
 ```
 project/
-├── assets/                 # 靜態資源
-│   └── css                 # Tailwindcss custom css
-├── components/             # 共用子件
-│   └── global              # 全域使用
-├── i18/                    # 語言翻譯
-│   ├── en.json             # 英文
-│   ├── jp.json             # 日文
-│   ├── zhHant.json         # 簡體中文
-│   └── zhTW.json           # 繁體中文
-├── layouts/                # 頁面佈局子件
-├── middleware/             # 中介
-│   └── route_middleware    # 路由中介
-├── pages/                  # 頁面
-│   ├── LogInPage           # 登入頁
-│   │   ├── LogInUI         # 登入頁 UI
-│   │   ├── useLogInHook    # 登入頁 邏輯
-│   │   └── index           # 登入頁 主頁
-│   ├── Register            # 註冊頁
-│   │   ├── RegisterUI      # 註冊頁 UI
-│   │   ├── useRegisterHook # 註冊頁 邏輯
-│   │   └── index           # 註冊頁 主頁
-│   ├── AddTextPage         # 新增單字 功能頁
-│   │   ├── addTextUI       # 新增單字 UI
-│   │   ├── useAddTextHook  # 新增單字 邏輯
-│   │   └── index           # 新增單字 主頁
-│   ├── EditTextPage        # 修改單字 功能頁
-│   │   ├── EditTextUI      # 修改單字 UI
-│   │   ├── useEditTextHook # 修改單字 邏輯
-│   │   └── index           # 修改單字 主頁
-│   ├── TextPage            # 單字 功能頁
-│   │   ├── TextUI_List     # 單字 清單 UI
-│   │   ├── TextUI_Search   # 單字 搜尋 UI
-│   │   ├── useTextHook     # 單字 邏輯
-│   │   ├── useInfiniteScrollHook # 無限捲動 邏輯
-│   │   └── index           # 單字 主頁
-│   └── HomePage            # 首頁
-│       ├── HomeUI          # 首頁 UI
-│       ├── ListUI          # 首頁 UI
-│       ├── useHomeHook     # 首頁 邏輯
-│       ├── LoadingSkeleton # 載入動畫 組件
-│       └── index           # 首頁 主頁
-├── plugins/                # Nuxt 插件
-│   ├── api                 # Api 功能
-│   ├── configUtils         # 共用邏輯設定 功能
-│   ├── auth                # token 驗證
-│   └── nav                 # 導航欄 驗證
-├── public/                 # 公共資源
-│   └── img                 # 圖片
-├── store/                  # Pinia 狀態管理
-│   └── modalStore          # Modal 彈窗
-├── utils/                  # 工具函數
-│   └── errorCodes          # errorCode 文字轉換
-├── .env                    # 環境變數
-├── nuxt.config.ts          # Nuxt 配置
-├── tailwind.config         # tailwind 配置
-└── package.json            # 項目依賴
+├── assets/                         # 靜態資源
+│   └── css                         # Tailwindcss custom css
+├── components/                     # 共用子件
+│   └── global                      # 全域使用
+├── i18/                            # 語言翻譯
+│   ├── en.json                     # 英文
+│   ├── jp.json                     # 日文
+│   ├── zhHant.json                 # 簡體中文
+│   └── zhTW.json                   #    繁體中文
+├── layouts/                        # 頁面佈局子件
+├── middleware/                     # 中介
+│   └── route_middleware            # 路由中介
+├── pages/                          # 頁面
+│   ├── AddGrammarPage              # 新增文法 功能頁
+│   │   ├── AddGrammarUI            # 新增文法 UI
+│   │   ├── useAddGrammarHook       # 新增文法 邏輯
+│   │   └── index                   # 新增文法 主頁
+│   ├── EditGrammarPage             # 修改文法 功能頁
+│   │   ├── EditGrammarUI           # 修改文法 UI
+│   │   ├── useEditGrammarHook      # 修改文法 邏輯
+│   │   └── index                   # 修改文法 主頁
+│   ├── TextPage                    # 文法 功能頁
+│   │   ├── GrammarUI_List          # 文法 清單 UI
+│   │   ├── GrammarUI_Search        # 文法 搜尋 UI
+│   │   ├── useGrammarHook          # 文法 邏輯
+│   │   ├── useInfiniteScrollHook   # 無限捲動 邏輯
+│   │   └── index                   # 文法 主頁
+│   ├── LogInPage                   # 登入頁
+│   │   ├── LogInUI                 # 登入頁 UI
+│   │   ├── useLogInHook            # 登入頁 邏輯
+│   │   └── index                   # 登入頁 主頁
+│   ├── Register                    # 註冊頁
+│   │   ├── RegisterUI              # 註冊頁 UI
+│   │   ├── useRegisterHook         # 註冊頁 邏輯
+│   │   └── index                   # 註冊頁 主頁
+│   ├── AddTextPage                 # 新增單字 功能頁
+│   │   ├── addTextUI               # 新增單字 UI
+│   │   ├── useAddTextHook          # 新增單字 邏輯
+│   │   └── index                   # 新增單字 主頁
+│   ├── EditTextPage                # 修改單字 功能頁
+│   │   ├── EditTextUI              # 修改單字 UI
+│   │   ├── useEditTextHook         # 修改單字 邏輯
+│   │   └── index                   # 修改單字 主頁
+│   ├── TextPage                    # 單字 功能頁
+│   │   ├── config                  # 單字 設定檔
+│   │   ├── TextUI_List             # 單字 清單 UI
+│   │   ├── TextUI_Search           # 單字 搜尋 UI
+│   │   ├── useTextHook             # 單字 邏輯
+│   │   ├── useInfiniteScrollHook   # 無限捲動 邏輯
+│   │   └── index                   # 單字 主頁
+│   └── HomePage                    # 首頁
+│       ├── HomeUI                  # 首頁 UI
+│       ├── ListUI                  # 首頁 UI
+│       ├── useHomeHook             # 首頁 邏輯
+│       ├── LoadingSkeleton         # 載入動畫 組件
+│       └── index                   # 首頁 主頁
+├── plugins/                        # Nuxt 插件
+│   ├── api                         # Api 功能
+│   ├── configUtils                 # 共用邏輯設定 功能
+│   ├── auth                        # token 驗證
+│   └── nav                         # 導航欄 驗證
+├── public/                         # 公共資源
+│   └── img                         # 圖片
+├── store/                          # Pinia 狀態管理
+│   └── modalStore                  # Modal 彈窗
+├── utils/                          # 工具函數
+│   └── errorCodes                  # errorCode 文字轉換
+├── .env                            # 環境變數
+├── nuxt.config.ts                  # Nuxt 配置
+├── tailwind.config                 # tailwind 配置
+└── package.json                    # 項目依賴
 ```
 
 ## 開發規範
@@ -114,6 +129,20 @@ project/
 - `BUG` BUG分支：修改BUG錯誤。
 
 ## 版本
+
+### V1.1.0
+
+```
+新增 文法 頁面
+新增 文法相關 API 
+
+調整 Modal 格式移除多餘程式碼
+調整 TextPage 參數格式新增文法 type 判斷
+調整 HomePage 參數格式新增文法 type 判斷
+調整 layout 新增 文法 頁籤
+調整 middlware 新增 文法 白名單
+調整 TextPage 單字小卡樣式
+```
 
 ### V1.0.21
 
