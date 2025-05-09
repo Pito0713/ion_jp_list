@@ -51,7 +51,7 @@ export default defineNuxtConfig({
 			NEW_API_KEY: process.env.NEW_API_KEY || 'secret-key',
 			ENV_DEV_DOMAIN: process.env.ENV_DEV_DOMAIN || 'http://localhost:8080',
 			ENV_PRODUCTION_DOMAIN: process.env.ENV_PRODUCTION_DOMAIN || 'http://localhost:8080',
-			appVersion: 'V1.0.21',
+			appVersion: 'V1.1.0',
 		},
 		private: {
 			// secretKey: process.env.NEW_API_KEY || 'secret-key',
