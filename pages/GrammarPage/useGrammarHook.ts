@@ -89,7 +89,7 @@ export function useGrammarHook() {
 	const handleCopy = async (_text: string) => {
 		try {
 			await navigator.clipboard.writeText(_text);
-			store.ModalShow('success_copy'); // 彈窗文字
+			store.ModalShow('success_copy', 'copy_color') // 彈窗文字
 		} catch (err) {
 			store.ModalShow('fall_copy'); // 彈窗文字
 			console.error('fall_copy:', err);
@@ -105,6 +105,10 @@ export function useGrammarHook() {
 		});
 	};
 
+	// 觸發清除輸入筐
+	const initInput = () => {
+		textInput.value = '';
+	};
 
 	return {
 		init,
@@ -121,5 +125,6 @@ export function useGrammarHook() {
 		handleInitSearch,
 		handleCopy,
 		handleScrollTo,
+		initInput,
 	};
 }

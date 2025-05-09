@@ -3,6 +3,7 @@ LayoutsPage(class='')
   GrammarUI_Search(
     v-model:propTextInput="textInput"
     @init-Search="handleInitSearch"
+    @init-input="initInput"
   )
   GrammarUI_List(
     :propIsTopUP='isTopUP'
@@ -39,7 +40,8 @@ const {
   handleCopy,
   handleShowTop,
   initSearch,
-  handleScrollTo
+  handleScrollTo,
+  initInput
 } = useGrammarHook()
 
 // 解構 無限捲動 useInfiniteScrollHook
@@ -90,7 +92,8 @@ defineExpose({
   hasMoreData,
   handleCopy,
   handleShowTop,
-  handleScrollTo
+  handleScrollTo,
+  initInput
 })
 
 

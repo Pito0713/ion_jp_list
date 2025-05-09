@@ -1,6 +1,6 @@
 <template lang="pug">
   div(class='relative flex justify-center items-center flex-col pb-16' id='scroll-container')
-    div(class='w-full flex h-32 mb-2' id='topUpElement')
+    div(class='w-full flex h-28 mb-2' id='topUpElement')
     div(v-if='propIsTopUP' class='fixed w-10 h-10 bottom-20 right-6 md:right-1/2 md:translate-x-72' @click='$emit("scroll-To")')
       ImageFC(src='/img/topup_arrow.png' :width='35' :height='20')
     div(class='fixed w-12 h-12 bottom-4 right-6 md:right-1/2 md:translate-x-72')

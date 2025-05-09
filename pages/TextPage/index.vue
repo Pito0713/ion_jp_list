@@ -7,6 +7,7 @@
       :SELECTIONS='SELECTIONS'
       @select-Tag="handleTag"
       @init-Search="handleInitSearch"
+      @init-input="initInput"
     )
     TextUI_List(
       :propIsTopUP='isTopUP'
@@ -48,7 +49,8 @@ const {
   handleCopy,
   handleShowTop,
   initSearch,
-  handleScrollTo
+  handleScrollTo,
+  initInput
 } = useTextHook();
 
 // 解構 無限捲動 useInfiniteScrollHook
@@ -105,7 +107,8 @@ defineExpose({
   handleTag,
   handleCopy,
   handleShowTop,
-  handleScrollTo
+  handleScrollTo,
+  initInput
 })
 
 </script>

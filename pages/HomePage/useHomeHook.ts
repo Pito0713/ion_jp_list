@@ -82,7 +82,10 @@ export function useHomeHook() {
 					if (item.file == correctAnswerFile.grammarInput) {
 						target.file = resetAnswerFile + ` (O)`; // 正確的
 						target.correct = true;
-					} else target.file = resetAnswerFile + ` (X)`; // 錯誤的
+					} else {
+						target.file = resetAnswerFile + ` (X)`; // 錯誤的
+						target.correct = false;
+					}
 				});
 			}
 			if( res.data.type === 'text' ){
@@ -195,7 +198,7 @@ export function useHomeHook() {
 	const handleCopy = async (_text: string) => {
 		try {
 			await navigator.clipboard.writeText(_text);
-			store.ModalShow('success_copy'); // 彈窗文字
+			store.ModalShow('success_copy', 'copy_color') // 彈窗文字
 		} catch (err) {
 			store.ModalShow('fall_copy'); // 彈窗文字
 			console.error('fall_copy:', err);

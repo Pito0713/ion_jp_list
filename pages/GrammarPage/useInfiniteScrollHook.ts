@@ -18,6 +18,7 @@ export function useInfiniteScrollHook(
 	const {$api} = useNuxtApp();
 	const loadingIndicator = useLoadingIndicator();
 	const isTopUP = ref(false); // 是否顯示置頂功能
+	const prevHeight = ref(0); // 前一段長度
 
 	// @api /searchGrammar  文法搜尋
 	const searchMoreData = async () => {
@@ -38,16 +39,51 @@ export function useInfiniteScrollHook(
 				確保 List.data 無條件捨去個位數後 長度不超過 pageSize * 2 的資料量
 				splice() 刪除超過的資料量由開頭 0 到扣掉目前 List.data 長度 pageSize * 2 的多餘資料
 				ex: List.data.length = 32 , pageSize.value = 10
-				    30(32無條件捨去個位數) > 20
+				30(32無條件捨去個位數) > 20
 						List.data.splice(0, 32 - 10 * 2) = List.data.splice(0, 12)
 			*/
 
 			if (List.data.length > 0) {
+				/*
+				scrollContainer 取得目前 scrollHeight, 等資料合併後
+				nextTick DOM 後 從新拿取 addedHeight 新增合併後 Height
+
+				然後 scrollElements 找出在 container 中的 div 的 Height
+				但從 上一筆資料拿到的 prevHeight 往下補足下拉高度到視窗能見曲率
+				*/
+				const scrollContainer = document.getElementById('scroll-container'); 
+				const previousScrollHeight = scrollContainer ? scrollContainer.scrollHeight : 0;
 				List.data = [...List.data, ...response.data]; // 擴展運算 將兩者合併
+				await nextTick(); // 等待 DOM 更新
+				const addedHeight = scrollContainer ? scrollContainer.scrollHeight : 0;
+
 				const roundedValue = Math.floor(List.data.length / 10) * 10;
 				if (roundedValue > pageSize.value * 2) {
 					List.data.splice(0, List.data.length - pageSize.value * 2);
 				}
+				await nextTick(); // 等待 DOM 更新 
+
+				const scrollElements = document.querySelectorAll("#scroll-container > div");
+				let totalHeight = 0;
+
+				scrollElements.forEach((element, index) => {
+					if (index > 12) { // 扣除 container 的 置頂 element 從12開始計算
+						// 128 是 置頂element
+						let target = totalHeight + element.getBoundingClientRect().height + 128
+						if (target > window.innerHeight) return // 如果下拉移動的距離大於視窗不進行累積
+						totalHeight += element.getBoundingClientRect().height;
+					}
+				}); 
+
+				// 插入資料後調整滾動條位置
+				if (roundedValue > pageSize.value * 2) {
+					window.scrollTo({
+						// 88 是提高高度讓頁面留畫面出現後續資料 
+						top: prevHeight.value - totalHeight + 88,
+						behavior: 'auto',
+					});
+				}
+				prevHeight.value = addedHeight - previousScrollHeight
 			}
 		} else {
 			// response status failed clear the list
@@ -84,26 +120,24 @@ export function useInfiniteScrollHook(
 
 			/*
 				插入 response.data 資料後, 等待 DOM 更新後
-				previousScrollHeight 這邊為插入 response.data 資料後的 scrollHeight
-				然後再次刪除多餘的資料量 確保 List.data 長度不超過 pageSize * 2 的資料量
-				-- 在等待 DOM 更新後 --
-				在宣告一個 addedHeight 這邊為刪除多餘的資料量後的 scrollHeight
-				因為是 unshift() 方法, 所以插入資料後會在最上方,
-				所以 previousScrollHeight - addedHeight 這裏為 response.data 插入資料後的高度差
-				然後 window.scrollTo 調整滾動條位置,  
+				然後 scrollElements 找出在 container 中的 div 的 Height
+				但移除掉 置頂的div 開始計算移動高度往後 10 筆資料, 調整滾動條位置
 			*/
-			const scrollContainer = document.getElementById('scroll-container');
-			const previousScrollHeight = scrollContainer ? scrollContainer.scrollHeight : 0;
 			if (List.data.length > pageSize.value * 2) {
 				List.data.splice(pageSize.value * 2 , List.data.length - pageSize.value*2);
 			}
 			await nextTick(); // 等待 DOM 更新
-			const addedHeight = scrollContainer ? scrollContainer.scrollHeight : 0;
-
+			const scrollElements = document.querySelectorAll("#scroll-container > div");
+			let totalHeight = 0;
+			scrollElements.forEach((element, index) => {
+				if (12 > index && index > 1) {
+					totalHeight += element.getBoundingClientRect().height;
+				}
+			}); 
 			// 插入資料後調整滾動條位置
 			window.scrollTo({
-				top: previousScrollHeight - addedHeight,
-				behavior: 'auto',
+				top: totalHeight,
+				behavior: 'auto' ,
 			});
 		} else {
 			// response status failed clear the list
@@ -113,11 +147,11 @@ export function useInfiniteScrollHook(
 	};
 
 	/* ------- 功能解釋 --------------------------------
-	 *  IntersectionObserver - 對於 所指派或指定的 element
-	 *  若元素在 viewport 當前視窗時或離開視窗時，會觸發 entries
-	 *  inject data {
-	 *   isIntersecting 判斷元素是否進入 viewport 視窗範圍
-	 *  }*/
+		IntersectionObserver - 對於 所指派或指定的 element
+			若元素在 viewport 當前視窗時或離開視窗時，會觸發 entries
+			inject data {
+			isIntersecting 判斷元素是否進入 viewport 視窗範圍
+		}*/
 	const infiniteScrollObserve = (infiniteScroll: IntersectionObserver | null) => {
 		// element
 		const infiniteScrollElement = document.querySelector('#infiniteScrollElement');
