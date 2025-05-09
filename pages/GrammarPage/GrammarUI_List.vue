@@ -1,7 +1,7 @@
 <template lang="pug">
 div(class='relative flex justify-center items-center flex-col pb-16' id='scroll-container')
-  div(class='w-full flex h-20 mb-2' id='topUpElement')
-  div(v-if='propIsTopUP' class='fixed w-10 h-10 bottom-20 right-6 md:right-1/2 md:translate-x-72')
+  div(class='w-full flex h-16 mt-2 mb-2' id='topUpElement')
+  div(v-if='propIsTopUP' class='fixed w-10 h-10 bottom-20 right-6 md:right-1/2 md:translate-x-72' @click='$emit("scroll-To")')
     ImageFC(src='/img/topup_arrow.png' :width='35' :height='20')
   div(class='fixed w-12 h-12 bottom-4 right-6 md:right-1/2 md:translate-x-72')
     NuxtLinkLocale(to="AddGrammarPage")
@@ -56,4 +56,7 @@ defineEmits([
   'show-top',
   'scroll-To'
 ])
+defineExpose({
+  localePath
+})
 </script>
