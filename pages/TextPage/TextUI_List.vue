@@ -14,12 +14,14 @@
               template(v-for='(item, index) in item.tags' :key='item')
                 a(class='mr-2 mb-1 text-gray-400 text-sm') {{$t(item)}}
         div(class='w-full flex flex-row')
-          div(class='w-9/12 flex flex-row justify-start items-center mb-1')
-            a(class=' text-2xl font-medium mr-2 ml-1') {{item.file}}
-            a(v-if='item.fileHiragana' class=' text-gray-500 text-xs font-medium mr-1 mt-3 ') {{item.fileHiragana}}
-            a(v-if='item.fileTranslate' class=' text-base font-medium ml-3 mr-1 mt-2 ') {{item.fileTranslate}}
-            div(@click='$emit("copy-text",item.file)'  class='active:opacity-20 mt-2')
-              ImageFC(src='/img/item_copy.png' :width='16' :height='16' )
+          div(class='w-9/12 flex sm:flex-row flex-col justify-start sm:items-center items-start mb-1 ')
+            div(class='flex flex-row justify-start items-start mb-2')
+              a(class=' text-2xl font-medium mr-4 ml-1') {{item.file}}
+              a(v-if='item.fileHiragana' class=' text-gray-500 text-xs font-medium mr-1 mt-3 ') {{item.fileHiragana}}
+            div(class='flex flex-row  justify-center items-center ml-1')
+              a(v-if='item.fileTranslate' class=' text-base font-medium') {{item.fileTranslate}}
+              div(@click='$emit("copy-text",item.file)'  class='active:opacity-20 ml-1')
+                ImageFC(src='/img/item_copy.png' :width='16' :height='16' )
           div(class='w-3/12 flex flex-row justify-end items-center')
             NuxtLink(:to="{ path:localePath('EditTextPage'), query: { value: $configUtils.encodeBase64(item) } }" class='mr-3')
               ImageFC(src='/img/item_edit.png' :width='22.5' :height='22.5')
