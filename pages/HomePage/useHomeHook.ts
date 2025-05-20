@@ -120,6 +120,7 @@ export function useHomeHook() {
 
 			await nextTick(); // 等待 DOM 更新
 			answerDaily(); // 更新每日回答題目
+			answer.value = '';  // 清空答案
 
 			isSubmit.value = true; // 提交按鈕 disabled
 		}
