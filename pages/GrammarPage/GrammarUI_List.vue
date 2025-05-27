@@ -21,7 +21,7 @@ div(class='relative flex justify-center items-center flex-col pb-16' id='scroll-
           div(@click='$emit("show-top", item)' class='active:opacity-40')
             ImageFC(v-if='item.isShowTop' src='/img/heart.png' :width='22.5' :height='22.5' )
             ImageFC(v-else src='/img/heart_line.png' :width='22.5' :height='22.5')
-      div(class='border-l-4 border-stone-400 mt-1')
+      div(v-if='item.sentenceInput' class='border-l-4 border-stone-400 mt-1')
         a(class='w-full text-textSecond text-gray-700 mt-1 pl-2 py-2 ') {{item.sentenceInput}}
         template(v-if='item.extraTextInputs.length > 0')
           div(class='w-full border-b-2 my-2.5 ml-2' )
