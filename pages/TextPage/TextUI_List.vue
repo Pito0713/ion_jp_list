@@ -28,7 +28,7 @@
             div(@click='$emit("show-top", item)' class='active:opacity-40')
               ImageFC(v-if='item.isShowTop' src='/img/heart.png' :width='22.5' :height='22.5' )
               ImageFC(v-else src='/img/heart_line.png' :width='22.5' :height='22.5')
-        div(class='border-l-4 border-stone-400')
+        div(v-if='item.translation' class='border-l-4 border-stone-400')
           div(class='bg-stone-100 p-2 flex justify-center items-starts flex-col')
             a(class='text-textSecond text-gray-700 text-lg') {{item.translation}}
             template(v-if='item.inputs.length > 0')
