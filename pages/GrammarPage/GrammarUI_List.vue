@@ -10,11 +10,12 @@ div(class='relative flex justify-center items-center flex-col pb-16' id='scroll-
     Card(class='flex flex-col justify-start items-start w-full mt-2 mb-0 p-3')
       div(class='w-full flex flex-row')
         div(class='w-9/12  flex sm:flex-row flex-col justify-start sm:items-center items-start mb-1')
-          a(class='text-2xl font-medium mr-2 ') {{item.grammarInput}}
-          div(class='flex flex-row  justify-start items-start')
-            a(v-if='item.grammarTransInput' class=' text-sm font-medium ml-1 mr-1 mt-2 text-gray-500') {{item.grammarTransInput}}
-            div(@click='$emit("copy-text")'  class='active:opacity-20 mt-2') 
+          div(class='flex')
+            a(class='text-2xl font-medium mr-1') {{item.grammarInput}}
+            div(@click='$emit("copy-text", item.grammarInput)'  class='active:opacity-20 mt-3 mr-4') 
               ImageFC(src='/img/item_copy.png' :width='16' :height='16' )
+          div(class='flex flex-row  justify-start items-start')
+            a(v-if='item.grammarTransInput' class='text-base font-medium mr-1 mt-2 text-gray-500') {{item.grammarTransInput}}
         div(class='w-3/12 flex flex-row justify-end items-center')
           NuxtLink(:to="{ path:localePath('EditGrammarPage'), query: { value: $configUtils.encodeBase64(item) } }" class='mr-3')
             ImageFC(src='/img/item_edit.png' :width='22.5' :height='22.5')
@@ -22,7 +23,8 @@ div(class='relative flex justify-center items-center flex-col pb-16' id='scroll-
             ImageFC(v-if='item.isShowTop' src='/img/heart.png' :width='22.5' :height='22.5' )
             ImageFC(v-else src='/img/heart_line.png' :width='22.5' :height='22.5')
       div(v-if='item.sentenceInput' class='border-l-4 border-stone-400 mt-1')
-        a(class='w-full text-textSecond text-gray-700 mt-1 pl-2 py-2 ') {{item.sentenceInput}}
+        div(class='mt-1 ml-2')
+          a(class='text-textSecond text-gray-700') {{item.sentenceInput}}
         template(v-if='item.extraTextInputs.length > 0')
           div(class='w-full border-b-2 my-2.5 ml-2' )
         template(v-if='item.extraTextInputs.length > 0')
