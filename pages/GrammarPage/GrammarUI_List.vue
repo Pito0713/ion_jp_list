@@ -22,16 +22,17 @@ div(class='relative flex justify-center items-center flex-col pb-16' id='scroll-
           div(@click='$emit("show-top", item)' class='active:opacity-40')
             ImageFC(v-if='item.isShowTop' src='/img/heart.png' :width='22.5' :height='22.5' )
             ImageFC(v-else src='/img/heart_line.png' :width='22.5' :height='22.5')
-      div(v-if='item.sentenceInput' class='border-l-4 border-stone-400 mt-1')
-        div(class='mt-1 ml-2')
-          a(class='text-textSecond text-gray-700') {{item.sentenceInput}}
-        template(v-if='item.extraTextInputs.length > 0')
-          div(class='w-full border-b-2 my-2.5 ml-2' )
-        template(v-if='item.extraTextInputs.length > 0')
-          div(v-for='(input, index) in item.extraTextInputs' :key='index')
-            div(class='pl-2')
-              a(class='mr-2 font-medium text-base') {{input.jpValue}}
-              a(class='text-textSecond text-gray-500 text-sm') {{input.chValue}}
+      div(v-if='item.sentenceInput' class='border-l-4 border-stone-400 mt-1 ')
+        div(class='bg-stone-100 p-2 flex justify-center items-starts flex-col')
+          div(class='mt-1')
+            a(class='text-textSecond text-gray-700') {{item.sentenceInput}}
+          template(v-if='item.extraTextInputs.length > 0')
+            div(class='w-full border-b-2 my-2.5' )
+          template(v-if='item.extraTextInputs.length > 0')
+            div(v-for='(input, index) in item.extraTextInputs' :key='index')
+              div
+                a(class='mr-2 font-medium text-base') {{input.jpValue}}
+                a(class='text-textSecond text-gray-500 text-sm') {{input.chValue}}
   div(class='w-full flex justify-center items-center mt-4 mr-6' id='infiniteScrollElement')
   template(v-if='propList.data.length > 0')
     template(v-if='propTotalCount > propList.data.length && propHasMoreData') 
