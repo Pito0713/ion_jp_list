@@ -2,11 +2,12 @@
   Card(class='custom-container flex-col mt-3 fixed top-12 left-15 z-40 rounded-none')
     div(class='flex flex-row w-full' )
       div(class='flex border-2 border-primary-color rounded-md justify-between w-32 flex-1')
-        input(
+      input(
           :placeholder="$t('please_enter_word')" 
           :value="propTextInput"  
           class=" border-none outline-none w-32 flex-1"
           @input="$emit('update:propTextInput', $event.target.value)"
+          @keydown.enter="$emit('init-Search')"
         )
         div(@click='$emit("init-input")')
           ImageFC(src='/img/one_click.png' :width='40' :height='40')
@@ -29,7 +30,7 @@
         @change="$emit('update:propSelect', $event.target.value)"
       )
         option(v-for="item in SELECTIONS" :key="item.id" :value="item.name") {{ $t(item.name) }}    
-  </template>
+</template>
 
 <script setup>
 // @props
