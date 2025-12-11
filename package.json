@@ -37,6 +37,6 @@
 		"string-width": "4.2.3"
 	},
 	"engines": {
-		"node": "20.17.0"
+		"node": "20.19.4"
 	}
 }
