@@ -2,7 +2,7 @@
   Card(class='custom-container flex-col mt-3 fixed top-12 left-15 z-40 rounded-none')
     div(class='flex flex-row w-full' )
       div(class='flex border-2 border-primary-color rounded-md justify-between w-32 flex-1')
-      input(
+        input(
           :placeholder="$t('please_enter_word')" 
           :value="propTextInput"  
           class=" border-none outline-none w-32 flex-1"
